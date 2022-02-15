@@ -10,7 +10,7 @@ import com.vaadin.flow.router.Route;
 public class MultiPlayer extends HtmlContainer {
 	
 	public MultiPlayer() {
-		H1 title = new H1("hello word Multi player");
+		H1 title = new H1("hello word Multi-player");
 		add(title);
 	}
 }
