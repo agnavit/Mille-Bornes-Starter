@@ -2,7 +2,15 @@ package nc.unc.gl.borne.classes.carte;
 
 /**
  * Description d'une carte du jeu du 1000 bornes
+ *
+ * ----------------REFLEXION ----------------
+ * ---L'image de la carte on la met où ??----------------
+ * ---Dans une nouvelle classe ?
+ * ---Peut-être faire dépendre l'image de TypeCarte et NomCarte
+ * ---Par ex avec un dico dans un dico: [TypeCarte -> [NomCarte -> imageCarte]] ?
+ *
  */
+
 public class Carte {
     /**
      * Nom
