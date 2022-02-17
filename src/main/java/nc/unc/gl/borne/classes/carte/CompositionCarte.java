@@ -43,25 +43,23 @@ public class CompositionCarte {
             '}';
     }
 
+    /**
+     * Ajoute une carte
+     * @param newCarte la carte à ajouter
+     */
     public void ajouterCarte(Carte newCarte){
         this.jeu.add(newCarte);
     }
 
-    public void enelverCarte(Carte delCarte){
-        // ATTENTION : ne pas enlever une carte qui n'existe pas dans le jeu
-        if(!this.jeu.contains(delCarte)){
-            throw new IllegalAccessError("Erreur: la carte " + delCarte + " n'est pas présente dans le jeu " + this.jeu);
-        }
-        // Boucle qui s'arrête lorsqu'on a trouvé et enlevé la première occurence de la carte à enlever
-        boolean fin = false;
-        int i = 0;
-        while(!fin && i<this.tailleJeu){
-            if (this.jeu.get(i).equals(delCarte)) {
-                this.jeu.remove(delCarte);
-                fin = true;
-            }
-            i += 1;
-        }
+    /**
+     * Enlève une carte
+     * @param delCarte la carte à enlever
+     * @return true si la carte est enlevée ou false sinon (i.e la carte n'est pas présente)
+     */
+    public boolean enleverCarte(Carte delCarte){
+        // Renvoie True si la carte est enlevée et false sinon
+        return this.jeu.remove(delCarte);
+
     }
 
     public List<Carte> getJeu() {
