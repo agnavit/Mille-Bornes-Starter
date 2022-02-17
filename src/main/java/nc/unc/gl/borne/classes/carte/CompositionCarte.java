@@ -22,17 +22,18 @@ public class CompositionCarte {
     protected List<Carte> jeu;
 
     /**
-     * Taille de la liste précédente
+     * Taille deu jeu
      */
     protected int tailleJeu;
 
     /**
      * Constructeur
      * @param jeu une liste de carte
+     * @param tailleJeu la taille du jeu
      */
-    public CompositionCarte(List<Carte> jeu) {
+    public CompositionCarte(List<Carte> jeu, int tailleJeu) {
         this.jeu = jeu;
-        this.tailleJeu = jeu.size();
+        this.tailleJeu = tailleJeu;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class CompositionCarte {
     }
 
     /**
-     * Ajoute une carte
+     * Ajoute une carte au jeu
      * @param newCarte la carte à ajouter
      */
     public void ajouterCarte(Carte newCarte){
@@ -52,7 +53,7 @@ public class CompositionCarte {
     }
 
     /**
-     * Enlève une carte
+     * Enlève une carte du jeu
      * @param delCarte la carte à enlever
      * @return true si la carte est enlevée ou false sinon (i.e la carte n'est pas présente)
      */
