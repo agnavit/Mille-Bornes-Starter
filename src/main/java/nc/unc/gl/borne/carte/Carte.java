@@ -1,4 +1,4 @@
-package nc.unc.gl.borne.classes.carte;
+package nc.unc.gl.borne.carte;
 
 /**
  * Description d'une carte du jeu du 1000 bornes

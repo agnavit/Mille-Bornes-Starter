@@ -1,4 +1,4 @@
-package nc.unc.gl.borne.classes.carte;
+package nc.unc.gl.borne.carte;
 
 /**
  * Enumération des différents types de carte dans le jeu
