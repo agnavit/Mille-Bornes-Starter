@@ -1,4 +1,8 @@
-package nc.unc.gl.borne.carte;
+package nc.unc.gl.borne.joueur;
+
+import nc.unc.gl.borne.carte.Carte;
+import nc.unc.gl.borne.carte.PileCarte;
+import nc.unc.gl.borne.carte.TypeCarte;
 
 import java.util.List;
 
