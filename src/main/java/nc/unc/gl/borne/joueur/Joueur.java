@@ -1,85 +1,101 @@
 package nc.unc.gl.borne.joueur;
 
-import nc.unc.gl.borne.carte.Carte;
-import nc.unc.gl.borne.carte.PileCarte;
-import nc.unc.gl.borne.carte.TypeCarte;
+import nc.unc.gl.borne.carte.*;
 
 import java.util.List;
 
+/**
+ * Description d'un joueur
+ */
 public class Joueur {
 	
 	/**
-	 * id d'un Joueur
+	 * Identifiant
 	 */
-	public int id;
+    private int id;
 	
 	/**
-	 * Pseudo d'un Joueur
+	 * Pseudo
 	 */
-	public String pseudo;
+    private String pseudo;
 	
 	/**
-	 * Âge d'un Joueur
+	 * Âge
 	 */
-	public int age;
+    private int age;
 	
 	/**
-	 * Plateau représentant les cartes qui sont posées devant le Joueur 
+	 * Plateau représentant les cartes qui sont posées devant le joueur
 	 */
-	public List<Carte> plateau;
+    private Plateau plateau;
 	
 	/**
-	 * Les cartes que le Joueur a en main
+	 * Les cartes que le joueur a en main
 	 */
-	public List<Carte> main;
-	
-	/**
-	 * Contruteur Joueur
-	 * @param pseudo
-	 * @param age
-	 */
-	public Joueur(String pseudo, int age) {
-		this.pseudo = pseudo;
-		this.age = age;
-	}
-	
-	public void setMain(List<Carte> main) {
-		this.main = main;
-	}
-	
-	public void setPlateau(List<Carte> plateau) {
-		this.plateau = plateau;
-	}
-	
-	/**
-	 * A discuter avec l'équipe :
-	 * Ne serait-il pas plus simple de mettre les méthode piocher(), jeter() 
-	 * et poser() dans CompositionCarte ?
-	 */
-	public void piocher() {
-		
-	}
-	
-	public void jeter() {
-		
-	}
-	
-	public void poser() {
-		
-	}
-	
-	/**
-	 * Permet à un joueur d'attaquer un autre joueur
-	 * @param joueur
-	 * @param carte
-	 * @return true si la carte est de type attaque false sinon
-	 */
-	public boolean attaquer(Joueur joueur, Carte carte) {
-		if (carte.type != TypeCarte.ATTAQUE) {
-			return false;
-		}
-		joueur.plateau.add(carte);
-		return true;
-	}
-	
+	private Deck main;
+
+    /**
+     * Le score
+     */
+    private int score;
+
+    /**
+     * Constructeur
+     * @param id id
+     * @param pseudo pseudo
+     * @param age age
+     */
+    public Joueur(int id, String pseudo, int age) {
+        this.id = id;
+        this.pseudo = pseudo;
+        this.age = age;
+        this.plateau = new Plateau();
+        this.score = 0;
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+
+    public int getAge() {
+        return age;
+    }
+
+
+    public Plateau getPlateau() {
+        return plateau;
+    }
+
+    public void setPlateau(Plateau plateau) {
+        this.plateau = plateau;
+    }
+
+    public Deck getMain() {
+        return main;
+    }
+
+    public void setMain(Deck main) {
+        this.main = main;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void jeter(Carte carteChoisie){
+        //TODO
+    }
+
+    public void poser(Carte carteChoisie){
+        //TODO
+    }
+
+    public void attaquer(Carte carteAttaque, Joueur jouerAttaque){
+        //TODO
+    }
 }

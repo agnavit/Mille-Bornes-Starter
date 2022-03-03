@@ -7,8 +7,8 @@ public class JeuComplet {
     private ArrayList<Carte> jeuComplet;
 
 
-    public JeuComplet(ArrayList<Carte> jeuComplet) {
-        this.jeuComplet = jeuComplet;
+    public JeuComplet() {
+        //TODO;
     }
 
     public ArrayList<Carte> getJeuComplet() {

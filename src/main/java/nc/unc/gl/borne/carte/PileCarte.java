@@ -1,20 +1,33 @@
 package nc.unc.gl.borne.carte;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
 public class PileCarte {
 
-    private Stack<Carte> pileCarte;
+    /**
+     * Ensemble de carte représentée dans une liste, implémentée sous forme de pile
+     *  sortie <-  [ 0 - - - - - (len-1) ]  <- entrée
+     */
+    private ArrayList<Carte> pileCarte;
 
-    public PileCarte(Stack<Carte> pileCarte) {
-        this.pileCarte = pileCarte;
+    public PileCarte() {
+        this.pileCarte = new ArrayList<>();
     }
 
-    public Stack<Carte> getPileCarte() {
+    public ArrayList<Carte> getPileCarte() {
         return pileCarte;
     }
 
-    public void setPileCarte(Stack<Carte> pileCarte) {
+    public void setPileCarte(ArrayList<Carte> pileCarte) {
         this.pileCarte = pileCarte;
     }
+
+    public void ajouter(Carte carteChoisie){
+        //TODO
+    }
+
+    public void enlever(){
+        //TODO
+    }
+
 }
