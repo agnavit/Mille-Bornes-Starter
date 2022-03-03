@@ -9,17 +9,17 @@ public class Carte {
     /**
      * Nom
      */
-    protected NomCarte nom;
+    private NomCarte nom;
 
     /**
      * Type
      */
-    protected TypeCarte type;
+    private TypeCarte type;
 
     /**
      * Numéro (unique)
      */
-    protected int numero;
+    private int numero;
 
     /**
      * Constructeur
@@ -41,4 +41,18 @@ public class Carte {
             ", numero=" + numero +
             '}';
     }
+
+    public NomCarte getNom() {
+        return nom;
+    }
+
+    public TypeCarte getType() {
+        return type;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+
 }
