@@ -1,5 +1,7 @@
 package nc.unc.gl.borne.carte;
 
+import java.util.Objects;
+
 /**
  * Description d'une carte du jeu du 1000 bornes
  *
@@ -54,5 +56,11 @@ public class Carte {
         return numero;
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carte carte = (Carte) o;
+        return numero == carte.numero && nom == carte.nom && type == carte.type;
+    }
 }
