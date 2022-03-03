@@ -46,6 +46,37 @@ public class PileCarte {
     }
 
     /**
+     * Renvoie la taille de la pile de carte
+     * @return la taille
+     */
+    public int taille(){
+        return this.pileCarte.size();
+    }
+
+    /**
+     * Recupère la carte d'une pile
+     * @param carteARecupere la carte à récupérer
+     * @return la carte entrée en paramètre
+     */
+    public Carte getCarte(Carte carteARecupere){
+        for (Carte carte : this.pileCarte) {
+            if (carte == carteARecupere) {
+                return carte;
+            }
+        }
+        throw new IllegalArgumentException("Erreur : la carte demandée n'est pas présente dans la pile!")
+    }
+
+    /**
+     * Renvoie la carte d'une pile à un indice donné
+     * @param i l'indice de la carte à renvoyer
+     * @return la carte à l'indice i
+     */
+    public Carte getCarte(int i){
+        return this.pileCarte.get(i);
+    }
+
+    /**
      * Ajouter une carte dans la pile
      * @param carteChoisie la carte à ajouter
      */
