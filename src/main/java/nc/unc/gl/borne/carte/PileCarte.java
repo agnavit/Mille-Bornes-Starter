@@ -64,7 +64,7 @@ public class PileCarte {
                 return carte;
             }
         }
-        throw new IllegalArgumentException("Erreur : la carte demandée n'est pas présente dans la pile!")
+        throw new IllegalArgumentException("Erreur : la carte demandée n'est pas présente dans la pile!");
     }
 
     /**
