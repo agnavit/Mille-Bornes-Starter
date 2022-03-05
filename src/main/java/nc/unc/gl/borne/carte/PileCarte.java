@@ -1,6 +1,7 @@
 package nc.unc.gl.borne.carte;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Description d'une pile de carte
@@ -80,21 +81,34 @@ public class PileCarte {
      * Ajouter une carte dans la pile
      * @param carteChoisie la carte à ajouter
      */
-    public void ajouter(Carte carteChoisie){
-        if (carteChoisie == null){
-            throw new IllegalArgumentException("Erreur : la carte à ajouter ne peut être nulle!");
-        }
+    public PileCarte ajouter(Carte carteChoisie){
         this.pileCarte.add(carteChoisie);
+        return this;
     }
 
     /**
      * Enlève une carte : celle à l'indice 0 de la liste
      */
-    public void enlever(){
+    public PileCarte enlever() throws IllegalArgumentException{
         if(this.pileCarte.size() == 0){
             throw new IllegalArgumentException("Erreur : on ne peut pas enlever une carte, la pile est déjà vide!");
         }
         this.pileCarte.remove(0);
+        return this;
     }
 
+    @Override
+    public String toString() {
+        return "PileCarte{" +
+            "pileCarte=" + pileCarte +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PileCarte pileCarte1 = (PileCarte) o;
+        return (Objects.equals(pileCarte, pileCarte1.pileCarte));
+    }
 }
