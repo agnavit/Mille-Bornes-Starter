@@ -89,7 +89,7 @@ public class PileCarte {
     /**
      * Enlève une carte : celle à l'indice 0 de la liste
      */
-    public PileCarte enlever() throws IllegalArgumentException{
+    public PileCarte enlever(){
         if(this.pileCarte.size() == 0){
             throw new IllegalArgumentException("Erreur : on ne peut pas enlever une carte, la pile est déjà vide!");
         }
