@@ -5,7 +5,7 @@ package nc.unc.gl.borne.carte;
  */
 public enum NomCarte {
     /**
-     * Pour les cartes ATTAQUE, BOTTE et PARADE :
+     * Pour les cartes ATTAQUE et PARADE :
      */
     ACCIDENT,
     CREVAISON,
@@ -14,11 +14,19 @@ public enum NomCarte {
     VITESSE,
 
     /**
+     * Pour les cartes BOTTE
+     */
+    VEHICULE_PRIORITAIRE,
+    CAMION_CITERNE,
+    AS_DU_VOLANT,
+    INCREVABLE,
+
+    /**
      * Pour les cartes BORNE :
      */
     VINGT_CINQ,
     CINQUANTE,
-    SOIXANTE_DIX,
+    SOIXANTE_QUINZE,
     CENT,
     DEUX_CENTS;
 }

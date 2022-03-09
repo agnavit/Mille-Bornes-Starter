@@ -4,21 +4,7 @@ import java.util.ArrayList;
 
 public class Deck {
 
-<<<<<<< refs/remotes/origin/main
-    public int minimumSize;
-    public ArrayList<Carte> deckPlayer;
-
-    public Deck(ArrayList<Carte> deckPlayer){
-        this.deckPlayer = deckPlayer;
-    }
-
-    public void setDeckPlayer(ArrayList<Carte> deckPlayer) {
-        this.deckPlayer = deckPlayer;
-    }
-
-    public ArrayList<Carte> getDeckPlayer() {
-        return deckPlayer;
-=======
+    static final int TAILLE_MAX = 7;
     static final int TAILLE_MIN = 6;
 
     /**
@@ -27,14 +13,10 @@ public class Deck {
     private ArrayList<Carte> mainJoueur;
 
     /**
-     * Constructeur
-     * @param mainJoueur la main
+     * Constructeur vide
      */
-    public Deck(ArrayList<Carte> mainJoueur) {
-        if(mainJoueur.size() != 6){
-            throw new IllegalArgumentException("Erreur: la main d'un joueur doit contenir " + TAILLE_MIN + " cartes!");
-        }
-        this.mainJoueur = mainJoueur;
+    public Deck() {
+        mainJoueur = new ArrayList<Carte>();
     }
 
     public ArrayList<Carte> getMainJoueur() {
@@ -50,15 +32,43 @@ public class Deck {
      * Ajouter une carte
      * @param carteAjoute la carte à ajouter
      */
-    public void ajouter(Carte carteAjoute){
+    public Deck ajouter(Carte carteAjoute){
+        if(mainJoueur.size() == 7){
+            throw new IllegalArgumentException("Erreur: la main d'un joueur peut contenir au plus " + TAILLE_MAX + " cartes!");
+        }
         this.mainJoueur.add(carteAjoute);
+        return this;
     }
 
     /**
      * Enelver une carte
      * @param carteEnlever la carte à enlever
      */
-    public void enlever(Carte carteEnlever){
+    public Deck enlever(Carte carteEnlever){
+        if(mainJoueur.size() == 6){
+            throw new IllegalArgumentException("Erreur: la main d'un joueur peut contenir au moins " + TAILLE_MIN + " cartes!");
+        }
         this.mainJoueur.remove(carteEnlever);
+        return this;
+    }
+
+    public int taille(){
+        return this.mainJoueur.size();
+    }
+
+    public boolean contains(Carte carteAChercher){
+        for (Carte carte : this.mainJoueur) {
+            if (carte.equals(carteAChercher)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Deck{" +
+            "mainJoueur=" + mainJoueur +
+            '}';
     }
 }
