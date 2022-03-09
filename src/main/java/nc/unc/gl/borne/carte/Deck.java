@@ -45,4 +45,20 @@ public class Deck {
         this.mainJoueur = mainJoueur;
 >>>>>>> Ajout Deck, JeuComplet, PileCarte
     }
+
+    /**
+     * Ajouter une carte
+     * @param carteAjoute la carte à ajouter
+     */
+    public void ajouter(Carte carteAjoute){
+        this.mainJoueur.add(carteAjoute);
+    }
+
+    /**
+     * Enelver une carte
+     * @param carteEnlever la carte à enlever
+     */
+    public void enlever(Carte carteEnlever){
+        this.mainJoueur.remove(carteEnlever);
+    }
 }
