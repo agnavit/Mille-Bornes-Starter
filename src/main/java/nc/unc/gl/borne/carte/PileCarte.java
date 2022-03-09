@@ -78,10 +78,18 @@ public class PileCarte {
     }
 
     /**
+     * Renvoie la carte du sommet de la pile (la carte qui sera dépilé)
+     * @return la dernière carte de la liste PileCarte
+     */
+    public Carte getSommet(){
+        return this.getCarte(this.taille() -1);
+    }
+
+    /**
      * Ajouter une carte dans la pile
      * @param carteChoisie la carte à ajouter
      */
-    public PileCarte ajouter(Carte carteChoisie){
+    public PileCarte empiler(Carte carteChoisie){
         this.pileCarte.add(carteChoisie);
         return this;
     }
@@ -89,12 +97,13 @@ public class PileCarte {
     /**
      * Enlève une carte : celle à l'indice 0 de la liste
      */
-    public PileCarte enlever(){
+    public Carte depiler(){
         if(this.pileCarte.size() == 0){
             throw new IllegalArgumentException("Erreur : on ne peut pas enlever une carte, la pile est déjà vide!");
         }
-        this.pileCarte.remove(0);
-        return this;
+        Carte carteDepile = this.getSommet();
+        this.pileCarte.remove(this.taille() -1);
+        return carteDepile;
     }
 
     @Override
