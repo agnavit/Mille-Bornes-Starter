@@ -25,7 +25,7 @@ public class Deck {
 
     public void setMainJoueur(ArrayList<Carte> mainJoueur) {
         this.mainJoueur = mainJoueur;
->>>>>>> Ajout Deck, JeuComplet, PileCarte
+        //Ajout Deck, JeuComplet, PileCarte
     }
 
     /**
