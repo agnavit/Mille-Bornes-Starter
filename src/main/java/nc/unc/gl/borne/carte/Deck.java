@@ -25,7 +25,6 @@ public class Deck {
 
     public void setMainJoueur(ArrayList<Carte> mainJoueur) {
         this.mainJoueur = mainJoueur;
-        //Ajout Deck, JeuComplet, PileCarte
     }
 
     /**
@@ -34,19 +33,19 @@ public class Deck {
      */
     public Deck ajouter(Carte carteAjoute){
         if(mainJoueur.size() == 7){
-            throw new IllegalArgumentException("Erreur: la main d'un joueur peut contenir au plus " + TAILLE_MAX + " cartes!");
+            throw new IllegalArgumentException("Erreur: la main d'un joueur ne doit pas contenir au plus " + TAILLE_MAX + " cartes!");
         }
         this.mainJoueur.add(carteAjoute);
         return this;
     }
 
     /**
-     * Enelver une carte
+     * Enlever une carte
      * @param carteEnlever la carte à enlever
      */
     public Deck enlever(Carte carteEnlever){
         if(mainJoueur.size() == 6){
-            throw new IllegalArgumentException("Erreur: la main d'un joueur peut contenir au moins " + TAILLE_MIN + " cartes!");
+            throw new IllegalArgumentException("Erreur: la main d'un joueur doit contenir au moins " + TAILLE_MIN + " cartes!");
         }
         this.mainJoueur.remove(carteEnlever);
         return this;
