@@ -6,19 +6,25 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class JeuComplet {
 
+    /**
+     * Le jeu
+     */
     private ArrayList<Carte> jeuComplet;
 
 
+    /**
+     * Constructeur par défaut
+     */
     public JeuComplet() {
 
-        ArrayList<Carte> jeu = new ArrayList<>();
-
-        AtomicInteger i = new AtomicInteger();
+        this.jeuComplet = new ArrayList<>();
+        AtomicInteger iAtomic = new AtomicInteger();
 
         Arrays.asList(EnumCard.values())
             .forEach(carte -> {
-                for(int j =0;j<=109;j++) {
-                    jeu.add(new Carte(carte.nameCard, carte.typeCarte, i.incrementAndGet()));
+                int nbCarte = carte.numberCard;
+                for(int i =1; i<=nbCarte; i++) {
+                    this.jeuComplet.add(new Carte(carte.nameCard, carte.typeCarte, iAtomic.incrementAndGet()));
                 }});
     }
 
@@ -28,5 +34,17 @@ public class JeuComplet {
 
     public void setJeuComplet(ArrayList<Carte> jeuComplet) {
         this.jeuComplet = jeuComplet;
+    }
+
+    public int taille(){
+        return this.jeuComplet.size();
+    }
+
+    @Override
+    public String toString() {
+        for(int i=0; i<jeuComplet.size(); i++){
+            System.out.println(jeuComplet.get(i));
+        }
+        return "";
     }
 }
