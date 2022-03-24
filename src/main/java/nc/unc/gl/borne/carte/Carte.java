@@ -61,6 +61,6 @@ public class Carte {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Carte carte = (Carte) o;
-        return numero == carte.numero && nom == carte.nom && type == carte.type;
+        return nom == carte.nom && type == carte.type;
     }
 }
