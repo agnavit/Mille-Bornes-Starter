@@ -28,15 +28,30 @@ public class Plateau {
         this.plateau.put(TypePile.BOTTES, new PileCarte());
     }
 
+    // ---------- A-t-on besoin de getter et setter ici ? ----------
+
+    /**
+     * Getter du plateau
+     * @return plateau
+     */
     public HashMap<TypePile, PileCarte> getPlateau() {
         return plateau;
     }
 
+    /**
+     * Setter du plateau
+     * @param plateau le nouveau plateau
+     */
     public void setPlateau(HashMap<TypePile, PileCarte> plateau) {
         this.plateau = plateau;
     }
 
 
+    /**
+     * Récupère une pile du plateau
+     * @param cle la clé de la pile à récupérer
+     * @return la pile voulue
+     */
     public PileCarte getPile(TypePile cle){
         if (!plateau.containsKey(cle)){
             throw new IllegalArgumentException("Erreur : la clé entrée n'est pas présente dans le plateau!");
@@ -44,21 +59,46 @@ public class Plateau {
         return this.plateau.get(cle);
     }
 
+    /**
+     * Ajoute une carte au plateau
+     * @param cle la clé de la pile à modifier
+     * @param carte la carte à ajouter
+     * @return le plateau
+     */
     public Plateau ajouterCartePlateau(TypePile cle, Carte carte){
         this.getPile(cle).empiler(carte);
         return this;
     }
 
+    /**
+     * Enlève une carte au plateau
+     * @param cle la clé de la pile à dépiler
+     * @return la carte dépilée
+     */
     public Carte enleverCartePlateau(TypePile cle){
         return this.getPile(cle).depiler();
     }
 
+    /**
+     * Récupère la taille d'une pile du plateau
+     * @param cle la clé de la pile
+     * @return la taille de la pile
+     */
     public int getTaillePile(TypePile cle){
         return this.getPile(cle).taille();
     }
 
-    public void enleverCartesAttaqueEtParadePile(TypePile cle,PileCarte defausse){
+    /**
+     * Enlève 2 cartes d'affilé d'une pile
+     * Sera utilisée uniquement sur les piles TypePile.BATAILLE et TypePile.VITESSE
+     * @param cle la clé de la pile
+     * @param defausse le défusse
+     */
+    public void enleverCartesAttaqueEtParadePile(TypePile cle, PileCarte defausse){
         // On enleve deux fois : pour enlever la carte attaque et la carte parade
+        if(cle != TypePile.BATAILLE && cle !=TypePile.VITESSE){
+            throw new IllegalArgumentException("Erreur : le type de pile pour utiliser cette fonction doit être Bataille ou Vitesse");
+        }
         for(int i=0; i<2; i++){
             defausse.empiler(this.getPile(cle).depiler());
         }
