@@ -10,7 +10,7 @@ public class PileCarte {
 
     /**
      * Ensemble de carte représentée dans une liste, implémenté sous forme de pile
-     *  sortie <-  [ 0 - - - - - (len-1) ]  <- entrée
+     *   [ 0 - - - - - (len-1) ]  <- empiler / -> dépiler
      */
     private ArrayList<Carte> pileCarte;
 

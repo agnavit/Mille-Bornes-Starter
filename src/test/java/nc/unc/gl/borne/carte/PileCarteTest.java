@@ -32,9 +32,10 @@ public class PileCarteTest {
 
         // Enlever une carte sans erreur
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        unePile.empiler(carte1).depiler();
-        assertEquals(unePile, new PileCarte());
-        assertEquals(unePile.taille(),0);
+        Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 2);
+        unePile.empiler(carte1).empiler(carte2).depiler();
+        assertEquals(unePile, new PileCarte().empiler(carte1));
+        assertEquals(unePile.taille(),1);
     }
 
     @Test
