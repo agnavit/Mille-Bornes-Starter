@@ -1,4 +1,8 @@
-package nc.unc.gl.borne.carte;
+package nc.unc.gl.borne.plateau;
+
+import nc.unc.gl.borne.carte.Carte;
+import nc.unc.gl.borne.carte.PileCarte;
+import nc.unc.gl.borne.carte.TypePile;
 
 import java.util.HashMap;
 
@@ -28,40 +32,11 @@ public class Plateau {
         this.plateau.put(TypePile.BOTTES, new PileCarte());
     }
 
-    public HashMap<TypePile, PileCarte> getPlateau() {
-        return plateau;
-    }
-
-    public void setPlateau(HashMap<TypePile, PileCarte> plateau) {
-        this.plateau = plateau;
-    }
-
-
     public PileCarte getPile(TypePile cle){
         if (!plateau.containsKey(cle)){
             throw new IllegalArgumentException("Erreur : la clé entrée n'est pas présente dans le plateau!");
         }
         return this.plateau.get(cle);
-    }
-
-    public Plateau ajouterCartePlateau(TypePile cle, Carte carte){
-        this.getPile(cle).empiler(carte);
-        return this;
-    }
-
-    public Carte enleverCartePlateau(TypePile cle){
-        return this.getPile(cle).depiler();
-    }
-
-    public int getTaillePile(TypePile cle){
-        return this.getPile(cle).taille();
-    }
-
-    public void enleverCartesAttaqueEtParadePile(TypePile cle,PileCarte defausse){
-        // On enleve deux fois : pour enlever la carte attaque et la carte parade
-        for(int i=0; i<2; i++){
-            defausse.empiler(this.getPile(cle).depiler());
-        }
     }
 
     @Override

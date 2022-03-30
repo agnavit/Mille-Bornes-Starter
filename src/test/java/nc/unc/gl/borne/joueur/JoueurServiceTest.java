@@ -1,6 +1,7 @@
 package nc.unc.gl.borne.joueur;
 
 import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.plateau.PlateauService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class JoueurServiceTest {
 
     public JoueurService joueurService = new JoueurService();
+    public PlateauService plateauService = new PlateauService();
 
     @Test
     void jeter(){
@@ -44,7 +46,7 @@ public class JoueurServiceTest {
         IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteVitesse(carte1, defausse, j));
         Assertions.assertEquals("Erreur: la pile vitesse est vide, on ne peut pas poser une carte Vitesse-Parade!", thrown1.getMessage());
 
-        j.getPlateau().ajouterCartePlateau(TypePile.VITESSE, carte2);
+        plateauService.ajouterCartePlateau(TypePile.VITESSE, carte2, j);
 
         //Si la carte vitesse est de type attaque
         IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteVitesse(carte2, defausse, j));
@@ -53,7 +55,7 @@ public class JoueurServiceTest {
         // Si il n'y a pas d'erreur
         joueurService.poserCarteVitesse(carte1,defausse, j);
         assertEquals(defausse.taille(), 2);
-        assertEquals(j.getPlateau().getTaillePile(TypePile.VITESSE), 0);
+        assertEquals(plateauService.getTaillePile(TypePile.VITESSE, j), 0);
 
     }
 
@@ -70,15 +72,15 @@ public class JoueurServiceTest {
         mainJoueur.ajouter(carte1).ajouter(carte2).ajouter(carte3);
         j.setMain(mainJoueur);
 
-        j.getPlateau().ajouterCartePlateau(TypePile.BATAILLE, carte1);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
 
         // Si la carte parade est de type différent de la carte sur la pile bataille
         IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteParade(carte3, defausse, j));
         Assertions.assertEquals("Erreur: on ne peut pas poser une carte parade d'un nom différent que celui" +
             " la première carte sur la pile bataille!", thrown1.getMessage());
 
-        j.getPlateau().enleverCartePlateau(TypePile.BATAILLE);
-        j.getPlateau().ajouterCartePlateau(TypePile.BATAILLE, carte2);
+        plateauService.enleverCartePlateau(TypePile.BATAILLE, j);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte2, j);
 
         // Si il n'y a pas d'attaque à parer (la carte sur la pile bataille n'est pas une attaque)
         IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteParade(carte2, defausse, j));
@@ -86,17 +88,17 @@ public class JoueurServiceTest {
             " sur le pile bataille n'est pas une carte attaque", thrown2.getMessage());
 
         // Si il n'y a pas d'erreur et que la carte parade n'a pas pour nom FEU
-        j.getPlateau().enleverCartePlateau(TypePile.BATAILLE);
-        j.getPlateau().ajouterCartePlateau(TypePile.BATAILLE, carte1);
+        plateauService.enleverCartePlateau(TypePile.BATAILLE, j);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
         joueurService.poserCarteParade(carte2, defausse, j);
         assertEquals(defausse.taille(), 2);
-        assertEquals(j.getPlateau().getTaillePile(TypePile.BATAILLE), 0);
+        assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 0);
 
         // Si il n'y a pas d'erreur et que la carte parade a pour nom FEU
-        j.getPlateau().ajouterCartePlateau(TypePile.BATAILLE, carte4);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte4, j);
         joueurService.poserCarteParade(carte5, defausse, j);
         assertEquals(defausse.taille(), 3);
-        assertEquals(j.getPlateau().getTaillePile(TypePile.BATAILLE), 1);
+        assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 1);
     }
 
     @Test
@@ -161,12 +163,12 @@ public class JoueurServiceTest {
         IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poser(carte2, defausse, j));
         Assertions.assertEquals("Erreur: on ne peut pas utiliser une carte attaque sur son plateau!", thrown.getMessage());
 
-        j.getPlateau().ajouterCartePlateau(TypePile.VITESSE, carte2);
+        plateauService.ajouterCartePlateau(TypePile.VITESSE, carte2, j);
         joueurService.poser(carte1,defausse, j);
         assertEquals(j.getMain().taille(), 0);
         assertEquals(defausse.taille(),2);
 
-        j.getPlateau().ajouterCartePlateau(TypePile.BATAILLE, carte3);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte3, j);
         j.setMain(mainJoueur.ajouter(carte4));
         joueurService.poser(carte4, defausse, j);
         assertEquals(j.getMain().taille(), 0);

@@ -1,10 +1,13 @@
 package nc.unc.gl.borne.joueur;
 
+import lombok.Data;
 import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.plateau.Plateau;
 
 /**
  * Description d'un joueur
  */
+@Data
 public class Joueur {
 
     /**
@@ -49,42 +52,6 @@ public class Joueur {
         this.age = age;
         this.plateau = new Plateau();
         this.score = 0;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getPseudo() {
-        return pseudo;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public Plateau getPlateau() {
-        return plateau;
-    }
-
-    public void setPlateau(Plateau plateau) {
-        this.plateau = plateau;
-    }
-
-    public Deck getMain() {
-        return main;
-    }
-
-    public void setMain(Deck main) {
-        this.main = main;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
 }
