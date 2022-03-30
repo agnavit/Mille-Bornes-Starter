@@ -19,10 +19,10 @@ public class PlateauService {
         return joueur.getPlateau().getPile(cle).taille();
     }
 
-    public void enleverCartesAttaqueEtParadePile(TypePile cle, PileCarte defausse, Plateau plateau){
+    public void enleverCartesAttaqueEtParadePile(TypePile cle, PileCarte defausse, Joueur joueur){
         // On enleve deux fois : pour enlever la carte attaque et la carte parade
         for(int i=0; i<2; i++){
-            defausse.empiler(plateau.getPile(cle).depiler());
+            defausse.empiler(joueur.getPlateau().getPile(cle).depiler());
         }
     }
 }

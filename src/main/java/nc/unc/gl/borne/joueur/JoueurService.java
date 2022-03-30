@@ -1,8 +1,11 @@
 package nc.unc.gl.borne.joueur;
 
 import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.plateau.PlateauService;
 
 public class JoueurService {
+
+    public PlateauService plateauService = new PlateauService();
 
     /**
      * Jeter une carte de la main dans la défausse
@@ -27,14 +30,14 @@ public class JoueurService {
                 " plateau!");
         }
         // Si la pile Vitesse est vide -> Erreur
-        if(joueur.getPlateau().getTaillePile(TypePile.VITESSE) == 0){
+        if(plateauService.getTaillePile(TypePile.VITESSE, joueur) == 0){
             throw new IllegalArgumentException("Erreur: la pile vitesse est vide, on ne peut pas poser une carte " +
                 "Vitesse-Parade!");
         }
 
         if(carteVitesse.getType() == TypeCarte.PARADE){
-            joueur.setPlateau(joueur.getPlateau().ajouterCartePlateau(TypePile.VITESSE, carteVitesse));
-            joueur.getPlateau().enleverCartesAttaqueEtParadePile(TypePile.VITESSE, defausse);
+            joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.VITESSE, carteVitesse, joueur));
+            plateauService.enleverCartesAttaqueEtParadePile(TypePile.VITESSE, defausse, joueur);
         }
         else{
             throw new IllegalArgumentException("Erreur: la carte vitesse n'as pas un type de carte correct!");
@@ -68,18 +71,18 @@ public class JoueurService {
         et on jette l'attaque : le feu rouge
          */
         if(carteParade.getNom() == NomCarte.FEU){
-            defausse.empiler(joueur.getPlateau().enleverCartePlateau(TypePile.BATAILLE));
-            joueur.setPlateau(joueur.getPlateau().ajouterCartePlateau(TypePile.BATAILLE, carteParade));
+            defausse.empiler(plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur));
+            joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteParade, joueur));
         }
         // Sinon on jette les deux cartes
         else{
-            joueur.setPlateau(joueur.getPlateau().ajouterCartePlateau(TypePile.BATAILLE, carteParade));
-            joueur.getPlateau().enleverCartesAttaqueEtParadePile(TypePile.BATAILLE, defausse);
+            joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteParade, joueur));
+            plateauService.enleverCartesAttaqueEtParadePile(TypePile.BATAILLE, defausse, joueur);
         }
     }
 
     public void poserCarteBorne(Carte carteBorne, Joueur joueur){
-        joueur.setPlateau(joueur.getPlateau().ajouterCartePlateau(TypePile.BORNES, carteBorne));
+        joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
         switch (carteBorne.getNom()) {
             case VINGT_CINQ -> joueur.setScore(joueur.getScore() + 25);
             case CINQUANTE -> joueur.setScore(joueur.getScore() + 50);
@@ -93,7 +96,7 @@ public class JoueurService {
     }
 
     public void poserCarteBotte(Carte carteBotte, Joueur joueur) {
-        joueur.setPlateau(joueur.getPlateau().ajouterCartePlateau(TypePile.BOTTES, carteBotte));
+        joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BOTTES, carteBotte, joueur));
         //TODO : on rejoue
     }
 
