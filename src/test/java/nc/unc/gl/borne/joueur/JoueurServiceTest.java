@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
-public class JoueurTest {
+public class JoueurServiceTest {
 
-    public JoueurService joueurService;
+    public JoueurService joueurService = new JoueurService();
 
     @Test
     void jeter(){
