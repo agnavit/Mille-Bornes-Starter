@@ -1,4 +1,4 @@
-package nc.unc.gl.borne;
+package nc.unc.gl.borne.views;
 
 import java.util.concurrent.atomic.AtomicReference;
 import com.vaadin.flow.component.Tag;
