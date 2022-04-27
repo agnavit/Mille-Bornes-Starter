@@ -22,9 +22,9 @@ public enum EnumCard {
     PARADE_FEU(NomCarte.FEU, 14,TypeCarte.PARADE, "parade_feu.jpeg"),
     PARADE_VITESSE(NomCarte.VITESSE, 6,TypeCarte.PARADE, "parade_vitesse.jpeg");
 
-    NomCarte nameCard;
+    public NomCarte nameCard;
     int numberCard;
-    TypeCarte typeCarte;
+    public TypeCarte typeCarte;
     String imageCard;
 
     EnumCard(NomCarte nameCard, int numberCard, TypeCarte typeCarte, String imageCard){

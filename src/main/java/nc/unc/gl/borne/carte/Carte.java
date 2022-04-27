@@ -1,12 +1,14 @@
 package nc.unc.gl.borne.carte;
 
+import lombok.Data;
+
 import java.util.Objects;
 
 /**
  * Description d'une carte du jeu du 1000 bornes
  *
  */
-
+@Data
 public class Carte {
     /**
      * Nom
@@ -42,18 +44,6 @@ public class Carte {
             ", type=" + type +
             ", numero=" + numero +
             '}';
-    }
-
-    public NomCarte getNom() {
-        return nom;
-    }
-
-    public TypeCarte getType() {
-        return type;
-    }
-
-    public int getNumero() {
-        return numero;
     }
 
     @Override
