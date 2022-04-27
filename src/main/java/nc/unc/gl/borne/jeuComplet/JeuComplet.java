@@ -14,14 +14,13 @@ public class JeuComplet {
     private ArrayList<Carte> jeuComplet;
 
     public JeuComplet() {
-        ArrayList<Carte> jeu = new ArrayList<>();
-
+        this.jeuComplet = new ArrayList<Carte>();
         AtomicInteger i = new AtomicInteger();
 
         Arrays.asList(EnumCard.values())
             .forEach(carte -> {
-                for(int j =0;j<=109;j++) {
-                    jeu.add(new Carte(carte.nameCard, carte.typeCarte, i.incrementAndGet()));
+                for(int j = 1; j <= carte.numberCard; j++) {
+                    this.jeuComplet.add(new Carte(carte.nameCard, carte.typeCarte, i.incrementAndGet()));
                 }});
     }
 }
