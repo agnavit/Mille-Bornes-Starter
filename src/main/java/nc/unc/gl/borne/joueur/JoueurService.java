@@ -65,8 +65,12 @@ public class JoueurService {
 
         // Si il n'y a pas d'attaque à parer (la carte sur la pile bataille n'est pas une attaque)
         if(derniereCarte.getType() != TypeCarte.ATTAQUE){
-            throw new IllegalArgumentException("Erreur: on ne peut pas poser une carte parade si la première carte" +
-                " sur le pile bataille n'est pas une carte attaque");
+            if (derniereCarte.getNom() == NomCarte.FEU) {
+
+            } else {
+                throw new IllegalArgumentException("Erreur: on ne peut pas poser une carte parade si la première carte" +
+                    " sur le pile bataille n'est pas une carte attaque");
+            }
         }
 
         /* Si la carte a pour nom feu : on garde sur la pile bataille uniquement la parade : le feu vert
@@ -94,6 +98,10 @@ public class JoueurService {
             default -> throw new IllegalArgumentException("Erreur: la carte borne n'as pas un nom de carte correct " +
                 "(valeur en km)!");
         }
+
+    }
+
+    public void poserCarteFeu(Carte carteFeu, Joueur joueur) {
 
     }
 
@@ -134,7 +142,21 @@ public class JoueurService {
         joueur.setMain(deckService.enlever(carteChoisie, joueur));
     }
 
-    public void attaquer(Carte carteAttaque, Joueur joueurAttaque) {
-        //TODO
+    public boolean attaquer(Carte carteAttaque, Joueur joueurAttaque) {
+        if (carteAttaque.getNom() == NomCarte.VITESSE
+            && !(plateauService.contains(carteAttaque, joueurAttaque))) {
+            //posser carte attaque
+            joueurAttaque.getPlateau().getPile(TypePile.VITESSE).empiler(carteAttaque);
+            return true;
+        } else if (!(plateauService.hasFeuVert(joueurAttaque) || plateauService.hasBotteVehiculePrio(joueurAttaque))) {
+            return false;
+        } else {
+            if (joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().contains(carteAttaque)) {
+                return false;
+            } else {
+                joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).empiler(carteAttaque);
+                return true;
+            }
+        }
     }
 }

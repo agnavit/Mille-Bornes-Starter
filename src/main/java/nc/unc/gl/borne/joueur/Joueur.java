@@ -2,6 +2,10 @@ package nc.unc.gl.borne.joueur;
 
 import lombok.Data;
 import nc.unc.gl.borne.Deck.Deck;
+import nc.unc.gl.borne.carte.Carte;
+import nc.unc.gl.borne.carte.NomCarte;
+import nc.unc.gl.borne.carte.TypeCarte;
+import nc.unc.gl.borne.carte.TypePile;
 import nc.unc.gl.borne.plateau.Plateau;
 
 /**
@@ -53,6 +57,7 @@ public class Joueur {
         this.plateau = new Plateau();
         this.score = 0;
         this.main = new Deck();
+        this.plateau.getPile(TypePile.BATAILLE).empiler(new Carte(NomCarte.FEU, TypeCarte.PARADE, 1));
     }
 
 }

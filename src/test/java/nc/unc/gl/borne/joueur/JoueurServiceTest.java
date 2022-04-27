@@ -95,13 +95,13 @@ public class JoueurServiceTest {
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
         joueurService.poserCarteParade(carte2, defausse, j);
         assertEquals(defausse.getPileCarte().size(), 2);
-        assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 0);
+        assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 1);
 
         // Si il n'y a pas d'erreur et que la carte parade a pour nom FEU
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte4, j);
         joueurService.poserCarteParade(carte5, defausse, j);
         assertEquals(defausse.getPileCarte().size(), 3);
-        assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 1);
+        assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 2);
     }
 
     @Test
@@ -190,8 +190,27 @@ public class JoueurServiceTest {
         assertEquals(defausse.getPileCarte().size(),4);
 
         assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(),0);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),0);
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),1);
         assertEquals(j.getPlateau().getPile(TypePile.BORNES).getPileCarte().size(),1);
         assertEquals(j.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(),1);
+    }
+
+    @Test
+    void attaquer() {
+        Joueur j = new Joueur(1, "mayaSixtine", 24);
+
+        Carte carteAttaque = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
+        Carte carteAttaque2 = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 3);
+
+        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 0);
+        joueurService.attaquer(carteAttaque, j);
+        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 1);
+        //on verrifie qu'il y a déjà une carte dans la pile bataille : feu vert
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 1);
+        joueurService.attaquer(carteAttaque2, j);
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 2);
+        joueurService.attaquer(carteAttaque2, j);
+        //on ne peut pas poser 2 attaque pareil sur le même plateau
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 2);
     }
 }

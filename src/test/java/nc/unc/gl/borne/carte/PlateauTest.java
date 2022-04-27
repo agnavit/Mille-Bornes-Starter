@@ -26,7 +26,7 @@ public class PlateauTest {
         Plateau plateau = new Plateau();
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),1);
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),2);
         assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getSommet(), carte1);
     }
 
@@ -39,10 +39,10 @@ public class PlateauTest {
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
         plateauService.ajouterCartePlateau(TypePile.BATAILLE,carte2, j);
         plateauService.enleverCartePlateau(TypePile.BATAILLE, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),1);
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),2);
         assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getSommet(), carte1);
         plateauService.enleverCartePlateau(TypePile.BATAILLE, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),0);
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),1);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class PlateauTest {
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
         plateauService.ajouterCartePlateau(TypePile.BATAILLE,carte2, j);
         plateauService.enleverCartesAttaqueEtParadePile(TypePile.BATAILLE, defausse, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 0);
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 1);
         assertEquals(defausse.getPileCarte().size(),2);
 
         IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> plateauService.enleverCartesAttaqueEtParadePile(TypePile.BOTTES,defausse, j));
