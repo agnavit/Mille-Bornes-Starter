@@ -23,9 +23,9 @@ public enum EnumCard {
     PARADE_VITESSE(NomCarte.VITESSE, 6,TypeCarte.PARADE, "parade_vitesse.jpeg");
 
     public NomCarte nameCard;
-    int numberCard;
+    public int numberCard;
     public TypeCarte typeCarte;
-    String imageCard;
+    public String imageCard;
 
     EnumCard(NomCarte nameCard, int numberCard, TypeCarte typeCarte, String imageCard){
         this.nameCard = nameCard;
