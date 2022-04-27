@@ -37,6 +37,10 @@ public class Carte {
         this.numero = numero;
     }
 
+    public TypeCarte getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return "Carte{" +
