@@ -1,4 +1,4 @@
-package nc.unc.gl.borne;
+package nc.unc.gl.borne.views;
 
 import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.Tag;

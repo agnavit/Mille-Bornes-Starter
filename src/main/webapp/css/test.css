@@ -1,0 +1,50 @@
+
+.container {
+    margin:0px;
+    padding: 1%;
+    height:100%;
+    width: 100%;
+    background-color: gray;
+    text-align: center;
+}
+
+.deck-cards {
+    width: 10%;
+}
+
+.speed {
+    background-color: blue;
+}
+
+.deck {
+    background-color: yellow;
+}
+
+.battle {
+    background-color: green;
+}
+
+.miles {
+    background-color: black;
+}
+
+.content-speed {
+    width: 15%;
+    float: left;
+}
+
+content-battle, content-miles {
+    width: 15%;
+    float: right;
+}
+
+.content-deck {
+    width: 50%;
+    float: left;
+}
+
+.content-title{
+    border-radius: 4vmin;
+    background-color: red;
+    color: white;
+}
