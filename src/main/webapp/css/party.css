@@ -1,0 +1,38 @@
+@import 'https://fonts.googleapis.com/css?family=Rubik+One';
+
+.image-title {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 13%;
+}
+
+.parrty-buttons {
+    background-color: #E1BC29;
+    padding: 10px 10px;
+    border-radius: 10%;
+    box-shadow: -3px 3px 3px #C4A31C;
+    text-decoration: none;
+    color: #fff;
+}
+
+.party-buttons, .chose-username {
+    background-color: #FFDEAD;
+    border: solid #DEB887;
+    margin-left: 38%;
+    margin-right: 38%;
+    border-radius: 4vmin;
+    text-align: center;
+    text-transform: uppercase;
+    -webkit-text-stroke: 1px #DEB887;
+    font-family: cursive;
+    color: #DEB887;
+    padding: 1px;
+    font-weight: 100;
+    position: relative;
+}
+
+.buttons-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

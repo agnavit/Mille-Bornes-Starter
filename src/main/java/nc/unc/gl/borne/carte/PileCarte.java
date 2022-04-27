@@ -33,6 +33,14 @@ public class PileCarte {
     }
 
     /**
+     * Récupère la valeur de l'attribut pileCarte
+     * @return pileCarte
+     */
+    public ArrayList<Carte> getPileCarte() {
+        return pileCarte;
+    }
+
+    /**
      * Recupère la carte d'une pile
      * @param carteARecupere la carte à récupérer
      * @return la carte entrée en paramètre

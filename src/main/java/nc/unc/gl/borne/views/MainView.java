@@ -36,7 +36,7 @@ public class MainView extends HtmlContainer {
         rules.addClassName("main-view-subtitle");
 
         // Création des événements des sous-titres
-        play.addClickListener(click -> UI.getCurrent().navigate("play"));
+        play.addClickListener(click -> UI.getCurrent().navigate("party"));
         rules.addClickListener(click -> Notification.show("Les règles ne sont pas encore disponible"));
 
         // Les éléments sont ajoutés au conteneur
