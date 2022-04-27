@@ -1,15 +1,17 @@
 package nc.unc.gl.borne.views;
 
-import com.vaadin.flow.component.HtmlContainer;
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.Party;
@@ -28,32 +30,37 @@ public class PartyView extends HtmlContainer {
         // On stocke l'UI pour pouvoir faire des UI.access()
         //this.ui = UI.getCurrent();
 
-        // Création de la div qui va servir de conteneur pour les autres balises
-        Div container = new Div();
-        container.getStyle()
-            .set("height", "100%")
-            .set("background-image", "url(background.jpg)")
-            .set("background-size", "cover")
-            .set("background-repeat", "no-repeat");
+        VerticalLayout container = new VerticalLayout();
+        container.setSpacing(true);
+        container.setAlignItems(FlexComponent.Alignment.CENTER);
 
-        // Création du titre de la page
-        Div title = new Div();
-        Image titleImage = new Image("cartes/header.png", "header");
-        titleImage.addClassName("image-title");
-        title.add(titleImage);
-        container.add(title);
+        Image image = new Image("cartes/back.png", "header");
+
+        container.add(image);
 
         createPlayer(container);
         add(container);
     }
 
-    private void createPlayer(Div container){
-        HorizontalLayout layout = new HorizontalLayout();
-        TextField userNameField = new TextField();
-        Button confirmationButton = new Button("Confirmation");
-        layout.add(userNameField, confirmationButton);
+    private void createPlayer(VerticalLayout container){
 
-        confirmationButton.addClickListener(click -> {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSpacing(true);
+        layout.setAlignItems(FlexComponent.Alignment.CENTER);
+
+        TextField userNameField = new TextField();
+        userNameField.setPrefixComponent(VaadinIcon.USER.create());
+        userNameField.setValue("Choisir un pseudo");
+        userNameField.setMaxLength(17);
+
+        Button pendingConfirmation = new Button("Confirmation", createIcon(VaadinIcon.CLOCK));
+        pendingConfirmation.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_CONTRAST);
+        pendingConfirmation.setIconAfterText(true);
+        layout.add(userNameField, pendingConfirmation);
+
+
+
+        pendingConfirmation.addClickListener(click -> {
 
             // Récupération du pseudo
             String username = userNameField.getValue();
@@ -63,15 +70,25 @@ public class PartyView extends HtmlContainer {
             System.out.println(username + " viens de choisir sont pseudo " + this.hashCode());
 
             //container.remove(layout);
-            confirmationButton.addClassName("buttons-disabled");
+            userNameField.setEnabled(false);
+            layout.remove(pendingConfirmation);
+
+            Button confirmed = new Button("Confirmé", createIcon(VaadinIcon.CHECK));
+            confirmed.setEnabled(false);
+            confirmed.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_SUCCESS);
+            confirmed.setIconAfterText(true);
+
+            layout.add(confirmed);
+
             showButtons(username, container);
         });
         layout.addClassName("chose-username");
         container.add(layout);
     }
 
-    private void showButtons(String username, Div container){
-        Notification.show("Bonjour " + username);
+    private void showButtons(String username, VerticalLayout container){
+
+        Notification.show("Bonjour " + username,2000,Notification.Position.TOP_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY);
 
         Button createGame = new Button("Créer une partie", click -> {
             party.createParty();
@@ -86,9 +103,22 @@ public class PartyView extends HtmlContainer {
         });
         joinGame.addClassName("party-buttons");
 
-        Div containerButtons = new Div();
+        HorizontalLayout containerButtons = new HorizontalLayout();
+        containerButtons.setSpacing(true);
+
         containerButtons.add(createGame, joinGame);
         container.add(containerButtons);
+    }
+
+    /**
+     * Crée et ajout le style de l'icon pour les boutons
+     * @param vaadinIcon Un icon de Vaadin
+     * @return l'icon avec le style
+     */
+    private Icon createIcon(VaadinIcon vaadinIcon) {
+        Icon icon = vaadinIcon.create();
+        icon.getStyle().set("padding", "var(--lumo-space-xs");
+        return icon;
     }
 
     /**

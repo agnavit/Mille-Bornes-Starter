@@ -44,7 +44,8 @@ content-battle, content-miles {
 }
 
 .content-title{
-    border-radius: 4vmin;
+    padding: 10px;
+    border-radius: 15% 15% 0% 0%;
     background-color: red;
     color: white;
 }
