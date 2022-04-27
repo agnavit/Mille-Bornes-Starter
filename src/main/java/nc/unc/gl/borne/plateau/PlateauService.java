@@ -22,6 +22,9 @@ public class PlateauService {
 
     public void enleverCartesAttaqueEtParadePile(TypePile cle, PileCarte defausse, Joueur joueur){
         // On enleve deux fois : pour enlever la carte attaque et la carte parade
+        if(cle != TypePile.BATAILLE && cle !=TypePile.VITESSE){
+            throw new IllegalArgumentException("Erreur : le type de pile pour utiliser cette fonction doit être Bataille ou Vitesse");
+        }
         for(int i=0; i<2; i++){
             defausse.empiler(joueur.getPlateau().getPile(cle).depiler());
         }
