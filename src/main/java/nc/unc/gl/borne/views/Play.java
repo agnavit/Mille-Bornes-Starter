@@ -11,8 +11,8 @@ import com.vaadin.flow.router.Route;
 
 import java.awt.*;
 
-@Route("play")
-@Tag("play")
+@Route("playv2")
+@Tag("playv2")
 @StyleSheet("css/play.css")
 public class Play extends HtmlContainer {
     public Play(){
