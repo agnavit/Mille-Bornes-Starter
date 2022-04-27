@@ -6,6 +6,7 @@ import nc.unc.gl.borne.carte.TypePile;
 import nc.unc.gl.borne.joueur.Joueur;
 
 public class PlateauService {
+
     public Plateau ajouterCartePlateau(TypePile cle, Carte carte, Joueur joueur){
         joueur.getPlateau().getPile(cle).empiler(carte);
         return joueur.getPlateau();
@@ -16,7 +17,7 @@ public class PlateauService {
     }
 
     public int getTaillePile(TypePile cle, Joueur joueur){
-        return joueur.getPlateau().getPile(cle).taille();
+        return joueur.getPlateau().getPile(cle).getPileCarte().size();
     }
 
     public void enleverCartesAttaqueEtParadePile(TypePile cle, PileCarte defausse, Joueur joueur){

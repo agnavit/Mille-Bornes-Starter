@@ -1,5 +1,7 @@
 package nc.unc.gl.borne.joueur;
 
+import nc.unc.gl.borne.Deck.Deck;
+import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.*;
 import nc.unc.gl.borne.plateau.PlateauService;
 import org.junit.jupiter.api.Assertions;
@@ -7,11 +9,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-
 public class JoueurServiceTest {
 
     public JoueurService joueurService = new JoueurService();
     public PlateauService plateauService = new PlateauService();
+    public DeckService deckService = new DeckService();
 
     @Test
     void jeter(){
@@ -22,12 +24,11 @@ public class JoueurServiceTest {
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
         Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
-        mainJoueur.ajouter(carte1);
+        deckService.ajouter(carte1, j);
         j.setMain(mainJoueur);
         joueurService.jeter(carte1, defausse, j);
         assertEquals(defausse.getSommet(), carte1);
-        assertEquals(j.getMain().taille(), 0);
-        assertFalse(j.getMain().contains(carte1));
+        assertFalse(deckService.contains(carte1, j));
 
     }
 
@@ -39,7 +40,8 @@ public class JoueurServiceTest {
         Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
         Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
-        mainJoueur.ajouter(carte1).ajouter(carte2);
+        deckService.ajouter(carte1, j);
+        deckService.ajouter(carte2, j);
         j.setMain(mainJoueur);
 
         // Si la pile Vitesse est vide -> Erreur
@@ -54,7 +56,7 @@ public class JoueurServiceTest {
 
         // Si il n'y a pas d'erreur
         joueurService.poserCarteVitesse(carte1,defausse, j);
-        assertEquals(defausse.taille(), 2);
+        assertEquals(defausse.getPileCarte().size(), 2);
         assertEquals(plateauService.getTaillePile(TypePile.VITESSE, j), 0);
 
     }
@@ -68,9 +70,10 @@ public class JoueurServiceTest {
         Carte carte4 = new Carte(NomCarte.FEU, TypeCarte.ATTAQUE, 4);
         Carte carte5 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 5);
         Deck mainJoueur = new Deck();
-        PileCarte defausse = new PileCarte();
-        mainJoueur.ajouter(carte1).ajouter(carte2).ajouter(carte3);
-        j.setMain(mainJoueur);
+        PileCarte defausse = new PileCarte();;
+        deckService.ajouter(carte1, j);
+        deckService.ajouter(carte2, j);
+        deckService.ajouter(carte3, j);
 
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
 
@@ -91,13 +94,13 @@ public class JoueurServiceTest {
         plateauService.enleverCartePlateau(TypePile.BATAILLE, j);
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
         joueurService.poserCarteParade(carte2, defausse, j);
-        assertEquals(defausse.taille(), 2);
+        assertEquals(defausse.getPileCarte().size(), 2);
         assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 0);
 
         // Si il n'y a pas d'erreur et que la carte parade a pour nom FEU
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte4, j);
         joueurService.poserCarteParade(carte5, defausse, j);
-        assertEquals(defausse.taille(), 3);
+        assertEquals(defausse.getPileCarte().size(), 3);
         assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 1);
     }
 
@@ -112,7 +115,11 @@ public class JoueurServiceTest {
 
         Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
-        mainJoueur.ajouter(carte1).ajouter(carte2).ajouter(carte3).ajouter(carte4).ajouter(carte5);
+        deckService.ajouter(carte1, j);
+        deckService.ajouter(carte2, j);
+        deckService.ajouter(carte3, j);
+        deckService.ajouter(carte4, j);
+        deckService.ajouter(carte5, j);
         j.setMain(mainJoueur);
 
         joueurService.poserCarteBorne(carte1, j);
@@ -125,7 +132,7 @@ public class JoueurServiceTest {
         assertEquals(j.getScore(),250);
         joueurService.poserCarteBorne(carte5, j);
         assertEquals(j.getScore(),450);
-        assertEquals(j.getPlateau().getPile(TypePile.BORNES).taille(),5);
+        assertEquals(j.getPlateau().getPile(TypePile.BORNES).getPileCarte().size(),5);
     }
 
     @Test
@@ -135,12 +142,13 @@ public class JoueurServiceTest {
         Carte carte2 = new Carte(NomCarte.VEHICULE_PRIORITAIRE, TypeCarte.BORNE, 2);
         Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
-        mainJoueur.ajouter(carte1).ajouter(carte2);
+        deckService.ajouter(carte1, j);
+        deckService.ajouter(carte2, j);
         j.setMain(mainJoueur);
 
         joueurService.poserCarteBotte(carte1, j);
         joueurService.poserCarteBotte(carte2, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BOTTES).taille(), 2);
+        assertEquals(j.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(), 2);
     }
 
     @Test
@@ -155,7 +163,7 @@ public class JoueurServiceTest {
 
         Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
-        mainJoueur.ajouter(carte1);
+        deckService.ajouter(carte1, j);
 //        .ajouter(carte2).ajouter(carte3).ajouter(carte4).ajouter(carte5).ajouter(carte6)
         j.setMain(mainJoueur);
 
@@ -165,24 +173,25 @@ public class JoueurServiceTest {
 
         plateauService.ajouterCartePlateau(TypePile.VITESSE, carte2, j);
         joueurService.poser(carte1,defausse, j);
-        assertEquals(j.getMain().taille(), 0);
-        assertEquals(defausse.taille(),2);
+        assertEquals(j.getMain().getMainJoueur().size(), 0);
+        assertEquals(defausse.getPileCarte().size(),2);
 
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte3, j);
-        j.setMain(mainJoueur.ajouter(carte4));
+        j.setMain(deckService.ajouter(carte4, j));
         joueurService.poser(carte4, defausse, j);
-        assertEquals(j.getMain().taille(), 0);
-        assertEquals(defausse.taille(),4);
+        assertEquals(j.getMain().getMainJoueur().size(), 0);
+        assertEquals(defausse.getPileCarte().size(),4);
 
-        j.setMain(mainJoueur.ajouter(carte5).ajouter(carte6));
+        deckService.ajouter(carte5, j);
+        deckService.ajouter(carte6, j);
         joueurService.poser(carte5, defausse, j);
         joueurService.poser(carte6, defausse, j);
-        assertEquals(j.getMain().taille(), 0);
-        assertEquals(defausse.taille(),4);
+        assertEquals(j.getMain().getMainJoueur().size(), 0);
+        assertEquals(defausse.getPileCarte().size(),4);
 
-        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).taille(),0);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).taille(),0);
-        assertEquals(j.getPlateau().getPile(TypePile.BORNES).taille(),1);
-        assertEquals(j.getPlateau().getPile(TypePile.BOTTES).taille(),1);
+        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(),0);
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),0);
+        assertEquals(j.getPlateau().getPile(TypePile.BORNES).getPileCarte().size(),1);
+        assertEquals(j.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(),1);
     }
 }

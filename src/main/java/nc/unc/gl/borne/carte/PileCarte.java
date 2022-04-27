@@ -1,11 +1,14 @@
 package nc.unc.gl.borne.carte;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  * Description d'une pile de carte
  */
+@Data
 public class PileCarte {
 
     /**
@@ -27,31 +30,6 @@ public class PileCarte {
      */
     public PileCarte(ArrayList<Carte> pileCarte) {
         this.pileCarte = pileCarte;
-    }
-
-    /**
-     * Récupère la valeur de l'attribut pileCarte
-     * @return pileCarte
-     */
-    public ArrayList<Carte> getPileCarte() {
-        return pileCarte;
-    }
-
-
-    /**
-     * Modifie la valeur de l'attribut pileCarte
-     * @param pileCarte la nouvelle valeur
-     */
-    public void setPileCarte(ArrayList<Carte> pileCarte) {
-        this.pileCarte = pileCarte;
-    }
-
-    /**
-     * Renvoie la taille de la pile de carte
-     * @return la taille
-     */
-    public int taille(){
-        return this.pileCarte.size();
     }
 
     /**
@@ -82,7 +60,7 @@ public class PileCarte {
      * @return la dernière carte de la liste PileCarte
      */
     public Carte getSommet(){
-        return this.getCarte(this.taille() -1);
+        return this.getCarte(this.getPileCarte().size()-1);
     }
 
     /**
@@ -102,7 +80,7 @@ public class PileCarte {
             throw new IllegalArgumentException("Erreur : on ne peut pas enlever une carte, la pile est déjà vide!");
         }
         Carte carteDepile = this.getSommet();
-        this.pileCarte.remove(this.taille() -1);
+        this.pileCarte.remove(this.getPileCarte().size()-1);
         return carteDepile;
     }
 

@@ -1,7 +1,7 @@
 package nc.unc.gl.borne.joueur;
 
 import lombok.Data;
-import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.Deck.Deck;
 import nc.unc.gl.borne.plateau.Plateau;
 
 /**
@@ -52,6 +52,7 @@ public class Joueur {
         this.age = age;
         this.plateau = new Plateau();
         this.score = 0;
+        this.main = new Deck();
     }
 
 }

@@ -1,11 +1,13 @@
 package nc.unc.gl.borne.joueur;
 
+import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.*;
 import nc.unc.gl.borne.plateau.PlateauService;
 
 public class JoueurService {
 
     public PlateauService plateauService = new PlateauService();
+    public DeckService deckService = new DeckService();
 
     /**
      * Jeter une carte de la main dans la défausse
@@ -13,7 +15,7 @@ public class JoueurService {
      * @param defausse la défausse de la partie
      */
     public void jeter(Carte carteChoisie, PileCarte defausse, Joueur joueur){
-        joueur.getMain().enlever(carteChoisie);
+        deckService.enlever(carteChoisie, joueur);
         defausse.empiler(carteChoisie);
     }
 
@@ -129,10 +131,10 @@ public class JoueurService {
         else if(carteChoisie.getType() == TypeCarte.BOTTE){
             poserCarteBotte(carteChoisie, joueur);
         }
-        joueur.setMain(joueur.getMain().enlever(carteChoisie));
+        joueur.setMain(deckService.enlever(carteChoisie, joueur));
     }
 
-    public void attaquer(Carte carteAttaque, Joueur jouerAttaque) {
+    public void attaquer(Carte carteAttaque, Joueur joueurAttaque) {
         //TODO
     }
 }
