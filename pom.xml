@@ -17,8 +17,8 @@
 
     <properties>
         <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
-        <java.version>17</java.version>
-        <node.version>v16.13.2</node.version>
+        <java.version>16</java.version>
+        <node.version>v16.0.2</node.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vaadin.version>22.0.4</vaadin.version>
     </properties>
@@ -27,6 +27,11 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
         </dependency>
 
         <dependency>
