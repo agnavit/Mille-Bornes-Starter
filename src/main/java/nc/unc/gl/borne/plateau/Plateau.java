@@ -32,6 +32,10 @@ public class Plateau {
         this.plateau.put(TypePile.BOTTES, new PileCarte());
     }
 
+    public HashMap<TypePile, PileCarte> getPlateau() {
+        return this.plateau;
+    }
+
     public PileCarte getPile(TypePile cle){
         if (!plateau.containsKey(cle)){
             throw new IllegalArgumentException("Erreur : la clé entrée n'est pas présente dans le plateau!");
