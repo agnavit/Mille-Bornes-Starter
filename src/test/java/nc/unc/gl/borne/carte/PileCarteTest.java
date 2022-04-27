@@ -16,7 +16,7 @@ public class PileCarteTest {
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
         Carte carte2 = new Carte(NomCarte.CENT, TypeCarte.BORNE, 2);
         unePile.empiler(carte1).empiler(carte2);
-        assertEquals(unePile.taille(), 2);
+        assertEquals(unePile.getPileCarte().size(), 2);
 
         // On vérifie que les cartes ont été ajoutées dans le bon ordre (ajout à droite dans la liste)
         assertEquals(unePile.getCarte(0), unePile.getCarte(carte1));
@@ -32,10 +32,9 @@ public class PileCarteTest {
 
         // Enlever une carte sans erreur
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 2);
-        unePile.empiler(carte1).empiler(carte2).depiler();
-        assertEquals(unePile, new PileCarte().empiler(carte1));
-        assertEquals(unePile.taille(),1);
+        unePile.empiler(carte1).depiler();
+        assertEquals(unePile, new PileCarte());
+        assertEquals(unePile.getPileCarte().size(),0);
     }
 
     @Test
