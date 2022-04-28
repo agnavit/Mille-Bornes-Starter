@@ -14,12 +14,12 @@ public class Partie {
 
     private ArrayList<Joueur> listejoueur = new ArrayList<Joueur>();
     private int nbJoueurMax;
-    private PileCarte pioche;
-    private PileCarte defausse;
+    private PileCarte pioche = new PileCarte();
+    private PileCarte defausse = new PileCarte();
     private int id;
     private JeuComplet jeuComplet = new JeuComplet();
 
-    public Partie(ArrayList<Joueur> listejoueur,int nbJoueurMax, PileCarte pioche, PileCarte defausse, int id){
+    public Partie(ArrayList<Joueur> listejoueur,int nbJoueurMax, int id){
         this.listejoueur = listejoueur;
         this.nbJoueurMax = nbJoueurMax;
         this.pioche = pioche.melangerPioche(jeuComplet);

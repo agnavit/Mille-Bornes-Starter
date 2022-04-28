@@ -1,9 +1,14 @@
 package nc.unc.gl.borne.carte;
 
+import nc.unc.gl.borne.jeuComplet.JeuComplet;
+import nc.unc.gl.borne.joueur.Joueur;
+import nc.unc.gl.borne.partie.Partie;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Description des test de la classe PileCarte
@@ -50,5 +55,14 @@ public class PileCarteTest {
         // Demander une carte pas présente dans la pile
         IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> unePile.getCarte(carte2));
         Assertions.assertEquals("Erreur : la carte demandée n'est pas présente dans la pile!", thrown.getMessage());
+    }
+
+    @Test
+    void melangerPioche() {
+        JeuComplet jeuComplet = new JeuComplet();
+        ArrayList<Joueur> listeJoueur = new ArrayList<>();
+
+        Partie partie = new Partie(listeJoueur, 2, 1);
+        assertNotEquals(jeuComplet.getJeuComplet(), partie.getPioche().getPileCarte());
     }
 }
