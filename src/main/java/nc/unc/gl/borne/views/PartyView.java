@@ -12,6 +12,8 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.Party;
@@ -19,7 +21,6 @@ import nc.unc.gl.borne.joueur.Joueur;
 
 @Route(value = "party")
 @Tag("party")
-@StyleSheet("css/party.css")
 public class PartyView extends HtmlContainer {
 
     private final Party party = new Party();
@@ -50,27 +51,34 @@ public class PartyView extends HtmlContainer {
 
         TextField userNameField = new TextField();
         userNameField.setPrefixComponent(VaadinIcon.USER.create());
-        userNameField.setValue("Choisir un pseudo");
+        userNameField.setPlaceholder("Pseudo");
         userNameField.setMaxLength(17);
 
         Button pendingConfirmation = new Button("Confirmation", createIcon(VaadinIcon.CLOCK));
         pendingConfirmation.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_CONTRAST);
         pendingConfirmation.setIconAfterText(true);
-        layout.add(userNameField, pendingConfirmation);
+
+        IntegerField ageUserField = new IntegerField();
+        ageUserField.setPrefixComponent(VaadinIcon.CALENDAR.create());
+        ageUserField.setPlaceholder("Âge");
+        ageUserField.setMax(120);
+
+        layout.add(userNameField, ageUserField, pendingConfirmation);
 
 
 
         pendingConfirmation.addClickListener(click -> {
 
-            // Récupération du pseudo
+            // Récupération des données
             String username = userNameField.getValue();
-            // Création du joueur (Pas besoin d'age)
-            Joueur player = new Joueur(this.hashCode(), username, 0);
+            Integer ageUser = ageUserField.getValue();
 
-            System.out.println(username + " viens de choisir sont pseudo " + this.hashCode());
+            // Création du joueur
+            Joueur player = new Joueur(this.hashCode(), username, ageUser);
 
-            //container.remove(layout);
+            System.out.println(username + " viens de choisir sont pseudo, il a " + ageUser + " ans " + this.hashCode());
             userNameField.setEnabled(false);
+            ageUserField.setEnabled(false);
             layout.remove(pendingConfirmation);
 
             Button confirmed = new Button("Confirmé", createIcon(VaadinIcon.CHECK));
@@ -98,7 +106,6 @@ public class PartyView extends HtmlContainer {
 
         Button joinGame = new Button("Rejoindre une partie", click -> {
             party.joinParty();
-            Notification.show("Attente pour rejoindre une partie");
             UI.getCurrent().navigate("test");
         });
         joinGame.addClassName("party-buttons");
