@@ -1,8 +1,10 @@
 package nc.unc.gl.borne.carte;
 
 import lombok.Data;
+import nc.unc.gl.borne.jeuComplet.JeuComplet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 /**
@@ -90,6 +92,16 @@ public class PileCarte {
         Carte carteDepile = this.getSommet();
         this.pileCarte.remove(this.getPileCarte().size()-1);
         return carteDepile;
+    }
+
+    /**
+     * Mélange le JeuComplet pour former une pioche
+     */
+    //TODO tester melangerPioche()
+    public ArrayList<Carte> melangerPioche(JeuComplet carte){
+        ArrayList<Carte> pioche = carte.getJeuComplet();
+        Collections.shuffle(pioche);
+        return pioche;
     }
 
     @Override
