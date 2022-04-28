@@ -36,21 +36,8 @@ public class TestView extends HtmlContainer {
 
         H2 titleDeck = new H2("Deck");
         titleDeck.addClassName("content-title");
-        HorizontalLayout deck = new HorizontalLayout();
-        Image deck1 = new Image("cartes/attaque_accident.jpeg", "attaque_accident");
-        Image deck2 = new Image("cartes/attaque_crevaison.jpeg", "attaque_crevaison");
-        Image deck3 = new Image("cartes/attaque_accident.jpeg", "attaque_accident");
-        Image deck4 = new Image("cartes/borne_25.jpeg", "borne_25");
-        Image deck5 = new Image("cartes/borne_75.jpeg", "borne_75");
-        Image deck6 = new Image("cartes/parade_vitesse.jpeg", "parade_vitesse");
-        deck1.addClassName("deck-cards");
-        deck2.addClassName("deck-cards");
-        deck3.addClassName("deck-cards");
-        deck4.addClassName("deck-cards");
-        deck5.addClassName("deck-cards");
-        deck6.addClassName("deck-cards");
-        deck.add(titleDeck, deck1, deck2, deck3, deck4, deck5, deck6);
-        deck.addClassName("deck");
+
+        DeckLayout deck = new DeckLayout();
 
         H2 titleBattle = new H2("Batailles");
         titleBattle.addClassName("content-title");
@@ -62,10 +49,14 @@ public class TestView extends HtmlContainer {
         VerticalLayout miles = new VerticalLayout();
         miles.addClassName("miles");
 
+
+
         containerSpeed.add(titleSpeed, speed);
         containerDeck.add(titleDeck, deck);
         containerBattle.add(titleBattle, battle);
         containerMiles.add(titleMiles, miles);
+
+
 
         container.add(containerSpeed, containerDeck, containerBattle, containerMiles);
         add(container);
