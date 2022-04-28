@@ -98,9 +98,11 @@ public class PileCarte {
      * Mélange le JeuComplet pour former une pioche
      */
     //TODO tester melangerPioche()
-    public ArrayList<Carte> melangerPioche(JeuComplet carte){
-        ArrayList<Carte> pioche = carte.getJeuComplet();
-        Collections.shuffle(pioche);
+    public PileCarte melangerPioche(JeuComplet carte){
+        ArrayList<Carte> listePioche = carte.getJeuComplet();
+        Collections.shuffle(listePioche);
+        PileCarte pioche = new PileCarte();
+        pioche.setPileCarte(listePioche);
         return pioche;
     }
 

@@ -14,7 +14,7 @@ public class Partie {
 
     private ArrayList<Joueur> listejoueur = new ArrayList<Joueur>();
     private int nbJoueurMax;
-    private ArrayList<Carte> pioche;
+    private PileCarte pioche;
     private PileCarte defausse;
     private int id;
     private JeuComplet jeuComplet = new JeuComplet();
