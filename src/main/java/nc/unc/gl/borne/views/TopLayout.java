@@ -7,7 +7,6 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import nc.unc.gl.borne.joueur.Joueur;
 
 @Route("test3")
 @Tag("test3")

@@ -4,6 +4,6 @@ public interface Observer {
 
     void update(String message);
 
-    void updatePartie(Party partie);
+    void updateParty(Party partie);
 
 }

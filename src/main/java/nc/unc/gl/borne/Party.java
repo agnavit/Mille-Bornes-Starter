@@ -18,14 +18,24 @@ public class Party {
         this.observers.remove(obs);
     }
 
-    public void createParty() {
-        System.out.println("Un utilisateur veux jouer " + this.hashCode());
-        this.observers.forEach(obs -> obs.updatePartie(this));
+    public void createParty(Joueur player) {
+        System.out.println(player.getPseudo() + " veux créer une partie " + this.hashCode());
+        this.players.add(player);
+        this.observers.forEach(obs -> obs.updateParty(this));
     }
 
-    public void joinParty() {
-        System.out.println("Un utilisateur veux rejoindre une partie " + this.hashCode());
-        this.observers.forEach(obs -> obs.updatePartie(this));
+    public void joinParty(String hostPlayer, Joueur guestPlayer) {
+        System.out.println(
+            guestPlayer.getPseudo() + " rejoint la partie de " + hostPlayer + " " + this.hashCode()
+        );
+        this.players.add(guestPlayer);
+        System.out.println("Lancement partie");
+        System.out.println("Liste des joueurs :");
+        for (Joueur player: this.players) {
+            System.out.println(player.getPseudo());
+        }
+
+        this.observers.forEach(obs -> obs.updateParty(this));
     }
 
     public void leaveParty(){

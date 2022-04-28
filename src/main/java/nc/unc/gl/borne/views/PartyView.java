@@ -3,21 +3,24 @@ package nc.unc.gl.borne.views;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.TabVariant;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.IntegerField;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.Party;
 import nc.unc.gl.borne.joueur.Joueur;
+import nc.unc.gl.borne.plateau.Plateau;
 
 @Route(value = "party")
 @Tag("party")
@@ -38,7 +41,6 @@ public class PartyView extends HtmlContainer {
         Image image = new Image("cartes/back.png", "header");
 
         container.add(image);
-
         createPlayer(container);
         add(container);
     }
@@ -65,8 +67,6 @@ public class PartyView extends HtmlContainer {
 
         layout.add(userNameField, ageUserField, pendingConfirmation);
 
-
-
         pendingConfirmation.addClickListener(click -> {
 
             // Récupération des données
@@ -88,33 +88,66 @@ public class PartyView extends HtmlContainer {
 
             layout.add(confirmed);
 
-            showButtons(username, container);
+            showTabs(player, container);
         });
         layout.addClassName("chose-username");
         container.add(layout);
     }
 
-    private void showButtons(String username, VerticalLayout container){
+    private void showTabs(Joueur player, VerticalLayout container){
 
-        Notification.show("Bonjour " + username,2000,Notification.Position.TOP_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY);
+        Notification.show(
+            "Bonjour " + player.getPseudo(),
+            2000,
+            Notification.Position.TOP_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
+        );
 
-        Button createGame = new Button("Créer une partie", click -> {
-            party.createParty();
+        // Ici les joueurs qui ont créer une partie
+        Joueur player1 = new Joueur(1, "Jason M", 21);
+        Joueur player2 = new Joueur(1, "Clementine", 26);
+        Joueur player3 = new Joueur(1, "Emerick", 22);
+
+        ListBox<String> listBox = new ListBox<>();
+        listBox.setItems(player1.getPseudo(), player2.getPseudo(), player3.getPseudo());
+
+        Tab createPartyTab = new Tab(
+            VaadinIcon.USER.create(),
+            new Span("Créer une partie")
+        );
+
+        Tab joinPartyTab = new Tab(
+            VaadinIcon.USERS.create(),
+            new Span("Rejoindre une partie")
+        );
+
+        // Icons en haut
+        for (Tab tab : new Tab[]{createPartyTab, joinPartyTab}){
+            tab.addThemeVariants(TabVariant.LUMO_ICON_ON_TOP);
+        }
+
+        Tabs playerChoice = new Tabs(createPartyTab, joinPartyTab);
+
+        Button createGameButton = new Button("Créer", click -> {
+            party.createParty(player);
             Notification.show("Attente pour créer une partie");
         });
-        createGame.addClassName("party-buttons");
 
-        Button joinGame = new Button("Rejoindre une partie", click -> {
-            party.joinParty();
+        Button joinGameButton = new Button("Rejoindre", click -> {
+            party.joinParty(listBox.getValue(), player);
             UI.getCurrent().navigate("test");
         });
-        joinGame.addClassName("party-buttons");
 
-        HorizontalLayout containerButtons = new HorizontalLayout();
-        containerButtons.setSpacing(true);
+        createPartyTab.getElement().addEventListener("click", event -> {
+            container.remove(createGameButton, listBox, joinGameButton);
+            container.add(createGameButton);
+        });
 
-        containerButtons.add(createGame, joinGame);
-        container.add(containerButtons);
+        joinPartyTab.getElement().addEventListener("click", event -> {
+            container.remove(createGameButton, listBox, joinGameButton);
+            container.add(listBox, joinGameButton);
+        });
+
+        container.add(playerChoice, createGameButton);
     }
 
     /**

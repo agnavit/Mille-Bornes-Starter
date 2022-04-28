@@ -1,6 +1,5 @@
 package nc.unc.gl.borne.views;
 
-import java.util.concurrent.atomic.AtomicReference;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;
@@ -15,7 +14,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.*;
-import com.vaadin.flow.component.notification.Notification;
 
 @Route("")
 @Tag("main-view")
@@ -48,13 +46,15 @@ public class MainView extends HtmlContainer {
         rulesSubtitle.addClassName("main-view-subtitle");
 
         // Création des événements des sous-titres
-        playSubtitle.addClickListener(click -> UI.getCurrent().navigate("party"));
-        rulesSubtitle.addClickListener(click -> rules.open());
+        playSubtitle.addClickListener(
+            click -> UI.getCurrent().navigate("party")
+        );
 
+        rulesSubtitle.addClickListener(
+            click -> rules.open()
+        );
 
-        // Les éléments sont ajoutés au conteneur
         container.add(title, playSubtitle, rulesSubtitle);
-        // Le conteneur est ajouté à la page
         add(container);
     }
 
