@@ -16,9 +16,10 @@ import com.vaadin.flow.router.Route;
 public class TestView extends HtmlContainer {
     public TestView(){
 
-        HorizontalLayout container = new HorizontalLayout();
+        VerticalLayout container = new VerticalLayout();
         container.setSpacing(true);
         container.addClassName("container");
+
 
         Div containerSpeed = new Div();
         containerSpeed.addClassName("content-speed");
@@ -49,7 +50,7 @@ public class TestView extends HtmlContainer {
         VerticalLayout miles = new VerticalLayout();
         miles.addClassName("miles");
 
-
+        TopLayout topLayout = new TopLayout();
 
         containerSpeed.add(titleSpeed, speed);
         containerDeck.add(titleDeck, deck);
@@ -58,7 +59,7 @@ public class TestView extends HtmlContainer {
 
 
 
-        container.add(containerSpeed, containerDeck, containerBattle, containerMiles);
+        container.add(topLayout, containerDeck);
         add(container);
     }
 }
