@@ -88,6 +88,7 @@ public class JoueurService {
     }
 
     public void poserCarteBorne(Carte carteBorne, Joueur joueur){
+        //TODO prendre en compte la pile limitation de vitesse
         joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
         switch (carteBorne.getNom()) {
             case VINGT_CINQ -> joueur.setScore(joueur.getScore() + 25);
