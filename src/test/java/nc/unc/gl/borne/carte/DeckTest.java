@@ -25,7 +25,7 @@ public class DeckTest {
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
         IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> deckService.ajouter(carte1, j));
-        Assertions.assertEquals("Erreur: la main d'un joueur ne doit pas contenir au plus 7 cartes!", thrown.getMessage());
+        Assertions.assertEquals("Erreur: la main d'un joueur peut contenir au plus 7 cartes!", thrown.getMessage());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class DeckTest {
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
         IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> deckService.enlever(carte1, j));
-        Assertions.assertEquals("Erreur: la main d'un joueur doit contenir au moins 6 cartes!", thrown.getMessage());
+        Assertions.assertEquals("Erreur: la main d'un joueur peut contenir au moins 6 cartes!", thrown.getMessage());
     }
 
     @Test

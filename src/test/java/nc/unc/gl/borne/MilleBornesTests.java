@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MilleBornesTests {
     private final ApplicationContext springContext = new FileSystemXmlApplicationContext
     		("D:/WorkspaceMilleBornes/Mille-Bornes-Starter/pom.xml");
-    
 
     @Test
     void spring_context_should_start() {
