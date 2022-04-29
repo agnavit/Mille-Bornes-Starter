@@ -1,9 +1,8 @@
 package nc.unc.gl.borne;
 
+import nc.unc.gl.borne.partie.Partie;
+
 public interface Observer {
 
-    void update(String message);
-
-    void updateParty(Party partie);
-
+    void update();
 }

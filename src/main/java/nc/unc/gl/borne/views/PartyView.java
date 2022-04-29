@@ -18,21 +18,29 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
-import nc.unc.gl.borne.Party;
+import lombok.Data;
+import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.joueur.Joueur;
-import nc.unc.gl.borne.plateau.Plateau;
+import nc.unc.gl.borne.partie.Partie;
+
+import java.util.ArrayList;
 
 @Route(value = "party")
 @Tag("party")
-public class PartyView extends HtmlContainer {
+@Data
+public class PartyView extends HtmlContainer implements Observer {
 
-    private final Party party = new Party();
-    //private final UI ui;
+    public static ArrayList<Joueur> listeJoueur = new ArrayList<>();
+    private static Partie party = new Partie();
+    public static ArrayList<Partie> listeParties = new ArrayList<>();
+    private final UI ui;
+    ListBox<String> listBox = new ListBox<>();
+
 
     public PartyView(){
 
         // On stocke l'UI pour pouvoir faire des UI.access()
-        //this.ui = UI.getCurrent();
+        this.ui = UI.getCurrent();
 
         VerticalLayout container = new VerticalLayout();
         container.setSpacing(true);
@@ -43,6 +51,16 @@ public class PartyView extends HtmlContainer {
         container.add(image);
         createPlayer(container);
         add(container);
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        party.addObserveur(this);
+    }
+
+    @Override
+    protected void onDetach(DetachEvent detachEvent) {
+        party.removeObserveur(this);
     }
 
     private void createPlayer(VerticalLayout container){
@@ -107,9 +125,6 @@ public class PartyView extends HtmlContainer {
         Joueur player2 = new Joueur(1, "Clementine", 26);
         Joueur player3 = new Joueur(1, "Emerick", 22);
 
-        ListBox<String> listBox = new ListBox<>();
-        listBox.setItems(player1.getPseudo(), player2.getPseudo(), player3.getPseudo());
-
         Tab createPartyTab = new Tab(
             VaadinIcon.USER.create(),
             new Span("Créer une partie")
@@ -128,12 +143,16 @@ public class PartyView extends HtmlContainer {
         Tabs playerChoice = new Tabs(createPartyTab, joinPartyTab);
 
         Button createGameButton = new Button("Créer", click -> {
-            party.createParty(player);
+            //party.createParty(player);
             Notification.show("Attente pour créer une partie");
+             ArrayList<Joueur> listeJoueurs = new ArrayList<>();
+            listeJoueurs.add(player);
+            Partie partie = new Partie(listeJoueurs, 2, 1);
+            listeParties.add(partie);
+            party.creerPartieObserver();
         });
 
         Button joinGameButton = new Button("Rejoindre", click -> {
-            party.joinParty(listBox.getValue(), player);
             UI.getCurrent().navigate("test");
         });
 
@@ -159,6 +178,16 @@ public class PartyView extends HtmlContainer {
         Icon icon = vaadinIcon.create();
         icon.getStyle().set("padding", "var(--lumo-space-xs");
         return icon;
+    }
+
+    @Override
+    public void update() {
+        System.out.println("update");
+        ui.access(() -> {
+            listeParties.forEach(p -> {
+                listBox.add(new Button(String.valueOf("Partie créé par : " + p.getListejoueur().get(0).getPseudo())));
+            });
+        });
     }
 
     /**
