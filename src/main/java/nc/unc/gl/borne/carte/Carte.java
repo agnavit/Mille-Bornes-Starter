@@ -1,7 +1,9 @@
 package nc.unc.gl.borne.carte;
 
+import com.vaadin.flow.component.html.Image;
 import lombok.Data;
 
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -56,5 +58,11 @@ public class Carte {
         if (o == null || getClass() != o.getClass()) return false;
         Carte carte = (Carte) o;
         return nom == carte.nom && type == carte.type;
+    }
+
+    public String getStringImage(){
+        String nomString = String.valueOf(nom).toLowerCase(Locale.ROOT);
+        String typeString = String.valueOf(type).toLowerCase(Locale.ROOT);
+        return typeString+"_"+nomString+".jpeg";
     }
 }

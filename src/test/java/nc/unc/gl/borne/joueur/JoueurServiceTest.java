@@ -146,9 +146,11 @@ public class JoueurServiceTest {
         deckService.ajouter(carte2, j);
         j.setMain(mainJoueur);
 
-        joueurService.poserCarteBotte(carte1, j);
-        joueurService.poserCarteBotte(carte2, j);
+        joueurService.poserCarteBotte(carte1, j, defausse);
+        joueurService.poserCarteBotte(carte2, j, defausse);
         assertEquals(j.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(), 2);
+
+        //TODO maj tests
     }
 
     @Test
