@@ -26,10 +26,10 @@ public class Partie {
 
     private ArrayList<Joueur> listejoueur = new ArrayList<Joueur>();
     private int nbJoueurMax;
-    private PileCarte pioche = new PileCarte();
-    private PileCarte defausse = new PileCarte();
+    private PileCarte pioche;
+    private PileCarte defausse;
     private int id;
-    private JeuComplet jeuComplet = new JeuComplet();
+    private JeuComplet jeuComplet;
 
     public Partie(){
     }
@@ -37,8 +37,9 @@ public class Partie {
     public Partie(ArrayList<Joueur> listejoueur,int nbJoueurMax, int id){
         this.listejoueur = listejoueur;
         this.nbJoueurMax = nbJoueurMax;
-        this.pioche = pioche.melangerPioche(jeuComplet);
-        this.defausse = defausse;
+        this.pioche = new PileCarte().melangerPioche();
+        this.jeuComplet = new JeuComplet();
+        this.defausse = new PileCarte();;
         this.id = id;
     }
 
