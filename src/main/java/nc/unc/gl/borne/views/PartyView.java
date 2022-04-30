@@ -3,6 +3,7 @@ package nc.unc.gl.borne.views;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -28,10 +29,11 @@ import java.util.ArrayList;
 @Route(value = "party")
 @Tag("party")
 @Data
+@StyleSheet("css/partyview.css")
 public class PartyView extends HtmlContainer implements Observer {
 
-    private static Partie party = new Partie();
     private final UI ui;
+    private static Partie party = new Partie();
     ListBox<String> listBox = new ListBox<>();
 
 
@@ -49,16 +51,6 @@ public class PartyView extends HtmlContainer implements Observer {
         container.add(image);
         createPlayer(container);
         add(container);
-    }
-
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        party.addObserveur(this);
-    }
-
-    @Override
-    protected void onDetach(DetachEvent detachEvent) {
-        party.removeObserveur(this);
     }
 
     private void createPlayer(VerticalLayout container){
@@ -118,11 +110,6 @@ public class PartyView extends HtmlContainer implements Observer {
             Notification.Position.TOP_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
         );
 
-        // Ici les joueurs qui ont créer une partie
-        Joueur player1 = new Joueur(1, "Jason M", 21);
-        Joueur player2 = new Joueur(1, "Clementine", 26);
-        Joueur player3 = new Joueur(1, "Emerick", 22);
-
         Tab createPartyTab = new Tab(
             VaadinIcon.USER.create(),
             new Span("Créer une partie")
@@ -140,15 +127,10 @@ public class PartyView extends HtmlContainer implements Observer {
 
         Tabs playerChoice = new Tabs(createPartyTab, joinPartyTab);
 
-        Button createGameButton = new Button("Créer", click -> {
-            //party.createParty(player);
-            Notification.show("Attente pour créer une partie");
-            party.creerPartieObserver(player);
-        });
+        Button createGameButton = new Button("Créer");
+        Button joinGameButton = new Button("Rejoindre");
+        Button cancelCreateGameButton = new Button("Annuler");
 
-        Button joinGameButton = new Button("Rejoindre", click -> {
-            UI.getCurrent().navigate("test");
-        });
 
         createPartyTab.getElement().addEventListener("click", event -> {
             container.remove(createGameButton, listBox, joinGameButton);
@@ -158,6 +140,22 @@ public class PartyView extends HtmlContainer implements Observer {
         joinPartyTab.getElement().addEventListener("click", event -> {
             container.remove(createGameButton, listBox, joinGameButton);
             container.add(listBox, joinGameButton);
+        });
+
+        createGameButton.getElement().addEventListener("click", event -> {
+            Notification.show("Attente pour créer une partie");
+            party.creerPartieObserver(player);
+            container.remove(createGameButton);
+            container.add(cancelCreateGameButton);
+            joinPartyTab.setEnabled(false);
+        });
+
+        joinGameButton.getElement().addEventListener("click", event -> UI.getCurrent().navigate("test"));
+
+        cancelCreateGameButton.getElement().addEventListener("click", event -> {
+            container.remove(cancelCreateGameButton);
+            container.add(createGameButton);
+            joinPartyTab.setEnabled(true);
         });
 
         container.add(playerChoice, createGameButton);
@@ -174,16 +172,20 @@ public class PartyView extends HtmlContainer implements Observer {
         return icon;
     }
 
-    public void update(Partie partie) {
-        ui.access(() -> {
-            listBox.add(new Button(String.valueOf("Partie créé par : " + partie.getListejoueur().get(0).getPseudo())));
-        });
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        party.addObserveur(this);
     }
 
-    /**
-     @Override
-     public void updatePartie(Partie partie) {
-     System.out.println("update");
-     ui.access(() -> this.add(""));
-     }*/
+    @Override
+    protected void onDetach(DetachEvent detachEvent) {
+        party.removeObserveur(this);
+    }
+
+    public void update(Partie partie) {
+        ui.access(() -> {
+            listBox.setItems(partie.getListejoueur().get(0).getPseudo());
+        });
+    }
 }
+
