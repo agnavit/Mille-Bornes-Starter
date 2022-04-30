@@ -30,9 +30,7 @@ import java.util.ArrayList;
 @Data
 public class PartyView extends HtmlContainer implements Observer {
 
-    public static ArrayList<Joueur> listeJoueur = new ArrayList<>();
     private static Partie party = new Partie();
-    public static ArrayList<Partie> listeParties = new ArrayList<>();
     private final UI ui;
     ListBox<String> listBox = new ListBox<>();
 
@@ -145,11 +143,7 @@ public class PartyView extends HtmlContainer implements Observer {
         Button createGameButton = new Button("Créer", click -> {
             //party.createParty(player);
             Notification.show("Attente pour créer une partie");
-             ArrayList<Joueur> listeJoueurs = new ArrayList<>();
-            listeJoueurs.add(player);
-            Partie partie = new Partie(listeJoueurs, 2, 1);
-            listeParties.add(partie);
-            party.creerPartieObserver();
+            party.creerPartieObserver(player);
         });
 
         Button joinGameButton = new Button("Rejoindre", click -> {
@@ -180,13 +174,9 @@ public class PartyView extends HtmlContainer implements Observer {
         return icon;
     }
 
-    @Override
-    public void update() {
-        System.out.println("update");
+    public void update(Partie partie) {
         ui.access(() -> {
-            listeParties.forEach(p -> {
-                listBox.add(new Button(String.valueOf("Partie créé par : " + p.getListejoueur().get(0).getPseudo())));
-            });
+            listBox.add(new Button(String.valueOf("Partie créé par : " + partie.getListejoueur().get(0).getPseudo())));
         });
     }
 

@@ -42,32 +42,10 @@ public class Partie {
         this.id = id;
     }
 
-    public void creerPartieObserver() {
-        this.observers.forEach(obs -> obs.update());
+    public void creerPartieObserver(Joueur joueur) {
+        ArrayList<Joueur> listeJoueurs = new ArrayList<>();
+        listeJoueurs.add(joueur);
+        Partie partie = new Partie(listeJoueurs, 2, 1);
+        this.observers.forEach(obs -> obs.update(partie));
     }
-
-    //ANTHONY **********
-
-    private final List<Observer> observer = new ArrayList<>();
-    private final List<Joueur> players = new ArrayList<>();
-
-    public void createParty(Joueur player) {
-        System.out.println(player.getPseudo() + " veux créer une partie " + this.hashCode());
-        this.players.add(player);
-        this.observers.forEach(obs -> obs.update());
-    }
-    public void joinParty(String hostPlayer, Joueur guestPlayer) {
-        System.out.println(
-            guestPlayer.getPseudo() + " rejoint la partie de " + hostPlayer + " " + this.hashCode()
-        );
-        this.players.add(guestPlayer);
-        System.out.println("Lancement partie");
-        System.out.println("Liste des joueurs :");
-        for (Joueur player: this.players) {
-            System.out.println(player.getPseudo());
-        }
-
-        this.observers.forEach(obs -> obs.update());
-    }
-
 }

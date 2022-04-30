@@ -4,5 +4,5 @@ import nc.unc.gl.borne.partie.Partie;
 
 public interface Observer {
 
-    void update();
+    void update(Partie partie);
 }
