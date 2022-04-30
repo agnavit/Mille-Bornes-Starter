@@ -4,6 +4,7 @@ import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -21,6 +22,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import lombok.Data;
 import nc.unc.gl.borne.Observer;
+import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.partie.Partie;
 
@@ -35,7 +37,7 @@ public class PartyView extends HtmlContainer implements Observer {
     private final UI ui;
     private static Partie party = new Partie();
     ListBox<String> listBox = new ListBox<>();
-
+    public Carte carteChoisie = null;
 
     public PartyView(){
 
@@ -142,12 +144,18 @@ public class PartyView extends HtmlContainer implements Observer {
             container.add(listBox, joinGameButton);
         });
 
+        Dialog loading = new Dialog();
+
+        VerticalLayout loadingLayout = showLoading(loading);
+        loading.add(loadingLayout);
+
         createGameButton.getElement().addEventListener("click", event -> {
             Notification.show("Attente pour créer une partie");
             party.creerPartieObserver(player);
             container.remove(createGameButton);
             container.add(cancelCreateGameButton);
             joinPartyTab.setEnabled(false);
+            loading.open();
         });
 
         joinGameButton.getElement().addEventListener("click", event -> UI.getCurrent().navigate("test"));
@@ -186,6 +194,18 @@ public class PartyView extends HtmlContainer implements Observer {
         ui.access(() -> {
             listBox.setItems(partie.getListejoueur().get(0).getPseudo());
         });
+    }
+
+    public static VerticalLayout showLoading(Dialog loading){
+        VerticalLayout loadingLayout = new VerticalLayout();
+        Div loadingDiv = new Div();
+        loadingDiv.addClassName("lds-dual-ring");
+        loadingDiv.getStyle().set("padding-left", "110px");
+        Text partieCree = new Text("Votre partie à été créé !");
+        Text attente = new Text("\nEn attente de joueur");
+        loadingLayout.add(loadingDiv, partieCree);
+        loadingLayout.add(attente);
+        return loadingLayout;
     }
 }
 

@@ -97,7 +97,6 @@ public class PileCarte {
     /**
      * Mélange le JeuComplet pour former une pioche
      */
-    //TODO tester melangerPioche()
     public PileCarte melangerPioche(){
         Collections.shuffle(this.pileCarte);
         return this;

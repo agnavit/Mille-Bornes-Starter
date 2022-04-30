@@ -1,5 +1,7 @@
 package nc.unc.gl.borne.partie;
 
+import nc.unc.gl.borne.carte.Carte;
+import nc.unc.gl.borne.jeuComplet.JeuComplet;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
 
@@ -14,6 +16,14 @@ public class PartieService {
 
     public void lancerPartie(Partie partie) {
         AtomicInteger score = new AtomicInteger();
+        JeuComplet jeuComplet = new JeuComplet();
+
+        partie.getPioche().setPileCarte(jeuComplet.getJeuComplet());
+        //distribution de feu vert à mes joueur
+        partie.getListejoueur().forEach(j -> {
+            j.getMain().getMainJoueur().add(partie.getPioche().depiler());
+        });
+        partie.getPioche().melangerPioche();
         distribuerCarte(partie);
         determinerOrdrePassage(partie);
         while (partie.getPioche().getPileCarte().size() != 0 || score.get() != 1000) {

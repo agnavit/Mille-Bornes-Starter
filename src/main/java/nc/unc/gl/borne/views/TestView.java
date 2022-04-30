@@ -7,11 +7,17 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import lombok.Data;
+import nc.unc.gl.borne.carte.Carte;
 
 @Route(value = "test")
 @Tag("test")
 @StyleSheet("css/test.css")
+@Data
 public class TestView extends HtmlContainer {
+
+    public Carte carteChoisie = null;
+
     public TestView(){
 
         VerticalLayout container = new VerticalLayout();
