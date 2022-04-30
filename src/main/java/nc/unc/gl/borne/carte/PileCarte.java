@@ -100,7 +100,7 @@ public class PileCarte {
     //TODO tester melangerPioche()
     public PileCarte melangerPioche(){
         Collections.shuffle(this.pileCarte);
-        return this.pileCarte;
+        return this;
     }
 
     @Override
