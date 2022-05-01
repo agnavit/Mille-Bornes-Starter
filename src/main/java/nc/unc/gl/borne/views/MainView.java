@@ -36,7 +36,7 @@ public class MainView extends HtmlContainer {
         Dialog rules = new Dialog();
         rules.getElement().setAttribute("aria-label", "Les règles");
 
-        VerticalLayout dialogLayout = showRules(rules);
+        VerticalLayout dialogLayout = showRules();
         rules.add(dialogLayout);
 
         // Création des sous-titres
@@ -73,7 +73,7 @@ public class MainView extends HtmlContainer {
             .set("background-repeat", "no-repeat");
     }
 
-    public static VerticalLayout showRules(Dialog rules){
+    public static VerticalLayout showRules(){
 
         Button arrowLeftButton = new Button(new Icon(VaadinIcon.ARROW_LEFT));
         Button arrowRightButton = new Button(new Icon(VaadinIcon.ARROW_RIGHT));
