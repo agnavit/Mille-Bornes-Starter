@@ -116,4 +116,19 @@ public class PileCarte {
         PileCarte pileCarte1 = (PileCarte) o;
         return (Objects.equals(pileCarte, pileCarte1.pileCarte));
     }
+
+    /**
+     * Compte le nombre de carte d'une carte passée en paramètre
+     * @param carteACompter la carte à analyser
+     * @return le nombre de cette carte dans la pile
+     */
+    public int getNbCartePile(Carte carteACompter){
+        int res = 0;
+        for (int i = 0; i<pileCarte.size(); i++) {
+            if(pileCarte.get(i).equals(carteACompter)){
+                res += 1;
+            }
+        }
+        return res;
+    }
 }

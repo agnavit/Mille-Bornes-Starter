@@ -65,4 +65,15 @@ public class PileCarteTest {
         Partie partie = new Partie(listeJoueur, 2, 1);
         assertNotEquals(jeuComplet.getJeuComplet(), partie.getPioche().getPileCarte());
     }
+
+    @Test
+    void getNbCartePile(){
+        PileCarte pile = new PileCarte();
+        pile.empiler(new Carte(NomCarte.FEU, TypeCarte.PARADE, 1));
+        pile.empiler(new Carte(NomCarte.FEU, TypeCarte.PARADE, 2));
+        pile.empiler(new Carte(NomCarte.FEU, TypeCarte.ATTAQUE, 3));
+        pile.empiler(new Carte(NomCarte.FEU, TypeCarte.PARADE, 4));
+        assertEquals(pile.getNbCartePile(new Carte(NomCarte.FEU, TypeCarte.PARADE, 1)), 3);
+        assertEquals(pile.getNbCartePile(new Carte(NomCarte.FEU, TypeCarte.ATTAQUE, 3)), 1);
+    }
 }
