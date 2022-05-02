@@ -131,4 +131,8 @@ public class PileCarte {
         }
         return res;
     }
+
+    public int getTaille(){
+        return this.pileCarte.size();
+    }
 }
