@@ -42,7 +42,7 @@ public class TestView extends HtmlContainer {
         H2 titleDeck = new H2("Deck");
         titleDeck.addClassName("content-title");
 
-        DeckLayout deck = new DeckLayout();
+        //DeckLayout deck = new DeckLayout();
 
         H2 titleBattle = new H2("Batailles");
         titleBattle.addClassName("content-title");
@@ -57,7 +57,7 @@ public class TestView extends HtmlContainer {
         TopLayout topLayout = new TopLayout();
 
         containerSpeed.add(titleSpeed, speed);
-        containerDeck.add(titleDeck, deck);
+        //containerDeck.add(titleDeck, deck);
         containerBattle.add(titleBattle, battle);
         containerMiles.add(titleMiles, miles);
 
