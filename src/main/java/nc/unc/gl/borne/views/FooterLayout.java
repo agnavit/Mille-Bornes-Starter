@@ -1,6 +1,7 @@
 package nc.unc.gl.borne.views;
 
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.Carte;
