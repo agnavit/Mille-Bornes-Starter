@@ -66,9 +66,7 @@ public class JoueurService {
 
         // Si il n'y a pas d'attaque à parer (la carte sur la pile bataille n'est pas une attaque)
         if(derniereCarte.getType() != TypeCarte.ATTAQUE){
-            if (derniereCarte.getNom() == NomCarte.FEU) {
-
-            } else {
+            if (derniereCarte.getNom() != NomCarte.FEU) {
                 throw new IllegalArgumentException("Erreur: on ne peut pas poser une carte parade si la première carte" +
                     " sur le pile bataille n'est pas une carte attaque");
             }
@@ -175,7 +173,7 @@ public class JoueurService {
 
     public void choisirCarte() {
         Carte carte = null;
-        while (carte == null) {
+        while(carte == null) {
             //TODO écouter evenement
             //TODO carte = evenement
         }
@@ -183,7 +181,7 @@ public class JoueurService {
 
     public void choisirAction() {
         Carte action = null;
-        while (action == null) {
+        while(action == null) {
             //TODO écouter evenement
             //TODO action = evenement
         }
@@ -196,4 +194,13 @@ public class JoueurService {
             choisirAction();
         }
     }
+
+    public int getSizeDeck(Joueur player){
+        return player.getMain().getMainJoueur().size();
+    }
+
+    public Carte getCardInDeck(Joueur player, int number){
+        return player.getMain().getMainJoueur().get(number);
+    }
+
 }
