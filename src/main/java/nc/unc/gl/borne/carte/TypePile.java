@@ -22,5 +22,5 @@ public enum TypePile {
     /**
      * Pile bottes
      */
-    BOTTES;
+    BOTTES
 }

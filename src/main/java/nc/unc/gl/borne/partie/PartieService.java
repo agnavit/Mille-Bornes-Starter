@@ -1,12 +1,10 @@
 package nc.unc.gl.borne.partie;
 
-import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.jeuComplet.JeuComplet;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,9 +18,7 @@ public class PartieService {
 
         partie.getPioche().setPileCarte(jeuComplet.getJeuComplet());
         //distribution de feu vert à mes joueur
-        partie.getListejoueur().forEach(j -> {
-            j.getMain().getMainJoueur().add(partie.getPioche().depiler());
-        });
+        partie.getListejoueur().forEach(j -> j.getMain().getMainJoueur().add(partie.getPioche().depiler()));
         partie.getPioche().melangerPioche();
         distribuerCarte(partie);
         determinerOrdrePassage(partie);
@@ -36,26 +32,22 @@ public class PartieService {
 
     private void determinerOrdrePassage(Partie partie) {
         ArrayList<Integer> listeAge = new ArrayList<>();
-        partie.getListejoueur().forEach(j -> {
-            listeAge.add(j.getAge());
-        });
+        partie.getListejoueur().forEach(j -> listeAge.add(j.getAge()));
         Collections.sort(listeAge);
         ArrayList<Joueur> listejoueurTrie = new ArrayList<>();
-        listeAge.forEach(age -> {
-            partie.getListejoueur().forEach(j -> {
-                if (j.getAge() == age) {
-                    listejoueurTrie.add(j);
-                }
-            });
-        });
+        listeAge.forEach(age -> partie.getListejoueur().forEach(j -> {
+            if (j.getAge() == age) {
+                listejoueurTrie.add(j);
+            }
+        }));
         partie.setListejoueur(listejoueurTrie);
     }
 
     private void distribuerCarte(Partie partie) {
         while (partie.getListejoueur().get(0).getMain().getMainJoueur().size() != 6) {
-            partie.getListejoueur().forEach(j -> {
+            for (Joueur j : partie.getListejoueur()) {
                 joueurService.piocher(partie.getPioche(), j);
-            });
+            }
         }
     }
 }

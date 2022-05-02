@@ -58,9 +58,7 @@ public class PlateauService {
                 i.set(1);
             }
         });
-        if (i.get() == 1) {
-            return true;
-        } else return false;
+        return i.get() == 1;
     }
 
     public boolean hasBotteVehiculePrio(Joueur joueur) {
@@ -71,8 +69,6 @@ public class PlateauService {
                 i.set(1);
             }
         });
-        if (i.get() == 1) {
-            return true;
-        } else return false;
+        return i.get() == 1;
     }
 }

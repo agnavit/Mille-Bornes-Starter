@@ -2,10 +2,7 @@ package nc.unc.gl.borne.partie;
 
 import lombok.Data;
 import nc.unc.gl.borne.Observer;
-import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.carte.PileCarte;
-import nc.unc.gl.borne.carte.TypePile;
-import nc.unc.gl.borne.jeuComplet.JeuComplet;
 import nc.unc.gl.borne.joueur.Joueur;
 
 import java.util.ArrayList;

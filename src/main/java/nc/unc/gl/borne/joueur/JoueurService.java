@@ -2,7 +2,6 @@ package nc.unc.gl.borne.joueur;
 
 import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.*;
-import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.plateau.PlateauService;
 
 public class JoueurService {
@@ -101,10 +100,6 @@ public class JoueurService {
 
     }
 
-    public void poserCarteFeu(Carte carteFeu, Joueur joueur) {
-
-    }
-
     public void poserCarteBotte(Carte carteBotte, Joueur joueur, PileCarte defausse) {
         joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BOTTES, carteBotte, joueur));
         // Si le joueur a une carte attaque du même nom que la carte botte alors cette attaque est enlevée
@@ -189,7 +184,7 @@ public class JoueurService {
 
     public void jouer(PileCarte pioche, Joueur joueur) {
         piocher(pioche, joueur);
-        while (joueur.getMain().getMainJoueur().size() != 6) {
+        while (joueur.getMain().getMainJoueur().size() > 6) {
             choisirCarte();
             choisirAction();
         }

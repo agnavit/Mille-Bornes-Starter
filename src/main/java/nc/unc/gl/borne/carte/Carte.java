@@ -1,10 +1,8 @@
 package nc.unc.gl.borne.carte;
 
-import com.vaadin.flow.component.html.Image;
 import lombok.Data;
 
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Description d'une carte du jeu du 1000 bornes

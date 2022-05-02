@@ -1,6 +1,5 @@
 package nc.unc.gl.borne.plateau;
 
-import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.carte.PileCarte;
 import nc.unc.gl.borne.carte.TypePile;
 

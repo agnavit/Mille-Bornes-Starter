@@ -22,5 +22,5 @@ public enum TypeCarte {
     /**
      * Carte qui répare l'effet d'une carte attaque
      */
-    PARADE;
+    PARADE
 }

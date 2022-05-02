@@ -1,7 +1,6 @@
 package nc.unc.gl.borne.carte;
 
 import lombok.Data;
-import nc.unc.gl.borne.jeuComplet.JeuComplet;
 
 import java.util.ArrayList;
 import java.util.Collections;

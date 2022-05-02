@@ -21,7 +21,7 @@ public class DeckService {
     }
 
     /**
-     * Enelver une carte
+     * Enlever une carte
      * @param carteEnlever la carte à enlever
      */
     public Deck enlever(Carte carteEnlever, Joueur joueur){

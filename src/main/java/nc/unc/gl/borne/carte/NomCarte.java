@@ -28,5 +28,5 @@ public enum NomCarte {
     CINQUANTE,
     SOIXANTE_QUINZE,
     CENT,
-    DEUX_CENTS;
+    DEUX_CENTS
 }
