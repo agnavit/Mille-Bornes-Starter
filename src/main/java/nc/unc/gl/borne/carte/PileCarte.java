@@ -135,4 +135,14 @@ public class PileCarte {
     public int getTaille(){
         return this.pileCarte.size();
     }
+
+    /**
+     * Fonction test @Anthony permet de récup la dernière carte de la pile
+     * @return carte
+     */
+    public Carte getLastCard(){
+        int sizePile = this.pileCarte.size();
+        System.out.println(this.pileCarte.get(sizePile-1));
+        return this.pileCarte.get(sizePile-1);
+    }
 }

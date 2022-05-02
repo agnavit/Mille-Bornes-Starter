@@ -14,15 +14,18 @@ import nc.unc.gl.borne.joueur.JoueurService;
 @StyleSheet("css/decklayout.css")
 public class PlateauLayout extends HorizontalLayout {
 
-        Carte carte1 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
-        Carte carte2 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
-        Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
-        Carte carte4 = new Carte(NomCarte.AS_DU_VOLANT, TypeCarte.BOTTE, 4);
-        PileCarte defausse = new PileCarte();
+    Carte carte1 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
+    Carte carte2 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
+    Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
+    Carte carte4 = new Carte(NomCarte.AS_DU_VOLANT, TypeCarte.BOTTE, 4);
+    PileCarte defausse = new PileCarte();
 
-        JoueurService playerService = new JoueurService();
-        Joueur joueur = new Joueur(2, "Anthony", 22);
+    JoueurService playerService = new JoueurService();
+    Joueur joueur = new Joueur(2, "Anthony", 22);
 
+    // Création de deux nouvelles cartes
+    Carte carteVitesse = new Carte(NomCarte.FEU, TypeCarte.PARADE, 5);
+    Carte carteBATAILLE = new Carte(NomCarte.FEU, TypeCarte.PARADE, 6);
 
     public PlateauLayout(){
         //TODO version générique avec paramètre joueur
@@ -31,13 +34,21 @@ public class PlateauLayout extends HorizontalLayout {
         playerService.poser(carte3, defausse, joueur);
         playerService.poser(carte4, defausse, joueur);
 
+        // Je pose une carte dans les piles vitesse et bataille
+        playerService.poser(carteVitesse, joueur.getPlateau().getPile(TypePile.VITESSE), joueur);
+        playerService.poser(carteBATAILLE, joueur.getPlateau().getPile(TypePile.BATAILLE), joueur);
 
+
+
+        // Correction :
+        //      - Ajout d'une carte dans les piles
+        //      - Ajout "cartes/" +
         //------------------------------------------------------
 
         VerticalLayout pileVitesse = new VerticalLayout();
         pileVitesse.add("Pile vitesse");
         pileVitesse
-            .add(new Image(joueur
+            .add(new Image("cartes/" + joueur
                 .getPlateau()
                 .getPile(TypePile.VITESSE)
                 .getSommet()
@@ -49,7 +60,7 @@ public class PlateauLayout extends HorizontalLayout {
         VerticalLayout pileBataille = new VerticalLayout();
         pileBataille.add("Pile Bataille");
         pileBataille
-            .add(new Image(joueur
+            .add(new Image("cartes/" +joueur
                 .getPlateau()
                 .getPile(TypePile.BATAILLE)
                 .getSommet()
@@ -108,11 +119,12 @@ public class PlateauLayout extends HorizontalLayout {
         pileBornes.add(pileBornesCartes);
 
 
+        // Correction : Ajout "cartes/" +
         VerticalLayout pileBottes = new VerticalLayout();
         pileBottes.add("Pile bottes");
         for (int i = 0; i<joueur.getPlateau().getPile(TypePile.BOTTES).getTaille(); i++)
         {
-            pileBottes.add(new Image(joueur
+            pileBottes.add(new Image("cartes/" +joueur
                 .getPlateau()
                 .getPile(TypePile.BOTTES)
                 .getCarte(i)
