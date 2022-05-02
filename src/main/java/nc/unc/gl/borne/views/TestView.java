@@ -11,11 +11,12 @@ import lombok.Data;
 import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Route(value = "test")
+@Route(value = "/test/{idPartie}")
 @Tag("test")
 @StyleSheet("css/test.css")
 @Data
@@ -25,7 +26,6 @@ public class TestView extends HtmlContainer {
     PartieService partieService = new PartieService();
 
     public TestView() {
-
         //partieService.lancerPartie();
 
         VerticalLayout container = new VerticalLayout();

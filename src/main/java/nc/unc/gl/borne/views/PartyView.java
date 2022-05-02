@@ -167,7 +167,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
         joinGameButton.getElement().addEventListener("click", event -> {
             partieService.connectJoueur(listBox.getValue(), player);
-            UI.getCurrent().navigate("test");
+            UI.getCurrent().navigate("/test?id=3");
         });
 
         cancelCreateGameButton.getElement().addEventListener("click", event -> {
@@ -204,9 +204,8 @@ public class PartyView extends HtmlContainer implements Observer {
         ui.access(() -> {
             listBox.setItems(partie);
             listBox.setRenderer(new ComponentRenderer<>(parti -> {
-                Span number = new Span(new Text(parti.getListejoueur().get(0).getPseudo()));
-
-                return new Div(new HorizontalLayout(number));
+                Span pseudo = new Span(new Text(parti.getListejoueur().get(0).getPseudo()));
+                return new Div(new HorizontalLayout(pseudo));
             }));
         });
     }
