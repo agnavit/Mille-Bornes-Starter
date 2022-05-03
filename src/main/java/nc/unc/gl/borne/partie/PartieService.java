@@ -3,6 +3,7 @@ package nc.unc.gl.borne.partie;
 import nc.unc.gl.borne.jeuComplet.JeuComplet;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
+import nc.unc.gl.borne.views.GameView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +50,17 @@ public class PartieService {
                 joueurService.piocher(partie.getPioche(), j);
             }
         }
+    }
+
+    public Partie getPartieJoueur(Joueur joueur, ArrayList<Partie> parties) {
+        for (Partie partie : parties) {
+            for (Joueur j : partie.getListejoueur()) {
+                if (j.getPseudo() == joueur.getPseudo()) {
+                    return partie;
+                }
+            }
+        }
+        return new Partie();
     }
 
     public void connectJoueur(Partie partie, Joueur joueur) {
