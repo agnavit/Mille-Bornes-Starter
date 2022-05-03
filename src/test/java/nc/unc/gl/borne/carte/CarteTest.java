@@ -9,4 +9,10 @@ public class CarteTest {
         Carte c2 = new Carte(NomCarte.VEHICULE_PRIORITAIRE, TypeCarte.BOTTE, 2);
         assertEquals(c1,c2);
     }
+
+    @Test
+    void getStringImage(){
+        Carte c1 = new Carte(NomCarte.ACCIDENT, TypeCarte.ATTAQUE, 1);
+        assertEquals(c1.getStringImage(),"attaque_accident.jpeg");
+    }
 }

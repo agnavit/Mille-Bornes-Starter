@@ -2,6 +2,7 @@ package nc.unc.gl.borne.joueur;
 
 import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.plateau.PlateauService;
 
 public class JoueurService {
@@ -65,9 +66,7 @@ public class JoueurService {
 
         // Si il n'y a pas d'attaque à parer (la carte sur la pile bataille n'est pas une attaque)
         if(derniereCarte.getType() != TypeCarte.ATTAQUE){
-            if (derniereCarte.getNom() == NomCarte.FEU) {
-
-            } else {
+            if (derniereCarte.getNom() != NomCarte.FEU) {
                 throw new IllegalArgumentException("Erreur: on ne peut pas poser une carte parade si la première carte" +
                     " sur le pile bataille n'est pas une carte attaque");
             }
@@ -106,8 +105,15 @@ public class JoueurService {
 
     }
 
-    public void poserCarteBotte(Carte carteBotte, Joueur joueur) {
+    public void poserCarteBotte(Carte carteBotte, Joueur joueur, PileCarte defausse) {
         joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BOTTES, carteBotte, joueur));
+        // Si le joueur a une carte attaque du même nom que la carte botte alors cette attaque est enlevée
+        if(joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet().getType().equals(TypeCarte.ATTAQUE)
+        && joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet().getNom().equals(carteBotte.getNom())){
+            Carte carteAJeter = joueur.getPlateau().getPile(TypePile.BATAILLE).depiler();
+            defausse.empiler(carteAJeter);
+        }
+        //TODO Tests
         //TODO : on rejoue
     }
 
@@ -138,7 +144,7 @@ public class JoueurService {
 
         }
         else if(carteChoisie.getType() == TypeCarte.BOTTE){
-            poserCarteBotte(carteChoisie, joueur);
+            poserCarteBotte(carteChoisie, joueur, defausse);
         }
         joueur.setMain(deckService.enlever(carteChoisie, joueur));
     }
@@ -167,7 +173,7 @@ public class JoueurService {
 
     public void choisirCarte() {
         Carte carte = null;
-        while (carte == null) {
+        while(carte == null) {
             //TODO écouter evenement
             //TODO carte = evenement
         }
@@ -175,7 +181,7 @@ public class JoueurService {
 
     public void choisirAction() {
         Carte action = null;
-        while (action == null) {
+        while(action == null) {
             //TODO écouter evenement
             //TODO action = evenement
         }
@@ -188,4 +194,13 @@ public class JoueurService {
             choisirAction();
         }
     }
+
+    public int getSizeDeck(Joueur player){
+        return player.getMain().getMainJoueur().size();
+    }
+
+    public Carte getCardInDeck(Joueur player, int number){
+        return player.getMain().getMainJoueur().get(number);
+    }
+
 }

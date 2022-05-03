@@ -1,63 +1,47 @@
 package nc.unc.gl.borne.views;
 
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
+import nc.unc.gl.borne.carte.Carte;
+import nc.unc.gl.borne.joueur.Joueur;
+import nc.unc.gl.borne.joueur.JoueurService;
 
-@Route("test2")
-@Tag("test2")
 @StyleSheet("css/decklayout.css")
 public class DeckLayout extends VerticalLayout {
 
-    // Doit remplacer les images par le deck protected Deck deck = new Deck();
-    protected Image[] deckPlayer = new Image[6];
+    JoueurService playerService = new JoueurService();
 
-    public DeckLayout(){
+    public DeckLayout(Joueur player){
 
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSpacing(true);
-        layout.getStyle()
-            .set("position", "fixed")
-            .set("bottom", "0")
-            .set("padding", "14px");
+        Image[] deckPlayerImage = new Image[player.getMain().getMainJoueur().size()];
 
-        deckPlayer[0] = new Image("cartes/parade_vitesse.jpeg", "parade_vitesse");
-        deckPlayer[0].addClassName("image-deck");
-        deckPlayer[1] = new Image("cartes/attaque_accident.jpeg", "attaque_accident");
-        deckPlayer[1].addClassName("image-deck");
-        deckPlayer[2] = new Image("cartes/attaque_crevaison.jpeg", "attaque_crevaison");
-        deckPlayer[2].addClassName("image-deck");
-        deckPlayer[3] = new Image("cartes/borne_25.jpeg", "borne_25");
-        deckPlayer[3].addClassName("image-deck");
-        deckPlayer[4] = new Image("cartes/borne_75.jpeg", "borne_75");
-        deckPlayer[4].addClassName("image-deck");
-        deckPlayer[5] = new Image("cartes/borne_25.jpeg", "borne_25");
-        deckPlayer[5].addClassName("image-deck");
+        for(Integer i = 0; i < playerService.getSizeDeck(player); i++){
 
-        HorizontalLayout deckLayout = new HorizontalLayout(deckPlayer);
-        deckLayout.getStyle().set("margin-right", "60px");
+            deckPlayerImage[i] = new Image(
+                "cartes/"+  playerService.getCardInDeck(player,i).getStringImage(),
+                String.valueOf(playerService.getCardInDeck(player,i)));
+            deckPlayerImage[i].addClassName("image-deck");
 
 
-        Image cardTaken = new Image("cartes/back.png", "back.png");
-        cardTaken.addClassName("image-deck");
+            var chosenCard = deckPlayerImage[i];
+            int j = i;
+            deckPlayerImage[i].addClickListener(
+                click -> {
+                    //click.getSource().getElement().getStyle().set("border-color", "gold");
+                    chosenCard.getElement().getStyle().set("border-color", "gold");
+                    System.out.println("Le joueur: " + player.getPseudo() + " a choisi la carte "+chosenCard.getAlt());
+                    Carte selectedCard = new Carte(
+                        playerService.getCardInDeck(player,j).getNom(),
+                        playerService.getCardInDeck(player,j).getType(),
+                        playerService.getCardInDeck(player,j).getNumero()
+                    );
+                }
+            );
+        }
 
-        HorizontalLayout cardTakenLayout = new HorizontalLayout(cardTaken);
-        cardTakenLayout.getStyle().set("margin-right", "25px");
-
-        Button putCard = new Button("Poser");
-        putCard.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_CONTRAST);
-        Button throwCard = new Button("Jeter");
-        throwCard.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_CONTRAST);
-
-        VerticalLayout buttonsLayout = new VerticalLayout(putCard, throwCard);
-
-        layout.add(deckLayout, cardTakenLayout, buttonsLayout);
-        layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
-        add(layout);
+        HorizontalLayout deckLayout = new HorizontalLayout(deckPlayerImage);
+        add(deckLayout);
     }
 }
