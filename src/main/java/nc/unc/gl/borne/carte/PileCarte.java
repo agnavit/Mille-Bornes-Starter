@@ -115,4 +115,33 @@ public class PileCarte {
         PileCarte pileCarte1 = (PileCarte) o;
         return (Objects.equals(pileCarte, pileCarte1.pileCarte));
     }
+
+    /**
+     * Compte le nombre de carte d'une carte passée en paramètre
+     * @param carteACompter la carte à analyser
+     * @return le nombre de cette carte dans la pile
+     */
+    public int getNbCartePile(Carte carteACompter){
+        int res = 0;
+        for (int i = 0; i<pileCarte.size(); i++) {
+            if(pileCarte.get(i).equals(carteACompter)){
+                res += 1;
+            }
+        }
+        return res;
+    }
+
+    public int getTaille(){
+        return this.pileCarte.size();
+    }
+
+    /**
+     * Fonction test @Anthony permet de récup la dernière carte de la pile
+     * @return carte
+     */
+    public Carte getLastCard(){
+        int sizePile = this.pileCarte.size();
+        System.out.println(this.pileCarte.get(sizePile-1));
+        return this.pileCarte.get(sizePile-1);
+    }
 }
