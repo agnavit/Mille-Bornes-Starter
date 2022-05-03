@@ -45,6 +45,16 @@ public class Partie {
         this.observers.forEach(obs -> obs.update(partie));
     }
 
+    public void suppPartieObserver(Joueur joueur, ArrayList<Partie> listePartie) {
+        for (Partie partie : listePartie) {
+            if (partie.getListejoueur().get(0).getPseudo() == joueur.getPseudo()) {
+                listePartie.remove(partie);
+                break;
+            }
+        }
+        this.observers.forEach(obs -> obs.updateListBox(listePartie));
+    }
+
     public String toString() {
         return this.getListejoueur().get(0).getPseudo();
     }

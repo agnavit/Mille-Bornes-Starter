@@ -43,6 +43,8 @@ public class PartyView extends HtmlContainer implements Observer {
     ListBox<Partie> listBox = new ListBox<>();
     RadioButtonGroup<Partie> radioGroup = new RadioButtonGroup<>();
 
+    ArrayList<Partie> listePartie = new ArrayList<>();
+
     public Carte carteChoisie = null;
     public PartieService partieService = new PartieService();
 
@@ -167,13 +169,14 @@ public class PartyView extends HtmlContainer implements Observer {
 
         joinGameButton.getElement().addEventListener("click", event -> {
             partieService.connectJoueur(listBox.getValue(), player);
-            UI.getCurrent().navigate("/test?id=3");
+            UI.getCurrent().navigate("/test");
         });
 
         cancelCreateGameButton.getElement().addEventListener("click", event -> {
             container.remove(cancelCreateGameButton);
             container.add(createGameButton);
             joinPartyTab.setEnabled(true);
+            party.suppPartieObserver(player, listePartie);
         });
 
         container.add(playerChoice, createGameButton);
@@ -202,11 +205,23 @@ public class PartyView extends HtmlContainer implements Observer {
 
     public void update(Partie partie) {
         ui.access(() -> {
-            listBox.setItems(partie);
+            listePartie.add(partie);
+            listBox.setItems(listePartie);
             listBox.setRenderer(new ComponentRenderer<>(parti -> {
                 Span pseudo = new Span(new Text(parti.getListejoueur().get(0).getPseudo()));
                 return new Div(new HorizontalLayout(pseudo));
             }));
+            listBox.getDataProvider().refreshAll();
+        });
+    }
+    public void updateListBox(ArrayList<Partie> listePartie) {
+        ui.access(() -> {
+            listBox.setItems(listePartie);
+            listBox.setRenderer(new ComponentRenderer<>(parti -> {
+                Span pseudo = new Span(new Text(parti.getListejoueur().get(0).getPseudo()));
+                return new Div(new HorizontalLayout(pseudo));
+            }));
+            listBox.getDataProvider().refreshAll();
         });
     }
 
