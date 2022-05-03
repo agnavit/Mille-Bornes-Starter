@@ -20,10 +20,6 @@ public class Deck {
         mainJoueur = new ArrayList<Carte>();
     }
 
-    public ArrayList<Carte> getMainJoueur() {
-        return mainJoueur;
-    }
-
     @Override
     public String toString() {
         return "Deck{" +

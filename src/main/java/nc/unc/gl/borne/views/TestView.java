@@ -9,16 +9,32 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import lombok.Data;
 import nc.unc.gl.borne.carte.Carte;
+import nc.unc.gl.borne.partie.Partie;
+import nc.unc.gl.borne.partie.PartieService;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
-@Route(value = "test")
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
+@Route(value = "/test")
 @Tag("test")
 @StyleSheet("css/test.css")
 @Data
 public class TestView extends HtmlContainer {
 
     public Carte carteChoisie = null;
+    PartieService partieService = new PartieService();
+    String idPartie;
 
-    public TestView(){
+    public TestView() {
+        //partieService.lancerPartie();
+        this.add(idPartie);
 
         VerticalLayout container = new VerticalLayout();
         container.setSpacing(true);

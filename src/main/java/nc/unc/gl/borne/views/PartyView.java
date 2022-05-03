@@ -14,19 +14,23 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.TabVariant;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import lombok.Data;
 import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.partie.Partie;
+import nc.unc.gl.borne.partie.PartieService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Route(value = "party")
 @Tag("party")
@@ -36,8 +40,13 @@ public class PartyView extends HtmlContainer implements Observer {
 
     private final UI ui;
     private static Partie party = new Partie();
-    ListBox<String> listBox = new ListBox<>();
+    ListBox<Partie> listBox = new ListBox<>();
+    RadioButtonGroup<Partie> radioGroup = new RadioButtonGroup<>();
+
+    ArrayList<Partie> listePartie = new ArrayList<>();
+
     public Carte carteChoisie = null;
+    public PartieService partieService = new PartieService();
 
     public PartyView(){
 
@@ -146,7 +155,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
         Dialog loading = new Dialog();
 
-        VerticalLayout loadingLayout = showLoading(loading);
+        VerticalLayout loadingLayout = showLoading();
         loading.add(loadingLayout);
 
         createGameButton.getElement().addEventListener("click", event -> {
@@ -158,12 +167,16 @@ public class PartyView extends HtmlContainer implements Observer {
             loading.open();
         });
 
-        joinGameButton.getElement().addEventListener("click", event -> UI.getCurrent().navigate("test"));
+        joinGameButton.getElement().addEventListener("click", event -> {
+            partieService.connectJoueur(listBox.getValue(), player);
+            UI.getCurrent().navigate("/test");
+        });
 
         cancelCreateGameButton.getElement().addEventListener("click", event -> {
             container.remove(cancelCreateGameButton);
             container.add(createGameButton);
             joinPartyTab.setEnabled(true);
+            party.suppPartieObserver(player, listePartie);
         });
 
         container.add(playerChoice, createGameButton);
@@ -192,11 +205,27 @@ public class PartyView extends HtmlContainer implements Observer {
 
     public void update(Partie partie) {
         ui.access(() -> {
-            listBox.setItems(partie.getListejoueur().get(0).getPseudo());
+            listePartie.add(partie);
+            listBox.setItems(listePartie);
+            listBox.setRenderer(new ComponentRenderer<>(parti -> {
+                Span pseudo = new Span(new Text(parti.getListejoueur().get(0).getPseudo()));
+                return new Div(new HorizontalLayout(pseudo));
+            }));
+            listBox.getDataProvider().refreshAll();
+        });
+    }
+    public void updateListBox(ArrayList<Partie> listePartie) {
+        ui.access(() -> {
+            listBox.setItems(listePartie);
+            listBox.setRenderer(new ComponentRenderer<>(parti -> {
+                Span pseudo = new Span(new Text(parti.getListejoueur().get(0).getPseudo()));
+                return new Div(new HorizontalLayout(pseudo));
+            }));
+            listBox.getDataProvider().refreshAll();
         });
     }
 
-    public static VerticalLayout showLoading(Dialog loading){
+    public static VerticalLayout showLoading(){
         VerticalLayout loadingLayout = new VerticalLayout();
         Div loadingDiv = new Div();
         loadingDiv.addClassName("lds-dual-ring");
