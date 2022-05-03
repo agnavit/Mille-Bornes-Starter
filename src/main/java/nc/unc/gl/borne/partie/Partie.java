@@ -44,4 +44,8 @@ public class Partie {
         Partie partie = new Partie(listeJoueurs, 2, 1);
         this.observers.forEach(obs -> obs.update(partie));
     }
+
+    public String toString() {
+        return this.getListejoueur().get(0).getPseudo();
+    }
 }
