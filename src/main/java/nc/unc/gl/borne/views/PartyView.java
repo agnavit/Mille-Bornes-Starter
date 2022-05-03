@@ -225,12 +225,10 @@ public class PartyView extends HtmlContainer implements Observer {
             listBox.getDataProvider().refreshAll();
         });
     }
-
-    @Override
     public void updateFenetre(GameView gameView) {
         ui.access(() -> {
-            this.removeAll();
-            this.add(gameView);
+            removeAll();
+            add(gameView);
         });
     }
 

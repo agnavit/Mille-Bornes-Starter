@@ -10,8 +10,8 @@ import nc.unc.gl.borne.partie.Partie;
 public class GameView extends HtmlContainer {
 
     public GameView(Partie partie, Joueur joueur) {
-        this.add("Joueur 1: " + partie.getListejoueur().get(0).getPseudo());
-        this.add("Joueur 2: " + partie.getListejoueur().get(1).getPseudo());
-        this.add("fenétre du joueur" + joueur.getPseudo());
+        add("Joueur 1: " + partie.getListejoueur().get(0).getPseudo());
+        add("Joueur 2: " + partie.getListejoueur().get(1).getPseudo());
+        add("fenétre du joueur" + joueur.getPseudo());
     }
 }
