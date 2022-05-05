@@ -1,5 +1,6 @@
 package nc.unc.gl.borne;
 
+import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.views.GameView;
 
@@ -11,5 +12,5 @@ public interface Observer {
 
     void updateListBox(ArrayList<Partie> listePartie);
 
-    void updateFenetre(GameView gameView);
+    void updateFenetre(Joueur player);
 }

@@ -49,6 +49,7 @@ public class PartyView extends HtmlContainer implements Observer {
     public Carte carteChoisie = null;
     public PartieService partieService = new PartieService();
     VerticalLayout container = new VerticalLayout();
+    Dialog loading = new Dialog();
 
     public PartyView(){
 
@@ -154,8 +155,6 @@ public class PartyView extends HtmlContainer implements Observer {
             container.add(listBox, joinGameButton);
         });
 
-        Dialog loading = new Dialog();
-
         VerticalLayout loadingLayout = showLoading();
         loading.add(loadingLayout);
 
@@ -170,9 +169,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
         joinGameButton.getElement().addEventListener("click", event -> {
             partieService.connectJoueur(listBox.getValue(), player);
-            UI.getCurrent().navigate(GameView.class);
-            //GameView gameView = new GameView(partieService.getPartieJoueur(player, listePartie), player);
-            //party.modifFenetreLancementPartie(gameView);
+            party.modifFenetreLancementPartie(player);
         });
 
         cancelCreateGameButton.getElement().addEventListener("click", event -> {
@@ -228,10 +225,10 @@ public class PartyView extends HtmlContainer implements Observer {
             listBox.getDataProvider().refreshAll();
         });
     }
-    public void updateFenetre(GameView gameView) {
+    public void updateFenetre(Joueur player) {
         ui.access(() -> {
-            container.removeAll();
-            container.add(gameView);
+            loading.close();
+            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId());
         });
     }
 
