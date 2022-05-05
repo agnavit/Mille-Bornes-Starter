@@ -57,8 +57,7 @@ public class Partie {
         this.observers.forEach(obs -> obs.updateListBox(listePartie));
     }
 
-    public void modifFenetreLancementPartie(Joueur player, ArrayList<Partie> listePartie) {
-        GameView gameView = new GameView(partieService.getPartieJoueur(player, listePartie), player);
+    public void modifFenetreLancementPartie(GameView gameView) {
         this.observers.forEach(obs -> obs.updateFenetre(gameView));
     }
 

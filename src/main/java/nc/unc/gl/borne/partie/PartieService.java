@@ -66,4 +66,8 @@ public class PartieService {
     public void connectJoueur(Partie partie, Joueur joueur) {
         partie.getListejoueur().add(joueur);
     }
+
+    /*public Partie getPartie(String idPartie) {
+
+    }*/
 }

@@ -60,4 +60,7 @@ public class Joueur {
         this.plateau.getPile(TypePile.BATAILLE).empiler(new Carte(NomCarte.FEU, TypeCarte.PARADE, 1));
     }
 
+    public Joueur() {
+    }
+
 }
