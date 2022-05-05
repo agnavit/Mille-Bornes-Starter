@@ -1,13 +1,14 @@
-package nc.unc.gl.borne.views;
+package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.carte.NomCarte;
 import nc.unc.gl.borne.carte.TypeCarte;
 import nc.unc.gl.borne.joueur.Joueur;
+import nc.unc.gl.borne.views.game.ActionLayout;
+import nc.unc.gl.borne.views.game.DeckLayout;
 
 @Route("testFooterLayout")
 public class FooterLayout extends HorizontalLayout {

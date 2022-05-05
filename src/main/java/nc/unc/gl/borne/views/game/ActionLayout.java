@@ -1,4 +1,4 @@
-package nc.unc.gl.borne.views;
+package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
