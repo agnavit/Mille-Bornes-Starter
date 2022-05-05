@@ -4,6 +4,7 @@ import lombok.Data;
 import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.carte.PileCarte;
 import nc.unc.gl.borne.joueur.Joueur;
+import nc.unc.gl.borne.views.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class Partie {
     private PileCarte pioche;
     private PileCarte defausse;
     private int id;
+    public PartieService partieService = new PartieService();
 
     public Partie(){
     }
@@ -53,6 +55,10 @@ public class Partie {
             }
         }
         this.observers.forEach(obs -> obs.updateListBox(listePartie));
+    }
+
+    public void modifFenetreLancementPartie(Joueur player) {
+        this.observers.forEach(obs -> obs.updateFenetre(player));
     }
 
     public String toString() {

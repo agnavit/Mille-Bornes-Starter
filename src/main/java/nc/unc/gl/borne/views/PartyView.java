@@ -21,6 +21,7 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
 import lombok.Data;
 import nc.unc.gl.borne.Observer;
@@ -47,24 +48,25 @@ public class PartyView extends HtmlContainer implements Observer {
 
     public Carte carteChoisie = null;
     public PartieService partieService = new PartieService();
+    VerticalLayout container = new VerticalLayout();
+    Dialog loading = new Dialog();
 
     public PartyView(){
 
         // On stocke l'UI pour pouvoir faire des UI.access()
         this.ui = UI.getCurrent();
 
-        VerticalLayout container = new VerticalLayout();
         container.setSpacing(true);
         container.setAlignItems(FlexComponent.Alignment.CENTER);
 
         Image image = new Image("cartes/back.png", "header");
 
         container.add(image);
-        createPlayer(container);
+        createPlayer();
         add(container);
     }
 
-    private void createPlayer(VerticalLayout container){
+    private void createPlayer(){
 
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSpacing(true);
@@ -153,8 +155,6 @@ public class PartyView extends HtmlContainer implements Observer {
             container.add(listBox, joinGameButton);
         });
 
-        Dialog loading = new Dialog();
-
         VerticalLayout loadingLayout = showLoading();
         loading.add(loadingLayout);
 
@@ -169,7 +169,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
         joinGameButton.getElement().addEventListener("click", event -> {
             partieService.connectJoueur(listBox.getValue(), player);
-            UI.getCurrent().navigate("/test");
+            party.modifFenetreLancementPartie(player);
         });
 
         cancelCreateGameButton.getElement().addEventListener("click", event -> {
@@ -214,6 +214,7 @@ public class PartyView extends HtmlContainer implements Observer {
             listBox.getDataProvider().refreshAll();
         });
     }
+
     public void updateListBox(ArrayList<Partie> listePartie) {
         ui.access(() -> {
             listBox.setItems(listePartie);
@@ -222,6 +223,12 @@ public class PartyView extends HtmlContainer implements Observer {
                 return new Div(new HorizontalLayout(pseudo));
             }));
             listBox.getDataProvider().refreshAll();
+        });
+    }
+    public void updateFenetre(Joueur player) {
+        ui.access(() -> {
+            loading.close();
+            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId());
         });
     }
 
