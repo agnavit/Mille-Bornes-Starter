@@ -1,6 +1,9 @@
 package nc.unc.gl.borne.plateau;
 
 import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.carte.enumerations.NomCarte;
+import nc.unc.gl.borne.carte.enumerations.TypeCarte;
+import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.joueur.Joueur;
 
 import java.util.concurrent.atomic.AtomicInteger;

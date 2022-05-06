@@ -19,7 +19,7 @@ public class PartieService {
         partie.getPioche().setPileCarte(jeuComplet.getJeuComplet());
         //distribution de feu vert à mes joueur
         partie.getListejoueur().forEach(j -> j.getMain().getMainJoueur().add(partie.getPioche().depiler()));
-        partie.getPioche().melangerPioche();
+        partie.getPioche().melanger();
         distribuerCarte(partie);
         determinerOrdrePassage(partie);
         while (partie.getPioche().getPileCarte().size() != 0 || score.get() != 1000) {

@@ -1,8 +1,8 @@
-package nc.unc.gl.borne.carte;
+package nc.unc.gl.borne.carte.enumerations;
 
-public enum EnumCard {
+public enum CartesJeu {
 
-    ATTAQUE_ACCIDENT(NomCarte.ACCIDENT, 3,TypeCarte.ATTAQUE, "attaque_accident.jpeg"),
+    ATTAQUE_ACCIDENT(NomCarte.ACCIDENT, 3, TypeCarte.ATTAQUE, "attaque_accident.jpeg"),
     ATTAQUE_CREVAISON(NomCarte.CREVAISON, 3,TypeCarte.ATTAQUE, "attaque_crevaison.jpeg"),
     ATTAQUE_ESSENCE(NomCarte.ESSENCE, 3,TypeCarte.ATTAQUE, "attaque_essence.jpeg"),
     ATTAQUE_FEU(NomCarte.FEU, 5,TypeCarte.ATTAQUE, "attaque_feu.jpeg"),
@@ -22,15 +22,15 @@ public enum EnumCard {
     PARADE_FEU(NomCarte.FEU, 14,TypeCarte.PARADE, "parade_feu.jpeg"),
     PARADE_VITESSE(NomCarte.VITESSE, 6,TypeCarte.PARADE, "parade_vitesse.jpeg");
 
-    public final NomCarte nameCard;
-    public final int numberCard;
-    public final TypeCarte typeCarte;
-    public final String imageCard;
+    public final NomCarte nom;
+    public final int nombreCartes;
+    public final TypeCarte type;
+    public final String image;
 
-    EnumCard(NomCarte nameCard, int numberCard, TypeCarte typeCarte, String imageCard){
-        this.nameCard = nameCard;
-        this.numberCard = numberCard;
-        this.typeCarte = typeCarte;
-        this.imageCard = imageCard;
+    CartesJeu(NomCarte nom, int nombreCartes, TypeCarte type, String image){
+        this.nom = nom;
+        this.nombreCartes = nombreCartes;
+        this.type = type;
+        this.image = image;
     }
 }

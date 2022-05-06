@@ -1,7 +1,7 @@
 package nc.unc.gl.borne.plateau;
 
 import nc.unc.gl.borne.carte.PileCarte;
-import nc.unc.gl.borne.carte.TypePile;
+import nc.unc.gl.borne.carte.enumerations.TypePile;
 
 import java.util.HashMap;
 

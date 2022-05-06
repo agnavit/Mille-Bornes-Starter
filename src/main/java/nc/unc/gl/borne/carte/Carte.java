@@ -1,44 +1,35 @@
 package nc.unc.gl.borne.carte;
 
 import lombok.Data;
+import nc.unc.gl.borne.carte.enumerations.NomCarte;
+import nc.unc.gl.borne.carte.enumerations.TypeCarte;
 
 import java.util.Locale;
 
-/**
- * Description d'une carte du jeu du 1000 bornes
- *
- */
 @Data
 public class Carte {
-    /**
-     * Nom
-     */
     private NomCarte nom;
-
-    /**
-     * Type
-     */
     private TypeCarte type;
+    private int identifiant;
 
-    /**
-     * Numéro (unique)
-     */
-    private int numero;
-
-    /**
-     * Constructeur
-     * @param nom nom de la carte
-     * @param type type de la carte
-     * @param numero numéro de la carte
-     */
-    public Carte(NomCarte nom, TypeCarte type, int numero) {
+    public Carte(NomCarte nom, TypeCarte type, int identifiant) {
         this.nom = nom;
         this.type = type;
-        this.numero = numero;
+        this.identifiant = identifiant;
     }
 
     public TypeCarte getType() {
         return type;
+    }
+
+    public NomCarte getNom() {return nom;}
+
+    public int getIdentifiant() {return identifiant;}
+
+    public String getStringImage(){
+        String nomString = String.valueOf(nom).toLowerCase(Locale.ROOT);
+        String typeString = String.valueOf(type).toLowerCase(Locale.ROOT);
+        return typeString+"_"+nomString+".jpeg";
     }
 
     @Override
@@ -46,7 +37,7 @@ public class Carte {
         return "Carte{" +
             "nom=" + nom +
             ", type=" + type +
-            ", numero=" + numero +
+            ", identifiant=" + identifiant +
             '}';
     }
 
@@ -58,9 +49,4 @@ public class Carte {
         return nom == carte.nom && type == carte.type;
     }
 
-    public String getStringImage(){
-        String nomString = String.valueOf(nom).toLowerCase(Locale.ROOT);
-        String typeString = String.valueOf(type).toLowerCase(Locale.ROOT);
-        return typeString+"_"+nomString+".jpeg";
-    }
 }
