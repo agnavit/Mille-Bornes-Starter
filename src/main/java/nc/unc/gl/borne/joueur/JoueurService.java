@@ -198,4 +198,7 @@ public class JoueurService {
         return player.getMain().getMainJoueur().get(number);
     }
 
+    public Carte getLastCardInPile(Joueur player, TypePile typePile){
+        return player.getPlateau().getPile(typePile).getSommet();
+    }
 }

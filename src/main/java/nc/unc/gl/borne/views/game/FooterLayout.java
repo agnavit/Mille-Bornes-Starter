@@ -3,6 +3,7 @@ package nc.unc.gl.borne.views.game;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -67,7 +68,6 @@ public class FooterLayout extends HorizontalLayout {
                         selectedCard,
                         myPlayer
                     );
-
                 } else if (selectedCard.getType() == TypeCarte.ATTAQUE) {
                     playerService.attaquer(
                         selectedCard,
@@ -109,9 +109,10 @@ public class FooterLayout extends HorizontalLayout {
         footerLayout.removeAll();
 
         Button putCardButton = new Button("Poser");
-        putCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_CONTRAST);
+        putCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+
         Button throwCardButton = new Button("Jeter");
-        throwCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_CONTRAST);
+        throwCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
 
         putCardButton.setEnabled(false);
         throwCardButton.setEnabled(false);
@@ -128,7 +129,7 @@ public class FooterLayout extends HorizontalLayout {
             Image image = new Image(
                 "cartes/" + playerService.getCardInDeck(myPlayer,i).getStringImage(),
                 String.valueOf(playerService.getCardInDeck(myPlayer,i)));
-            image.addClassName("image-deck");
+            image.addClassName("card-deck");
 
             deckPlayerImage.add(image);
 
@@ -136,7 +137,7 @@ public class FooterLayout extends HorizontalLayout {
             int j = i;
             deckPlayerImage.get(i).addClickListener(
                 click -> {
-                    chosenCard.getElement().getStyle().set("border-color", "gold");
+                    chosenCard.getElement().getStyle().set("border-color", "white");
                     System.out.println("Le joueur: " + myPlayer.getPseudo() + " a choisi la carte " + chosenCard.getAlt());
                     Carte selectedCard = new Carte(
                         playerService.getCardInDeck(myPlayer,j).getNom(),
@@ -157,6 +158,14 @@ public class FooterLayout extends HorizontalLayout {
         }
 
         footerLayout.add(deckLayout, buttonsLayout);
+
+        footerLayout.getStyle()
+            .set("border-radius", "10px")
+            .set("padding", "20px")
+            //.set("height", "14em")
+            .set("box-shadow", "0px 6px 10px rgba(0, 0, 0, 0.25)")
+            .set("background", "linear-gradient(to right, #feada6, #f5efef)");
+
         add(footerLayout);
     }
 }

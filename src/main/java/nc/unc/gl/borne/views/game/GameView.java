@@ -29,6 +29,19 @@ public class GameView extends VerticalLayout implements HasUrlParameter<String>,
         add("Joueur 2: " + partie.getListejoueur().get(1).getPseudo());
         add("fenétre du joueur" + joueur.getPseudo());*/
         party.getAllPlayer(idPartie);
+        PlateauLayout plateauLayout = new PlateauLayout();
+        PlateauLayout plateauLayout2 = new PlateauLayout();
+        FooterLayout footerLayout = new FooterLayout();
+
+        VerticalLayout layout = new VerticalLayout();
+
+        layout.add(plateauLayout, plateauLayout2, footerLayout);
+        layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
+        layout.setAlignItems(Alignment.CENTER);
+
+        add(layout);
+
+        //add(String.valueOf(party.getListejoueur()));
     }
 
     @Override

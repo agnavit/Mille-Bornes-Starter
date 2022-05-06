@@ -1,12 +1,4 @@
-.image-deck {
-    border: solid 4px;
-    width: 100px;
-}
-
-.image-deck:hover {
-}
-
-img {
-    border: solid 4px;
-    width: 100px;
+.card-deck {
+    border: solid #ff7a6e 4px;
+    width: 120px;
 }

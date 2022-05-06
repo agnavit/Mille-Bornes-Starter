@@ -1,13 +1,10 @@
 .image-deck {
-    border: solid 4px;
+    border: solid #ff7a6e 4px;
     width: 100px;
 }
 
-.image-deck:hover {
-}
-
 img {
-    border: solid 4px;
+    border: solid #ff7a6e 4px;
     width: 100px;
 }
 
@@ -15,18 +12,35 @@ img {
     border-radius: 10px;
     height: 14em;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
-    background: radial-gradient(#fbc1cc, #fa99b2);
+    background: linear-gradient(to bottom, #feada6, #f5efef);
 }
 
-div p {
+.piles-cards h3 {
     position: relative;
-    bottom: 100px;
-    left: 50px;
-    background-color: #ff9999;
-    border: solid 4px;
+    bottom: 33px;
+}
+
+.piles-cards img{
+    position: relative;
+    bottom: 45px;
+}
+
+div h4 {
+    color: #ff7a6e;
+    text-shadow: 0 0 8px white;
+    position: relative;
+    bottom: 155px;
+    left: 42px;
+    background-color: #fac3be;
+    border: solid 3px;
     border-radius: 30px;
-    border-color: #c20000;
+    border-color: #ff7a6e;
     text-align: center;
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 28px;
+    margin-right: 28px;
+}
+
+h3 {
+    color: #ff7a6e;
+    text-shadow: 0 0 6px white;
 }
