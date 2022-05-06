@@ -19,7 +19,6 @@ public class DeckTest {
     @Test
     void ajouter(){
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        Deck deck = new Deck();
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
@@ -34,7 +33,6 @@ public class DeckTest {
     @Test
     void enlever(){
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        Deck deck = new Deck();
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
@@ -49,7 +47,6 @@ public class DeckTest {
     void contains(){
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
         Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 1);
-        Deck deck = new Deck();
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);

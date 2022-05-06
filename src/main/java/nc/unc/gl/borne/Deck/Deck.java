@@ -13,6 +13,10 @@ public class Deck {
         mainJoueur = new ArrayList<Carte>();
     }
 
+    public int getTaille(){
+        return mainJoueur.size();
+    }
+
     @Override
     public String toString() {
         return "Deck{" +
