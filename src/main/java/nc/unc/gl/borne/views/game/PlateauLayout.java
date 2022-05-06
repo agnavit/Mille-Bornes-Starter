@@ -3,6 +3,7 @@ package nc.unc.gl.borne.views.game;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -11,7 +12,7 @@ import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
 
 @Route("testPlateauLayout")
-@StyleSheet("css/decklayout.css")
+@StyleSheet("css/plateau.css")
 public class PlateauLayout extends HorizontalLayout {
 
     Carte carte1 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
@@ -76,43 +77,43 @@ public class PlateauLayout extends HorizontalLayout {
 
         Div vingtCinq = new Div();
         vingtCinq.add(new Image("cartes/borne_vingt_cinq.jpeg","cartes/borne_vingt_cinq"));
-        vingtCinq.add(String
+        vingtCinq.add(new Paragraph(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.VINGT_CINQ, TypeCarte.BORNE, 0))));
+                .getNbCartePile(new Carte(NomCarte.VINGT_CINQ, TypeCarte.BORNE, 0)))));
 
         Div cinquante = new Div();
         cinquante.add(new Image("cartes/borne_cinquante.jpeg","cartes/borne_cinquante"));
-        cinquante.add(String
+        cinquante.add(new Paragraph(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.CINQUANTE, TypeCarte.BORNE, 0))));
+                .getNbCartePile(new Carte(NomCarte.CINQUANTE, TypeCarte.BORNE, 0)))));
 
         Div soixanteQuinze = new Div();
         soixanteQuinze.add(new Image("cartes/borne_soixante_quinze.jpeg","cartes/borne_soixante_quinze"));
-        soixanteQuinze.add(String
+        soixanteQuinze.add(new Paragraph(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.SOIXANTE_QUINZE, TypeCarte.BORNE, 0))));
+                .getNbCartePile(new Carte(NomCarte.SOIXANTE_QUINZE, TypeCarte.BORNE, 0)))));
 
         Div cent = new Div();
         cent.add(new Image("cartes/borne_cent.jpeg","cartes/borne_cent"));
-        cent.add(String
+        cent.add(new Paragraph(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.CENT, TypeCarte.BORNE, 0))));
+                .getNbCartePile(new Carte(NomCarte.CENT, TypeCarte.BORNE, 0)))));
 
         Div deuxCents = new Div();
         deuxCents.add(new Image("cartes/borne_deux_cents.jpeg","cartes/borne_deux_cents"));
-        deuxCents.add(String
+        deuxCents.add(new Paragraph(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 0))));
+                .getNbCartePile(new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 0)))));
 
         pileBornesCartes.add(vingtCinq, cinquante, soixanteQuinze, cent, deuxCents);
 
@@ -131,6 +132,15 @@ public class PlateauLayout extends HorizontalLayout {
                 .getStringImage(),
                 "carte/carteBottes"));
         }
+
+        pileVitesse.addClassName("piles-cards");
+
+        pileBataille.addClassName("piles-cards");
+
+        pileBornes.addClassName("piles-cards");
+
+        pileBottes.addClassName("piles-cards");
+
 
         add(pileVitesse, pileBataille, pileBornes, pileBottes);
     }

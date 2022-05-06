@@ -12,6 +12,7 @@ import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
+import nc.unc.gl.borne.views.TopLayout;
 
 @Tag("game")
 @Route("game")
@@ -30,6 +31,15 @@ public class GameView extends VerticalLayout implements HasUrlParameter<String>{
         joueurDao.findAll().forEach(j -> {
             add(j.getPseudo());
         });
+
+        TopLayout topLayout = new TopLayout();
+
+        PlateauLayout plateauLayout = new PlateauLayout();
+        plateauLayout.getStyle().set("height", " 14em");
+
+        FooterLayout footerLayout = new FooterLayout();
+
+        add(topLayout, plateauLayout, footerLayout);
     }
 
     @Override
