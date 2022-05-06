@@ -21,7 +21,6 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
 import lombok.Data;
 import nc.unc.gl.borne.Observer;
@@ -31,12 +30,12 @@ import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
 
 import java.util.ArrayList;
-import java.util.List;
 
-@Route(value = "party")
-@Tag("party")
+
 @Data
-@StyleSheet("css/partyview.css")
+@Tag("party")
+@Route(value = "party")
+@StyleSheet("css/party.css")
 public class PartyView extends HtmlContainer implements Observer {
 
     private final UI ui;
@@ -53,7 +52,6 @@ public class PartyView extends HtmlContainer implements Observer {
 
     public PartyView(){
 
-        // On stocke l'UI pour pouvoir faire des UI.access()
         this.ui = UI.getCurrent();
 
         container.setSpacing(true);
@@ -94,7 +92,6 @@ public class PartyView extends HtmlContainer implements Observer {
             String username = userNameField.getValue();
             Integer ageUser = ageUserField.getValue();
 
-            // Création du joueur
             Joueur player = new Joueur(this.hashCode(), username, ageUser);
 
             System.out.println(username + " viens de choisir sont pseudo, il a " + ageUser + " ans " + this.hashCode());
@@ -193,6 +190,15 @@ public class PartyView extends HtmlContainer implements Observer {
         return icon;
     }
 
+    public static VerticalLayout showLoading(){
+        VerticalLayout loadingLayout = new VerticalLayout();
+        Div loadingImage = new Div();
+        Text loadingText = new Text("Votre partie à été créé !\nEn attente de joueur");
+        loadingImage.addClassName("lds-dual-ring");
+        loadingLayout.add(loadingImage, loadingText);
+        return loadingLayout;
+    }
+
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         party.addObserveur(this);
@@ -225,23 +231,12 @@ public class PartyView extends HtmlContainer implements Observer {
             listBox.getDataProvider().refreshAll();
         });
     }
-    public void updateFenetre(Joueur player) {
+
+    public void updateWindow(Joueur player) {
         ui.access(() -> {
             loading.close();
             UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId());
         });
-    }
-
-    public static VerticalLayout showLoading(){
-        VerticalLayout loadingLayout = new VerticalLayout();
-        Div loadingDiv = new Div();
-        loadingDiv.addClassName("lds-dual-ring");
-        loadingDiv.getStyle().set("padding-left", "110px");
-        Text partieCree = new Text("Votre partie à été créé !");
-        Text attente = new Text("\nEn attente de joueur");
-        loadingLayout.add(loadingDiv, partieCree);
-        loadingLayout.add(attente);
-        return loadingLayout;
     }
 }
 

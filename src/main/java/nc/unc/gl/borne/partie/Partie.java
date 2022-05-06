@@ -4,7 +4,6 @@ import lombok.Data;
 import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.carte.PileCarte;
 import nc.unc.gl.borne.joueur.Joueur;
-import nc.unc.gl.borne.views.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +57,7 @@ public class Partie {
     }
 
     public void modifFenetreLancementPartie(Joueur player) {
-        this.observers.forEach(obs -> obs.updateFenetre(player));
+        this.observers.forEach(obs -> obs.updateWindow(player));
     }
 
     public String toString() {
