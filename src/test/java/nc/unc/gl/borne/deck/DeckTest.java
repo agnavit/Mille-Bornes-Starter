@@ -1,7 +1,8 @@
-package nc.unc.gl.borne.carte;
+package nc.unc.gl.borne.deck;
 
 import nc.unc.gl.borne.Deck.Deck;
 import nc.unc.gl.borne.Deck.DeckService;
+import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.carte.enumerations.NomCarte;
 import nc.unc.gl.borne.carte.enumerations.TypeCarte;
 import nc.unc.gl.borne.joueur.Joueur;

@@ -7,15 +7,8 @@ import java.util.ArrayList;
 
 @Data
 public class Deck {
-
-    /**
-     * Main d'un joueur
-     */
     private ArrayList<Carte> mainJoueur;
 
-    /**
-     * Constructeur vide
-     */
     public Deck() {
         mainJoueur = new ArrayList<Carte>();
     }
