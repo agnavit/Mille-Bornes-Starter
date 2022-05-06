@@ -28,6 +28,10 @@ import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
+import java.sql.SQLException;
+import nc.unc.gl.borne.dao.connection.ConnectionHolder;
+import nc.unc.gl.borne.dao.connection.SchemaInitializer;
+import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 
 import java.util.ArrayList;
 
@@ -49,6 +53,7 @@ public class PartyView extends HtmlContainer implements Observer {
     public PartieService partieService = new PartieService();
     VerticalLayout container = new VerticalLayout();
     Dialog loading = new Dialog();
+    JoueurDao joueurDao = new JoueurDao();
 
     public PartyView(){
 
@@ -93,6 +98,12 @@ public class PartyView extends HtmlContainer implements Observer {
             Integer ageUser = ageUserField.getValue();
 
             Joueur player = new Joueur(this.hashCode(), username, ageUser);
+
+            try {
+                joueurDao.insertJoueur(player.getPseudo(), player.getAge());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
             System.out.println(username + " viens de choisir sont pseudo, il a " + ageUser + " ans " + this.hashCode());
             userNameField.setEnabled(false);

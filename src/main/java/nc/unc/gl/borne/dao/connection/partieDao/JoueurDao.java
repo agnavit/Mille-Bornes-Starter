@@ -20,15 +20,37 @@ public class JoueurDao {
         }
     }
 
+    public ArrayList<Joueur> findJoueurWherePartieId(String idPartie) {
+        var connexion = ConnectionHolder.INSTANCE.getConnection();
+        try (var statement = connexion.createStatement()) {
+            try (var result = statement.executeQuery("select * from joueur where IDPARTIE = " + idPartie + ";")) {
+                return processResultSet(result);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void insertJoueur(String pseudoJoueur, int ageJoueur) throws SQLException {
+        var connection = ConnectionHolder.INSTANCE.getConnection();
+        try (var statement = connection.prepareStatement("INSERT INTO joueur ( PSEUDOJOUEUR, AGEJOUEUR, IDPARTIE) VALUES (?, ?, ?)")) {
+            //statement.setString(1, "0");
+            statement.setString(1, pseudoJoueur);
+            statement.setInt(2, ageJoueur);
+            statement.setString(3, "1");
+            statement.execute();
+        }
+    }
+
     private ArrayList<Joueur> processResultSet(ResultSet result) throws SQLException {
         ArrayList<Joueur> listeJoueur = new ArrayList<>();
         while (result.next()) {
             Joueur joueur = new Joueur();
-            var id = result.getInt(1);
-            var pseudo = result.getString(2);
-            var age = result.getInt(3);
-            var idPartie = result.getInt(4);
-            joueur.setId(id);
+            //var id = result.getInt(1);
+            var pseudo = result.getString(1);
+            var age = result.getInt(2);
+            var idPartie = result.getInt(3);
+            joueur.setId(0);
             joueur.setPseudo(pseudo);
             joueur.setAge(age);
             listeJoueur.add(joueur);

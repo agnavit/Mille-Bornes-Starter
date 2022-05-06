@@ -8,8 +8,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.joueur.Joueur;
 
-@Route("test3")
-@Tag("test3")
+@Route("testTopLayout")
+@Tag("testTopLayout")
 @StyleSheet("css/toplayout.css")
 public class TopLayout extends VerticalLayout {
 

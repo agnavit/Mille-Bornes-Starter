@@ -2,6 +2,7 @@ package nc.unc.gl.borne.partie;
 
 import lombok.Data;
 import nc.unc.gl.borne.Observer;
+import nc.unc.gl.borne.ObserverPartie;
 import nc.unc.gl.borne.carte.PileCarte;
 import nc.unc.gl.borne.joueur.Joueur;
 
@@ -12,12 +13,21 @@ import java.util.List;
 public class Partie {
 
     private final List<Observer> observers = new ArrayList<>();
+    private final List<ObserverPartie> observersPartie = new ArrayList<>();
 
     public void addObserveur(Observer obs) {
         this.observers.add(obs);
     }
 
+    public void addObserveurPartie(ObserverPartie obsPartie) {
+        this.observersPartie.add(obsPartie);
+    }
+
     public void removeObserveur(Observer obs) {
+        this.observers.remove(obs);
+    }
+
+    public void removeObserveurPartie(ObserverPartie obs) {
         this.observers.remove(obs);
     }
 
@@ -62,5 +72,9 @@ public class Partie {
 
     public String toString() {
         return this.getListejoueur().get(0).getPseudo();
+    }
+
+    public void getAllPlayer(String idPartie) {
+        this.observersPartie.forEach(obs -> obs.updateWindowParty(idPartie));
     }
 }
