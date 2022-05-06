@@ -1,11 +1,9 @@
-package nc.unc.gl.borne.views;
+package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.joueur.Joueur;
@@ -27,7 +25,6 @@ public class TopLayout extends VerticalLayout {
 
         scoresPlayers.add(myScore, notMyScore);
         topLayout.add(new H1("Score"), scoresPlayers);
-        topLayout.getStyle().set("width", "100px");
 
         add(topLayout);
     }
