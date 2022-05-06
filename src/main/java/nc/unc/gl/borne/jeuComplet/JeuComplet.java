@@ -3,7 +3,6 @@ package nc.unc.gl.borne.jeuComplet;
 import lombok.Data;
 import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.carte.enumerations.CartesJeu;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;

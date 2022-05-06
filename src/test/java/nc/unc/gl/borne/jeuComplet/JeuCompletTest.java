@@ -1,4 +1,4 @@
-package nc.unc.gl.borne.carte;
+package nc.unc.gl.borne.jeuComplet;
 
 import nc.unc.gl.borne.jeuComplet.JeuComplet;
 import org.junit.jupiter.api.Test;
