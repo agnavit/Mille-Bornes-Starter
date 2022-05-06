@@ -152,7 +152,6 @@ public class FooterLayout extends HorizontalLayout {
             );
         }
 
-
         for(Image image: deckPlayerImage){
             deckLayout.add(image);
         }
