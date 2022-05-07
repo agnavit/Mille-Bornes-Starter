@@ -21,7 +21,7 @@ public class PlateauLayout extends HorizontalLayout {
     Carte carte1 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
     Carte carte2 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
     Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
-    Carte carte4 = new Carte(NomCarte.AS_DU_VOLANT, TypeCarte.BOTTE, 4);
+    Carte carte4 = new Carte(NomCarte.ACCIDENT, TypeCarte.BOTTE, 4);
     PileCarte defausse = new PileCarte();
 
     JoueurService playerService = new JoueurService();

@@ -68,7 +68,7 @@ public class PlateauService {
         AtomicInteger i = new AtomicInteger();
         i.set(0);
         joueur.getPlateau().getPile(TypePile.BOTTES).getPileCarte().forEach( carte -> {
-            if (carte.getNom() == NomCarte.VEHICULE_PRIORITAIRE) {
+            if (carte.getNom() == NomCarte.VITESSE) {
                 i.set(1);
             }
         });

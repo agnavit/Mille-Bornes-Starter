@@ -11,8 +11,4 @@ public enum NomCarte {
     SOIXANTE_QUINZE,
     CENT,
     DEUX_CENTS,
-    AS_DU_VOLANT,
-    CAMION_CITERNE,
-    VEHICULE_PRIORITAIRE,
-    INCREVABLE
 }

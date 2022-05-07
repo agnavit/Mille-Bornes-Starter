@@ -1,6 +1,8 @@
 package nc.unc.gl.borne.carte;
 
 import lombok.Data;
+import nc.unc.gl.borne.carte.enumerations.NomCarte;
+import nc.unc.gl.borne.carte.enumerations.TypeCarte;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,6 +80,15 @@ public class PileCarte {
             }
         }
         return res;
+    }
+
+    public boolean contientCarte(NomCarte nomCarte, TypeCarte typeCarte){
+        for(Carte carte : pileCarte) {
+            if (carte.getType() == typeCarte && carte.getNom() == nomCarte) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
