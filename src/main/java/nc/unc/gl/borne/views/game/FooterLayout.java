@@ -18,7 +18,6 @@ import nc.unc.gl.borne.plateau.Plateau;
 import java.util.ArrayList;
 
 @Route("testFooterLayout")
-@StyleSheet("css/decklayout.css")
 public class FooterLayout extends HorizontalLayout {
 
     protected DeckService deckPlayer = new DeckService();
@@ -109,10 +108,10 @@ public class FooterLayout extends HorizontalLayout {
         footerLayout.removeAll();
 
         Button putCardButton = new Button("Poser");
-        putCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+        putCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         Button throwCardButton = new Button("Jeter");
-        throwCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+        throwCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         putCardButton.setEnabled(false);
         throwCardButton.setEnabled(false);
@@ -162,9 +161,8 @@ public class FooterLayout extends HorizontalLayout {
         footerLayout.getStyle()
             .set("border-radius", "10px")
             .set("padding", "20px")
-            //.set("height", "14em")
             .set("box-shadow", "0px 6px 10px rgba(0, 0, 0, 0.25)")
-            .set("background", "linear-gradient(to right, #feada6, #f5efef)");
+            .set("background", "linear-gradient(to right, #B0C4DE, #f5efef)");
 
         add(footerLayout);
     }

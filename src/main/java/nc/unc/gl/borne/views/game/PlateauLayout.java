@@ -16,7 +16,7 @@ public class PlateauLayout extends HorizontalLayout {
     Carte carte1 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
     Carte carte2 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
     Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
-    Carte carte4 = new Carte(NomCarte.AS_DU_VOLANT, TypeCarte.BOTTE, 4);
+    //Carte carte4 = new Carte(NomCarte., TypeCarte.BOTTE, 4);
     PileCarte defausse = new PileCarte();
 
     JoueurService playerService = new JoueurService();
@@ -34,7 +34,6 @@ public class PlateauLayout extends HorizontalLayout {
         playerService.poser(carte1, defausse, player);
         playerService.poser(carte2, defausse, player);
         playerService.poser(carte3, defausse, player);
-        playerService.poser(carte4, defausse, player);
 
         // Je pose une carte dans les piles vitesse et bataille
         playerService.poser(carteVitesse, player.getPlateau().getPile(TypePile.VITESSE), player);
@@ -71,43 +70,38 @@ public class PlateauLayout extends HorizontalLayout {
 
         Div vingtCinq = new Div();
         vingtCinq.add(new Image("cartes/borne_vingt_cinq.jpeg","cartes/borne_vingt_cinq"));
-        vingtCinq.add(new H4("x " + String
-            .valueOf(
+        vingtCinq.add(new H4("x " +
                 plateau
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.VINGT_CINQ, TypeCarte.BORNE, 0)))));
+                .getNbCartePile(new Carte(NomCarte.VINGT_CINQ, TypeCarte.BORNE, 0))));
 
         Div cinquante = new Div();
         cinquante.add(new Image("cartes/borne_cinquante.jpeg","cartes/borne_cinquante"));
-        cinquante.add(new H4("x " + String
-            .valueOf(
+        cinquante.add(new H4("x " +
                 plateau
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.CINQUANTE, TypeCarte.BORNE, 0)))));
+                .getNbCartePile(new Carte(NomCarte.CINQUANTE, TypeCarte.BORNE, 0))));
 
         Div soixanteQuinze = new Div();
         soixanteQuinze.add(new Image("cartes/borne_soixante_quinze.jpeg","cartes/borne_soixante_quinze"));
-        soixanteQuinze.add(new H4("x " + String
-            .valueOf(
+        soixanteQuinze.add(new H4("x " +
                 plateau
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.SOIXANTE_QUINZE, TypeCarte.BORNE, 0)))));
+                .getNbCartePile(new Carte(NomCarte.SOIXANTE_QUINZE, TypeCarte.BORNE, 0))));
 
         Div cent = new Div();
         cent.add(new Image("cartes/borne_cent.jpeg","cartes/borne_cent"));
-        cent.add(new H4("x " + String
-            .valueOf(
+        cent.add(new H4("x " +
                 plateau
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.CENT, TypeCarte.BORNE, 0)))));
+                .getNbCartePile(new Carte(NomCarte.CENT, TypeCarte.BORNE, 0))));
 
         Div deuxCents = new Div();
         deuxCents.add(new Image("cartes/borne_deux_cents.jpeg","cartes/borne_deux_cents"));
-        deuxCents.add(new H4("x " + String
-            .valueOf(
+        deuxCents.add(new H4("x " +
                 plateau
                 .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 0)))));
+                .getNbCartePile(new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 0))));
 
         pileBornesCartes.add(vingtCinq, cinquante, soixanteQuinze, cent, deuxCents);
 
@@ -119,22 +113,17 @@ public class PlateauLayout extends HorizontalLayout {
         VerticalLayout pileBottes = new VerticalLayout();
         pileBottes.add(new H3("Bottes"));
         HorizontalLayout cards = new HorizontalLayout();
-        for (int i = 0; i < player.getPlateau().getPile(TypePile.BOTTES).getTaille(); i++)
-        {
+        for (int i = 0; i < player.getPlateau().getPile(TypePile.BOTTES).getTaille(); i++) {
             cards.add(new Image("cartes/" +plateau
                 .getPile(TypePile.BOTTES)
                 .getCarte(i)
                 .getStringImage(),
                 "carte/carteBottes"));
+
         }
 
         pileBottes.add(cards);
         pileBottes.setAlignItems(Alignment.CENTER);
-
-        pileVitesse.addClassName("piles-cards");
-        pileBataille.addClassName("piles-cards");
-        pileBornes.addClassName("piles-cards");
-        pileBottes.addClassName("piles-cards");
 
         HorizontalLayout plateau3 = new HorizontalLayout(pileVitesse, pileBataille, pileBornes, pileBottes);
         add(plateau3);

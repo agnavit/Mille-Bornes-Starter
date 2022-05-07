@@ -1,6 +1,7 @@
 package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.listbox.ListBox;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEvent;
@@ -15,6 +16,7 @@ import nc.unc.gl.borne.partie.PartieService;
 
 @Tag("game")
 @Route("game")
+@StyleSheet("css/game.css")
 public class GameView extends VerticalLayout implements HasUrlParameter<String>, ObserverPartie {
 
     public String idPartie;
@@ -30,8 +32,11 @@ public class GameView extends VerticalLayout implements HasUrlParameter<String>,
         add("fenétre du joueur" + joueur.getPseudo());*/
         party.getAllPlayer(idPartie);
         PlateauLayout plateauLayout = new PlateauLayout();
+        plateauLayout.addClassName("not-my-pile-cards");
         PlateauLayout plateauLayout2 = new PlateauLayout();
+        plateauLayout2.addClassName("my-pile-cards");
         FooterLayout footerLayout = new FooterLayout();
+        footerLayout.addClassName("my-deck");
 
         VerticalLayout layout = new VerticalLayout();
 
