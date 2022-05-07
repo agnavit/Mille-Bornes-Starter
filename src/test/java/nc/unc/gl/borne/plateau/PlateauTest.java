@@ -1,5 +1,7 @@
-package nc.unc.gl.borne.carte;
+package nc.unc.gl.borne.plateau;
 
+import nc.unc.gl.borne.carte.Carte;
+import nc.unc.gl.borne.carte.PileCarte;
 import nc.unc.gl.borne.carte.enumerations.NomCarte;
 import nc.unc.gl.borne.carte.enumerations.TypeCarte;
 import nc.unc.gl.borne.carte.enumerations.TypePile;
@@ -17,7 +19,7 @@ public class PlateauTest {
     @Test
     void getPile(){
         Plateau plateau = new Plateau();
-        assertEquals(plateau.getPile(TypePile.BATAILLE), new PileCarte());
+        Assertions.assertEquals(plateau.getPile(TypePile.BATAILLE), new PileCarte());
         assertEquals(plateau.getPile(TypePile.BOTTES), new PileCarte());
         assertEquals(plateau.getPile(TypePile.VITESSE), new PileCarte());
         assertEquals(plateau.getPile(TypePile.BATAILLE), new PileCarte());
