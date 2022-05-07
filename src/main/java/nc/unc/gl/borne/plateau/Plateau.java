@@ -2,11 +2,9 @@ package nc.unc.gl.borne.plateau;
 
 import nc.unc.gl.borne.carte.PileCarte;
 import nc.unc.gl.borne.carte.enumerations.TypePile;
-
 import java.util.HashMap;
 
 public class Plateau {
-
     /**
      * Plateau d'un joueur
      * Chaque clé de dictionnaire correspond au nom de la pile
@@ -18,11 +16,7 @@ public class Plateau {
      */
     private HashMap<TypePile, PileCarte> plateau;
 
-    /**
-     * Constructeur
-     *
-     * NB: Créer chaque clé dans le constructeur et initialiser la pile associée à vide
-     */
+
     public Plateau() {
         this.plateau = new HashMap<>();
         this.plateau.put(TypePile.VITESSE, new PileCarte());

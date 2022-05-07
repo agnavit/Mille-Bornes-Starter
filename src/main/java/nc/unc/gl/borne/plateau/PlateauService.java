@@ -1,12 +1,8 @@
 package nc.unc.gl.borne.plateau;
 
 import nc.unc.gl.borne.carte.*;
-import nc.unc.gl.borne.carte.enumerations.NomCarte;
-import nc.unc.gl.borne.carte.enumerations.TypeCarte;
 import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.joueur.Joueur;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class PlateauService {
 
@@ -33,45 +29,7 @@ public class PlateauService {
         }
     }
 
-    public boolean contains(Carte carteAChercher, Joueur joueur){
-        TypePile typePile;
-        if ((carteAChercher.getType() == TypeCarte.ATTAQUE || carteAChercher.getType() == TypeCarte.PARADE)
-            && carteAChercher.getNom() == NomCarte.VITESSE) {
-                typePile = TypePile.VITESSE;
-        } else if(carteAChercher.getType() == TypeCarte.BORNE) {
-            typePile = TypePile.BORNES;
-        } else if(carteAChercher.getType() == TypeCarte.BOTTE) {
-            typePile = TypePile.BOTTES;
-        }else {
-            typePile = TypePile.BATAILLE;
-        }
-        for (Carte carte : joueur.getPlateau().getPile(typePile).getPileCarte()) {
-            if (carte.equals(carteAChercher)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasFeuVert(Joueur joueur) {
-        AtomicInteger i = new AtomicInteger();
-        i.set(0);
-        joueur.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().forEach( carte -> {
-            if (carte.getNom() == NomCarte.FEU && carte.getType() == TypeCarte.PARADE) {
-                i.set(1);
-            }
-        });
-        return i.get() == 1;
-    }
-
-    public boolean hasBotteVehiculePrio(Joueur joueur) {
-        AtomicInteger i = new AtomicInteger();
-        i.set(0);
-        joueur.getPlateau().getPile(TypePile.BOTTES).getPileCarte().forEach( carte -> {
-            if (carte.getNom() == NomCarte.VITESSE) {
-                i.set(1);
-            }
-        });
-        return i.get() == 1;
+    public boolean contains(Carte carteAChercher, Joueur joueur, TypePile typePile){
+        return joueur.getPlateau().getPile(typePile).contientCarte(carteAChercher.getNom(), carteAChercher.getType());
     }
 }

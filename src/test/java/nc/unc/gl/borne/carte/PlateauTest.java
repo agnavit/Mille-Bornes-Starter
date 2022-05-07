@@ -25,45 +25,41 @@ public class PlateauTest {
 
     @Test
     void ajouterCartePlateau(){
-        Joueur j = new Joueur(1, "mayaSixtine", 24);
-        Plateau plateau = new Plateau();
-        Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),2);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getSommet(), carte1);
+        Joueur joueur = new Joueur(1, "mayaSixtine", 24);
+        Carte carteParadeVitesse = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 0);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteParadeVitesse, joueur);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),1);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet(), carteParadeVitesse);
     }
 
     @Test
     void enleverCartePlateau(){
-        Joueur j = new Joueur(1, "mayaSixtine", 24);
-        Plateau plateau = new Plateau();
-        Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 2);
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE,carte2, j);
-        plateauService.enleverCartePlateau(TypePile.BATAILLE, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),2);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getSommet(), carte1);
-        plateauService.enleverCartePlateau(TypePile.BATAILLE, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),1);
+        Joueur joueur = new Joueur(1, "mayaSixtine", 24);
+        Carte carteParadeVitesse = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 0);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteParadeVitesse, joueur);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE,carteParadeVitesse, joueur);
+        plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),1);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet(), carteParadeVitesse);
+        plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),0);
     }
 
     @Test
     void enleverCartesAttaqueEtParadePile(){
-        Joueur j = new Joueur(1, "mayaSixtine", 24);
-        Plateau plateau = new Plateau();
+        Joueur joueur = new Joueur(1, "mayaSixtine", 24);
         PileCarte defausse = new PileCarte();
-        Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 1);
-        Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 2);
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE,carte2, j);
-        plateauService.enleverCartesAttaqueEtParadePile(TypePile.BATAILLE, defausse, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 1);
+        Carte carteAttaqueVitesse = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 0);
+        Carte carteParadeVitesse = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 0);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteAttaqueVitesse, joueur);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE,carteParadeVitesse, joueur);
+        plateauService.enleverCartesAttaqueEtParadePile(TypePile.BATAILLE, defausse, joueur);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 0);
         assertEquals(defausse.getPileCarte().size(),2);
 
-        IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> plateauService.enleverCartesAttaqueEtParadePile(TypePile.BOTTES,defausse, j));
+        IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> plateauService.enleverCartesAttaqueEtParadePile(TypePile.BOTTES,defausse, joueur));
         Assertions.assertEquals("Erreur : le type de pile pour utiliser cette fonction doit être Bataille ou Vitesse", thrown1.getMessage());
-        IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> plateauService.enleverCartesAttaqueEtParadePile(TypePile.BORNES,defausse, j));
+        IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> plateauService.enleverCartesAttaqueEtParadePile(TypePile.BORNES,defausse, joueur));
         Assertions.assertEquals("Erreur : le type de pile pour utiliser cette fonction doit être Bataille ou Vitesse", thrown2.getMessage());
     }
 }

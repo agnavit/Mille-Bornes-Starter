@@ -24,7 +24,5 @@ public class Joueur {
         this.plateau = new Plateau();
         this.score = 0;
         this.main = new Deck();
-        // TODO cette ligne peut être enlevée non?
-//        this.plateau.getPile(TypePile.BATAILLE).empiler(new Carte(NomCarte.FEU, TypeCarte.PARADE, 1));
     }
 }
