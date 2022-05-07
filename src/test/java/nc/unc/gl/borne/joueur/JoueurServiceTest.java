@@ -167,7 +167,6 @@ public class JoueurServiceTest {
         assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 0);
 
         plateauService.ajouterCartePlateau(TypePile.VITESSE,carteVitesseAttaque, j);
-        System.out.println(j.getPlateau());
         joueurService.poserCarteBotte(carteBotteVitesse, j, defausse);
         assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 0);
 
@@ -176,66 +175,66 @@ public class JoueurServiceTest {
 
     @Test
     void poser(){
-        //TODO Check
-        Joueur j = new Joueur(1, "mayaSixtine", 24);
-        Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
-        Carte carte3 = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 3);
-        Carte carte4 = new Carte(NomCarte.CREVAISON, TypeCarte.PARADE, 4);
-        Carte carte5 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 5);
-        Carte carte6 = new Carte(NomCarte.ESSENCE, TypeCarte.BOTTE, 6);
+        Joueur joueur = new Joueur(1, "mayaSixtine", 24);
+        Carte carteParadeVitesse = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 0);
+        Carte carteAttaqueVitesse = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 0);
+        Carte carteAttaqueCrevaison = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 0);
+        Carte carteBorne200 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 0);
+        Carte carteBotteCrevaison = new Carte(NomCarte.CREVAISON, TypeCarte.BOTTE, 0);
 
-        Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
-        deckService.ajouter(carte1, j);
-//        .ajouter(carte2).ajouter(carte3).ajouter(carte4).ajouter(carte5).ajouter(carte6)
-        j.setMain(mainJoueur);
 
         // Si on pose une carte ATTAQUE -> erreur
-        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poser(carte2, defausse, j));
+        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poser(carteAttaqueVitesse, defausse, joueur));
         Assertions.assertEquals("Erreur: on ne peut pas utiliser une carte attaque sur son plateau!", thrown.getMessage());
 
-        plateauService.ajouterCartePlateau(TypePile.VITESSE, carte2, j);
-        joueurService.poser(carte1,defausse, j);
-        assertEquals(j.getMain().getMainJoueur().size(), 0);
+        deckService.ajouter(carteParadeVitesse, joueur);
+        plateauService.ajouterCartePlateau(TypePile.VITESSE, carteAttaqueVitesse, joueur);
+        joueurService.poser(joueur.getMain().getMainJoueur().get(0), defausse, joueur);
+        assertEquals(joueur.getMain().getMainJoueur().size(), 0);
         assertEquals(defausse.getPileCarte().size(),2);
 
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte3, j);
-        j.setMain(deckService.ajouter(carte4, j));
-        joueurService.poser(carte4, defausse, j);
-        assertEquals(j.getMain().getMainJoueur().size(), 0);
-        assertEquals(defausse.getPileCarte().size(),4);
+        deckService.ajouter(carteBotteCrevaison, joueur);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteAttaqueCrevaison, joueur);
+        joueurService.poser(carteBotteCrevaison, defausse, joueur);
+        assertEquals(joueur.getMain().getMainJoueur().size(), 0);
+        assertEquals(defausse.getPileCarte().size(),3);
 
-        deckService.ajouter(carte5, j);
-        deckService.ajouter(carte6, j);
-        joueurService.poser(carte5, defausse, j);
-        joueurService.poser(carte6, defausse, j);
-        assertEquals(j.getMain().getMainJoueur().size(), 0);
-        assertEquals(defausse.getPileCarte().size(),4);
+        deckService.ajouter(carteBorne200, joueur);
+        joueurService.poser(carteBorne200, defausse, joueur);
+        assertEquals(joueur.getMain().getMainJoueur().size(), 0);
+        assertEquals(joueur.getScore(), 200);
 
-        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(),0);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),1);
-        assertEquals(j.getPlateau().getPile(TypePile.BORNES).getPileCarte().size(),1);
-        assertEquals(j.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(),1);
+        assertEquals(joueur.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(),0);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),0);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BORNES).getPileCarte().size(),1);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(),1);
     }
 
     @Test
     void attaquer() {
-        //TODO Check
-        Joueur j = new Joueur(1, "mayaSixtine", 24);
+        Joueur joueur = new Joueur(1, "mayaSixtine", 24);
+        Carte carteAttaqueVitesse = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 0);
+        Carte carteAttaqueCrevaison = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 0);
+        Carte carteParadeFeu = new Carte(NomCarte.FEU, TypeCarte.PARADE, 0);
 
-        Carte carteAttaque = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
-        Carte carteAttaque2 = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 3);
 
-        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 0);
-        joueurService.attaquer(carteAttaque, j);
-        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 1);
-        //on verrifie qu'il y a déjà une carte dans la pile bataille : feu vert
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 1);
-        joueurService.attaquer(carteAttaque2, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 2);
-        joueurService.attaquer(carteAttaque2, j);
-        //on ne peut pas poser 2 attaque pareil sur le même plateau
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 2);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteAttaqueVitesse, joueur);
+        IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.attaquer(carteAttaqueVitesse, joueur));
+        Assertions.assertEquals("Erreur : on ne peut pas mettre deux cartes attaques sur un joueur!", thrown1.getMessage());
+
+        IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.attaquer(carteParadeFeu, joueur));
+        Assertions.assertEquals("Erreur : on peut attaquer que avec une carte de type attaque!", thrown2.getMessage());
+
+        plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur);
+
+        joueurService.attaquer(carteAttaqueVitesse, joueur);
+        assertEquals(joueur.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 1);
+
+        plateauService.enleverCartePlateau(TypePile.VITESSE, joueur);
+
+        joueurService.attaquer(carteAttaqueCrevaison, joueur);
+        assertEquals(joueur.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 1);
+
     }
 }

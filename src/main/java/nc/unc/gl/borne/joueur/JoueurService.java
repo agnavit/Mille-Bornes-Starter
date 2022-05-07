@@ -143,39 +143,45 @@ public class JoueurService {
     }
 
     public boolean attaquer(Carte carteAttaque, Joueur joueurAttaque) {
-        if(carteAttaque.getType() != TypeCarte.ATTAQUE){
+        if (carteAttaque.getType() != TypeCarte.ATTAQUE) {
             throw new IllegalArgumentException("Erreur : on peut attaquer que avec une carte de type attaque!");
         }
+
+        if (joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1) {
+            throw new IllegalArgumentException("Erreur : on ne peut pas mettre deux cartes attaques sur un joueur!");
+        }
+
         NomCarte nomCarteAttaque = carteAttaque.getNom();
 
         // La botte véhicule prioritaire contre les attaques feu et vitesse
-        if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.VITESSE, TypeCarte.BOTTE)
+        if (joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.VITESSE, TypeCarte.BOTTE)
             && (nomCarteAttaque == NomCarte.VITESSE || nomCarteAttaque == NomCarte.FEU)) {
             return false;
         }
 
-        if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.ACCIDENT, TypeCarte.BOTTE)
-            && nomCarteAttaque == NomCarte.ACCIDENT){
+        if (joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.ACCIDENT, TypeCarte.BOTTE)
+            && nomCarteAttaque == NomCarte.ACCIDENT) {
             return false;
         }
 
-        if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.CREVAISON, TypeCarte.BOTTE)
-            && nomCarteAttaque == NomCarte.CREVAISON){
+        if (joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.CREVAISON, TypeCarte.BOTTE)
+            && nomCarteAttaque == NomCarte.CREVAISON) {
             return false;
         }
-        if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.ESSENCE, TypeCarte.BOTTE)
-            && nomCarteAttaque == NomCarte.ESSENCE ){
+        if (joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.ESSENCE, TypeCarte.BOTTE)
+            && nomCarteAttaque == NomCarte.ESSENCE) {
             return false;
         }
 
-        if (nomCarteAttaque == NomCarte.VITESSE && joueurAttaque.getPlateau().getPile(TypePile.VITESSE).getTaille() == 1){
-            joueurAttaque.getPlateau().getPile(TypePile.VITESSE).empiler(carteAttaque);
+        if (nomCarteAttaque == NomCarte.VITESSE && joueurAttaque.getPlateau().getPile(TypePile.VITESSE).getTaille() == 0) {
+            plateauService.ajouterCartePlateau(TypePile.VITESSE, carteAttaque, joueurAttaque);
             return true;
         }
-        if(joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1) {
-            joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).empiler(carteAttaque);
+        if (joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 0) {
+            plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteAttaque, joueurAttaque);
             return true;
         }
+
         return false;
     }
 
