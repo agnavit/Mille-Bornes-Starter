@@ -2,18 +2,18 @@ package nc.unc.gl.borne.joueur;
 
 import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.carte.enumerations.NomCarte;
+import nc.unc.gl.borne.carte.enumerations.TypeCarte;
+import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.plateau.PlateauService;
+
 
 public class JoueurService {
 
     public PlateauService plateauService = new PlateauService();
     public DeckService deckService = new DeckService();
 
-    /**
-     * Jeter une carte de la main dans la défausse
-     * @param carteChoisie la carte à jeter
-     * @param defausse la défausse de la partie
-     */
+
     public void jeter(Carte carteChoisie, PileCarte defausse, Joueur joueur){
         deckService.enlever(carteChoisie, joueur);
         defausse.empiler(carteChoisie);
@@ -22,21 +22,20 @@ public class JoueurService {
     /**
      * Poser sur son plateau une carte vitesse : c'est-à-dire contrer une attaque vitesse
      * Lors de cette action la carte attaque-vitesse et la carte parade-vitesse sont jetées dans la défausse
-     * @param carteVitesse la carte vitesse à poser
-     * @param defausse la defausse de la partie
      */
     public void poserCarteVitesse(Carte carteVitesse, PileCarte defausse, Joueur joueur){
-        //Si la carte vitesse est de type attaque
         if(carteVitesse.getType() == TypeCarte.ATTAQUE){
             throw new IllegalArgumentException("Erreur: on ne peut pas poser une carte Vitesse-Attaque sur notre" +
                 " plateau!");
         }
-        // Si la pile Vitesse est vide -> Erreur
         if(plateauService.getTaillePile(TypePile.VITESSE, joueur) == 0){
             throw new IllegalArgumentException("Erreur: la pile vitesse est vide, on ne peut pas poser une carte " +
                 "Vitesse-Parade!");
         }
 
+        if(joueur.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.VITESSE, TypeCarte.BOTTE)){
+            throw new IllegalArgumentException("Erreur : le joueur possède le véhicule prioritaire!");
+        }
         if(carteVitesse.getType() == TypeCarte.PARADE){
             joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.VITESSE, carteVitesse, joueur));
             plateauService.enleverCartesAttaqueEtParadePile(TypePile.VITESSE, defausse, joueur);
@@ -44,15 +43,11 @@ public class JoueurService {
         else{
             throw new IllegalArgumentException("Erreur: la carte vitesse n'as pas un type de carte correct!");
         }
-
     }
 
     /**
      * Poser sur son plateau une carte parade (sans être une carte parade-vitesse, cas pris en compte précédemment)
-     * Si une attaque de nom autre que feu est contrée, alors l'attaque et la parade sont jetées dans la défausse
-     * Pas besoin d'un feu vert pour redémarrer après avoir contré une attaque
-     * @param carteParade la carte parade à poser
-     * @param defausse la défausse de la partie
+     * Si une attaque est contrée, alors l'attaque et la parade sont jetées dans la défausse
      */
     public void poserCarteParade(Carte carteParade, PileCarte defausse, Joueur joueur){
         Carte derniereCarte = joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet();
@@ -63,30 +58,31 @@ public class JoueurService {
                 " que celui la première carte sur la pile bataille!");
         }
 
-        // Si il n'y a pas d'attaque à parer (la carte sur la pile bataille n'est pas une attaque)
+        // S' il n'y a pas d'attaque à parer
         if(derniereCarte.getType() != TypeCarte.ATTAQUE){
-            if (derniereCarte.getNom() != NomCarte.FEU) {
-                throw new IllegalArgumentException("Erreur: on ne peut pas poser une carte parade si la première carte" +
+            throw new IllegalArgumentException("Erreur: on ne peut pas poser une carte parade si la première carte" +
                     " sur le pile bataille n'est pas une carte attaque");
-            }
-        }
 
-        /* Si la carte a pour nom feu : on garde sur la pile bataille uniquement la parade : le feu vert
-        et on jette l'attaque : le feu rouge
-         */
-        if(carteParade.getNom() == NomCarte.FEU){
-            defausse.empiler(plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur));
-            joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteParade, joueur));
         }
-        // Sinon on jette les deux cartes
-        else{
-            joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteParade, joueur));
-            plateauService.enleverCartesAttaqueEtParadePile(TypePile.BATAILLE, defausse, joueur);
-        }
+        joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteParade, joueur));
+        plateauService.enleverCartesAttaqueEtParadePile(TypePile.BATAILLE, defausse, joueur);
     }
 
     public void poserCarteBorne(Carte carteBorne, Joueur joueur){
-        //TODO prendre en compte la pile limitation de vitesse
+        // TODO test
+        // S'il y a une limitation de vitesse
+        if(joueur.getPlateau().getPile(TypePile.VITESSE).contientCarte(NomCarte.VITESSE, TypeCarte.ATTAQUE)){
+            if(carteBorne.getNom() != NomCarte.VINGT_CINQ || carteBorne.getNom() != NomCarte.CINQUANTE){
+                throw new IllegalArgumentException("Erreur : la carte borne ne peut être posée, en raison " +
+                    "d'une limitation de vitesse! ");
+            }
+        }
+
+        if(joueur.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1){
+            throw new IllegalArgumentException("Erreur : la carte borne ne peut être posée, en raison " +
+                "d'une carte attaque présente! ");
+        }
+
         joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
         switch (carteBorne.getNom()) {
             case VINGT_CINQ -> joueur.setScore(joueur.getScore() + 25);
@@ -102,26 +98,28 @@ public class JoueurService {
 
     public void poserCarteBotte(Carte carteBotte, Joueur joueur, PileCarte defausse) {
         joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BOTTES, carteBotte, joueur));
+
         // Si le joueur a une carte attaque du même nom que la carte botte alors cette attaque est enlevée
-        if(joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet().getType().equals(TypeCarte.ATTAQUE)
-        && joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet().getNom().equals(carteBotte.getNom())){
-            Carte carteAJeter = joueur.getPlateau().getPile(TypePile.BATAILLE).depiler();
+
+        if(carteBotte.getNom() == NomCarte.VITESSE
+            && joueur.getPlateau().getPile(TypePile.VITESSE).getTaille() == 1){
+            Carte carteAJeter = plateauService.enleverCartePlateau(TypePile.VITESSE, joueur);
             defausse.empiler(carteAJeter);
         }
+        else {
+            NomCarte nomCarteSommetPileBataille = joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet().getNom();
+            if (joueur.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1
+                && nomCarteSommetPileBataille.equals(carteBotte.getNom())) {
+                Carte carteAJeter = plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur);
+                defausse.empiler(carteAJeter);
+            }
+        }
         //TODO Tests
-        //TODO : on rejoue
+        //TODO : on rejoue dans le code main principal non ?
     }
 
-
-    // Retourner boolean ?
-    // Pas pris en compte la boucle
-
-
-
     /**
-     * Poser une carte sur le plateau
-     * @param carteChoisie la carte à poser
-     * @param defausse la défausse (dans le cas où une attaque est contrée : la carte choisie est donc de type parade)
+     * Poser une carte := poser une carte sur le plateau du joueur
      */
     public void poser(Carte carteChoisie, PileCarte defausse, Joueur joueur){
         if(carteChoisie.getType() == TypeCarte.ATTAQUE){
@@ -145,21 +143,40 @@ public class JoueurService {
     }
 
     public boolean attaquer(Carte carteAttaque, Joueur joueurAttaque) {
-        if (carteAttaque.getNom() == NomCarte.VITESSE
-            && !(plateauService.contains(carteAttaque, joueurAttaque))) {
-            //posser carte attaque
+        if(carteAttaque.getType() != TypeCarte.ATTAQUE){
+            throw new IllegalArgumentException("Erreur : on peut attaquer que avec une carte de type attaque!");
+        }
+        NomCarte nomCarteAttaque = carteAttaque.getNom();
+
+        // La botte véhicule prioritaire contre les attaques feu et vitesse
+        if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.VITESSE, TypeCarte.BOTTE)
+            && (nomCarteAttaque == NomCarte.VITESSE || nomCarteAttaque == NomCarte.FEU)) {
+            return false;
+        }
+
+        if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.ACCIDENT, TypeCarte.BOTTE)
+            && nomCarteAttaque == NomCarte.ACCIDENT){
+            return false;
+        }
+
+        if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.CREVAISON, TypeCarte.BOTTE)
+            && nomCarteAttaque == NomCarte.CREVAISON){
+            return false;
+        }
+        if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.ESSENCE, TypeCarte.BOTTE)
+            && nomCarteAttaque == NomCarte.ESSENCE ){
+            return false;
+        }
+
+        if (nomCarteAttaque == NomCarte.VITESSE && joueurAttaque.getPlateau().getPile(TypePile.VITESSE).getTaille() == 1){
             joueurAttaque.getPlateau().getPile(TypePile.VITESSE).empiler(carteAttaque);
             return true;
-        } else if (!(plateauService.hasFeuVert(joueurAttaque) || plateauService.hasBotteVehiculePrio(joueurAttaque))) {
-            return false;
-        } else {
-            if (joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().contains(carteAttaque)) {
-                return false;
-            } else {
-                joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).empiler(carteAttaque);
-                return true;
-            }
         }
+        if(joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1) {
+            joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).empiler(carteAttaque);
+            return true;
+        }
+        return false;
     }
 
     public void piocher(PileCarte pioche, Joueur joueur) {
@@ -196,9 +213,5 @@ public class JoueurService {
 
     public Carte getCardInDeck(Joueur player, int number){
         return player.getMain().getMainJoueur().get(number);
-    }
-
-    public Carte getLastCardInPile(Joueur player, TypePile typePile){
-        return player.getPlateau().getPile(typePile).getSommet();
     }
 }

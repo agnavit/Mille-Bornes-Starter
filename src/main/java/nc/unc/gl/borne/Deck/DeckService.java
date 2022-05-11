@@ -8,10 +8,6 @@ public class DeckService {
     static final int TAILLE_MAX = 7;
     static final int TAILLE_MIN = 6;
 
-    /**
-     * Ajouter une carte
-     * @param carteAjoute la carte à ajouter
-     */
     public Deck ajouter(Carte carteAjoute, Joueur joueur){
         if(joueur.getMain().getMainJoueur().size() == 7){
             throw new IllegalArgumentException("Erreur: la main d'un joueur peut contenir au plus " + TAILLE_MAX + " cartes!");
@@ -20,10 +16,7 @@ public class DeckService {
         return joueur.getMain();
     }
 
-    /**
-     * Enlever une carte
-     * @param carteEnlever la carte à enlever
-     */
+
     public Deck enlever(Carte carteEnlever, Joueur joueur){
         if(joueur.getMain().getMainJoueur().size() == 6){
             throw new IllegalArgumentException("Erreur: la main d'un joueur peut contenir au moins " + TAILLE_MIN + " cartes!");

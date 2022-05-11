@@ -1,6 +1,9 @@
 package nc.unc.gl.borne.plateau;
 
 import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.carte.enumerations.NomCarte;
+import nc.unc.gl.borne.carte.enumerations.TypeCarte;
+import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.joueur.Joueur;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -65,7 +68,7 @@ public class PlateauService {
         AtomicInteger i = new AtomicInteger();
         i.set(0);
         joueur.getPlateau().getPile(TypePile.BOTTES).getPileCarte().forEach( carte -> {
-            if (carte.getNom() == NomCarte.VEHICULE_PRIORITAIRE) {
+            if (carte.getNom() == NomCarte.VITESSE) {
                 i.set(1);
             }
         });

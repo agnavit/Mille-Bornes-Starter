@@ -1,7 +1,10 @@
-package nc.unc.gl.borne.carte;
+package nc.unc.gl.borne.deck;
 
 import nc.unc.gl.borne.Deck.Deck;
 import nc.unc.gl.borne.Deck.DeckService;
+import nc.unc.gl.borne.carte.Carte;
+import nc.unc.gl.borne.carte.enumerations.NomCarte;
+import nc.unc.gl.borne.carte.enumerations.TypeCarte;
 import nc.unc.gl.borne.joueur.Joueur;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +19,6 @@ public class DeckTest {
     @Test
     void ajouter(){
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        Deck deck = new Deck();
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
@@ -31,7 +33,6 @@ public class DeckTest {
     @Test
     void enlever(){
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        Deck deck = new Deck();
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
@@ -46,7 +47,6 @@ public class DeckTest {
     void contains(){
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
         Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 1);
-        Deck deck = new Deck();
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);
         deckService.ajouter(carte1, j);

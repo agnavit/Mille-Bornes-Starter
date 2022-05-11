@@ -10,6 +10,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.carte.enumerations.NomCarte;
+import nc.unc.gl.borne.carte.enumerations.TypeCarte;
+import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
 import nc.unc.gl.borne.partie.Partie;
@@ -141,7 +144,7 @@ public class FooterLayout extends HorizontalLayout {
                     Carte selectedCard = new Carte(
                         playerService.getCardInDeck(myPlayer,j).getNom(),
                         playerService.getCardInDeck(myPlayer,j).getType(),
-                        playerService.getCardInDeck(myPlayer,j).getNumero()
+                        playerService.getCardInDeck(myPlayer,j).getIdentifiant()
                     );
                     putCardButton.setEnabled(true);
                     throwCardButton.setEnabled(true);

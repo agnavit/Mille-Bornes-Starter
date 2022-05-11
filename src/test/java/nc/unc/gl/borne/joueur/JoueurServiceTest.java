@@ -3,6 +3,9 @@ package nc.unc.gl.borne.joueur;
 import nc.unc.gl.borne.Deck.Deck;
 import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.*;
+import nc.unc.gl.borne.carte.enumerations.NomCarte;
+import nc.unc.gl.borne.carte.enumerations.TypeCarte;
+import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.plateau.PlateauService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,9 +20,6 @@ public class JoueurServiceTest {
 
     @Test
     void jeter(){
-        /*On va vérifier qu'une carte jetée n'est plus présente dans la main du joueur
-        Et vérifier que cette carte est au sommet de la pile défausse
-         */
         Joueur j = new Joueur(1, "mayaSixtine", 24);
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
         Deck mainJoueur = new Deck();
@@ -33,135 +33,157 @@ public class JoueurServiceTest {
     }
 
     @Test
-    void poserVitesse(){
-        //TODO
+    void poserCarteVitesse(){
         Joueur j = new Joueur(1, "mayaSixtine", 24);
-        Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
+        Carte carteParadeVitesse = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
+        Carte carteAttaqueVitesse = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
         Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
-        deckService.ajouter(carte1, j);
-        deckService.ajouter(carte2, j);
+        deckService.ajouter(carteParadeVitesse, j);
+        deckService.ajouter(carteAttaqueVitesse, j);
         j.setMain(mainJoueur);
 
         // Si la pile Vitesse est vide -> Erreur
-        IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteVitesse(carte1, defausse, j));
+        IllegalArgumentException thrown1 = Assertions
+            .assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteVitesse(carteParadeVitesse, defausse, j));
         Assertions.assertEquals("Erreur: la pile vitesse est vide, on ne peut pas poser une carte Vitesse-Parade!", thrown1.getMessage());
 
-        plateauService.ajouterCartePlateau(TypePile.VITESSE, carte2, j);
+        plateauService.ajouterCartePlateau(TypePile.VITESSE, carteAttaqueVitesse, j);
 
         //Si la carte vitesse est de type attaque
-        IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteVitesse(carte2, defausse, j));
+        IllegalArgumentException thrown2 = Assertions
+            .assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteVitesse(carteAttaqueVitesse, defausse, j));
         Assertions.assertEquals("Erreur: on ne peut pas poser une carte Vitesse-Attaque sur notre plateau!", thrown2.getMessage());
 
-        // Si il n'y a pas d'erreur
-        joueurService.poserCarteVitesse(carte1,defausse, j);
+        joueurService.poserCarteVitesse(carteParadeVitesse,defausse, j);
         assertEquals(defausse.getPileCarte().size(), 2);
         assertEquals(plateauService.getTaillePile(TypePile.VITESSE, j), 0);
+
+
+        // Si le joueur possède la botte vehicule prioritaire
+        Carte vehiculePrioritaire = new Carte(NomCarte.VITESSE, TypeCarte.BOTTE, 0);
+        plateauService.ajouterCartePlateau(TypePile.VITESSE, carteAttaqueVitesse, j);
+        plateauService.ajouterCartePlateau(TypePile.BOTTES, vehiculePrioritaire, j);
+        IllegalArgumentException thrwon3 = Assertions
+            .assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteVitesse(carteParadeVitesse, defausse, j));
+        Assertions.assertEquals("Erreur : le joueur possède le véhicule prioritaire!", thrwon3.getMessage());
 
     }
 
     @Test
-    void poserParade(){
+    void poserCarteParade(){
         Joueur j = new Joueur(1, "mayaSixtine", 24);
-        Carte carte1 = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 1);
-        Carte carte2 = new Carte(NomCarte.CREVAISON, TypeCarte.PARADE, 2);
-        Carte carte3 = new Carte(NomCarte.ACCIDENT, TypeCarte.PARADE, 3);
-        Carte carte4 = new Carte(NomCarte.FEU, TypeCarte.ATTAQUE, 4);
-        Carte carte5 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 5);
-        Deck mainJoueur = new Deck();
+        Carte carteAttaqueCrevaison = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 1);
+        Carte carteParadeCrevaison = new Carte(NomCarte.CREVAISON, TypeCarte.PARADE, 2);
+        Carte carteParadeAccident = new Carte(NomCarte.ACCIDENT, TypeCarte.PARADE, 3);
         PileCarte defausse = new PileCarte();;
-        deckService.ajouter(carte1, j);
-        deckService.ajouter(carte2, j);
-        deckService.ajouter(carte3, j);
+        deckService.ajouter(carteAttaqueCrevaison, j);
+        deckService.ajouter(carteParadeCrevaison, j);
+        deckService.ajouter(carteParadeAccident, j);
 
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteAttaqueCrevaison, j);
 
         // Si la carte parade est de type différent de la carte sur la pile bataille
-        IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteParade(carte3, defausse, j));
+        IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteParade(carteParadeAccident, defausse, j));
         Assertions.assertEquals("Erreur: on ne peut pas poser une carte parade d'un nom différent que celui" +
             " la première carte sur la pile bataille!", thrown1.getMessage());
 
         plateauService.enleverCartePlateau(TypePile.BATAILLE, j);
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte2, j);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteParadeCrevaison, j);
 
         // Si il n'y a pas d'attaque à parer (la carte sur la pile bataille n'est pas une attaque)
-        IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteParade(carte2, defausse, j));
+        IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteParade(carteParadeCrevaison, defausse, j));
         Assertions.assertEquals("Erreur: on ne peut pas poser une carte parade si la première carte" +
             " sur le pile bataille n'est pas une carte attaque", thrown2.getMessage());
 
-        // Si il n'y a pas d'erreur et que la carte parade n'a pas pour nom FEU
         plateauService.enleverCartePlateau(TypePile.BATAILLE, j);
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte1, j);
-        joueurService.poserCarteParade(carte2, defausse, j);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carteAttaqueCrevaison, j);
+        joueurService.poserCarteParade(carteParadeCrevaison, defausse, j);
         assertEquals(defausse.getPileCarte().size(), 2);
-        assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 1);
-
-        // Si il n'y a pas d'erreur et que la carte parade a pour nom FEU
-        plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte4, j);
-        joueurService.poserCarteParade(carte5, defausse, j);
-        assertEquals(defausse.getPileCarte().size(), 3);
-        assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 2);
+        assertEquals(plateauService.getTaillePile(TypePile.BATAILLE, j), 0);
     }
 
     @Test
-    void poserBorne(){
+    void poserCarteBorne(){
         Joueur j = new Joueur(1, "mayaSixtine", 24);
-        Carte carte1 = new Carte(NomCarte.VINGT_CINQ, TypeCarte.BORNE, 1);
-        Carte carte2 = new Carte(NomCarte.CINQUANTE, TypeCarte.BORNE, 2);
-        Carte carte3 = new Carte(NomCarte.SOIXANTE_QUINZE, TypeCarte.BORNE, 3);
-        Carte carte4 = new Carte(NomCarte.CENT, TypeCarte.BORNE, 4);
-        Carte carte5 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 5);
+        Carte carteBorne25 = new Carte(NomCarte.VINGT_CINQ, TypeCarte.BORNE, 1);
+        Carte carteBorne50 = new Carte(NomCarte.CINQUANTE, TypeCarte.BORNE, 2);
+        Carte carteBorne75 = new Carte(NomCarte.SOIXANTE_QUINZE, TypeCarte.BORNE, 3);
+        Carte carteBorne100 = new Carte(NomCarte.CENT, TypeCarte.BORNE, 4);
+        Carte carteBorne200 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 5);
+        Carte carteVitesseAttaque = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 6);
+        Carte carteAccidentAttaque = new Carte(NomCarte.ACCIDENT, TypeCarte.ATTAQUE, 7);
 
         Deck mainJoueur = new Deck();
-        PileCarte defausse = new PileCarte();
-        deckService.ajouter(carte1, j);
-        deckService.ajouter(carte2, j);
-        deckService.ajouter(carte3, j);
-        deckService.ajouter(carte4, j);
-        deckService.ajouter(carte5, j);
+        deckService.ajouter(carteBorne25, j);
+        deckService.ajouter(carteBorne50, j);
+        deckService.ajouter(carteBorne75, j);
+        deckService.ajouter(carteBorne100, j);
+        deckService.ajouter(carteBorne200, j);
         j.setMain(mainJoueur);
 
-        joueurService.poserCarteBorne(carte1, j);
+        plateauService.ajouterCartePlateau(TypePile.VITESSE,carteVitesseAttaque, j);
+        IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteBorne(carteBorne100, j));
+        Assertions.assertEquals("Erreur : la carte borne ne peut être posée, en raison " +
+            "d'une limitation de vitesse! ", thrown1.getMessage());
+        plateauService.enleverCartePlateau(TypePile.VITESSE,j);
+
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE,carteAccidentAttaque, j);
+        IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteBorne(carteBorne50, j));
+        Assertions.assertEquals("Erreur : la carte borne ne peut être posée, en raison " +
+            "d'une carte attaque présente! ", thrown2.getMessage());
+        plateauService.enleverCartePlateau(TypePile.BATAILLE,j);
+
+        joueurService.poserCarteBorne(carteBorne25, j);
         assertEquals(j.getScore(),25);
-        joueurService.poserCarteBorne(carte2, j);
+        joueurService.poserCarteBorne(carteBorne50, j);
         assertEquals(j.getScore(),75);
-        joueurService.poserCarteBorne(carte3, j);
+        joueurService.poserCarteBorne(carteBorne75, j);
         assertEquals(j.getScore(),150);
-        joueurService.poserCarteBorne(carte4, j);
+        joueurService.poserCarteBorne(carteBorne100, j);
         assertEquals(j.getScore(),250);
-        joueurService.poserCarteBorne(carte5, j);
+        joueurService.poserCarteBorne(carteBorne200, j);
         assertEquals(j.getScore(),450);
+
         assertEquals(j.getPlateau().getPile(TypePile.BORNES).getPileCarte().size(),5);
     }
 
     @Test
-    void poserBotte(){
+    void poserCarteBotte(){
         Joueur j = new Joueur(1, "mayaSixtine", 24);
-        Carte carte1 = new Carte(NomCarte.CAMION_CITERNE, TypeCarte.BORNE, 1);
-        Carte carte2 = new Carte(NomCarte.VEHICULE_PRIORITAIRE, TypeCarte.BORNE, 2);
+        Carte carteBotteAccident = new Carte(NomCarte.ACCIDENT, TypeCarte.BOTTE, 0);
+        Carte carteBotteVitesse = new Carte(NomCarte.VITESSE, TypeCarte.BOTTE, 0);
+        Carte carteAccidentAttaque = new Carte(NomCarte.ACCIDENT, TypeCarte.ATTAQUE, 0);
+        Carte carteVitesseAttaque = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 0);
+
         Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
-        deckService.ajouter(carte1, j);
-        deckService.ajouter(carte2, j);
+        deckService.ajouter(carteBotteAccident, j);
+        deckService.ajouter(carteBotteVitesse, j);
         j.setMain(mainJoueur);
 
-        joueurService.poserCarteBotte(carte1, j, defausse);
-        joueurService.poserCarteBotte(carte2, j, defausse);
-        assertEquals(j.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(), 2);
+        plateauService.ajouterCartePlateau(TypePile.BATAILLE,carteAccidentAttaque, j);
+        joueurService.poserCarteBotte(carteBotteAccident, j, defausse);
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 0);
 
-        //TODO maj tests
+        plateauService.ajouterCartePlateau(TypePile.VITESSE,carteVitesseAttaque, j);
+        System.out.println(j.getPlateau());
+        joueurService.poserCarteBotte(carteBotteVitesse, j, defausse);
+        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 0);
+
+        assertEquals(j.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(), 2);
     }
 
     @Test
     void poser(){
+        //TODO Check
         Joueur j = new Joueur(1, "mayaSixtine", 24);
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
         Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
         Carte carte3 = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 3);
         Carte carte4 = new Carte(NomCarte.CREVAISON, TypeCarte.PARADE, 4);
         Carte carte5 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 5);
-        Carte carte6 = new Carte(NomCarte.CAMION_CITERNE, TypeCarte.BOTTE, 6);
+        Carte carte6 = new Carte(NomCarte.ESSENCE, TypeCarte.BOTTE, 6);
 
         Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
@@ -199,6 +221,7 @@ public class JoueurServiceTest {
 
     @Test
     void attaquer() {
+        //TODO Check
         Joueur j = new Joueur(1, "mayaSixtine", 24);
 
         Carte carteAttaque = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
