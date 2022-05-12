@@ -214,4 +214,8 @@ public class JoueurService {
     public Carte getCardInDeck(Joueur player, int number){
         return player.getMain().getMainJoueur().get(number);
     }
+
+    public Carte getLastCardInPile(Joueur player, TypePile typePile){
+        return player.getPlateau().getPile(typePile).getSommet();
+    }
 }

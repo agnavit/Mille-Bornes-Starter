@@ -1,9 +1,7 @@
 package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.dependency.StyleSheet;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -22,6 +20,7 @@ public class PlateauLayout extends HorizontalLayout {
     Carte carte2 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
     Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
     Carte carte4 = new Carte(NomCarte.ACCIDENT, TypeCarte.BOTTE, 4);
+
     PileCarte defausse = new PileCarte();
 
     JoueurService playerService = new JoueurService();
@@ -33,14 +32,15 @@ public class PlateauLayout extends HorizontalLayout {
 
     public PlateauLayout(){
         //TODO version générique avec paramètre joueur
-        playerService.poser(carte1, defausse, joueur);
-        playerService.poser(carte2, defausse, joueur);
-        playerService.poser(carte3, defausse, joueur);
-        playerService.poser(carte4, defausse, joueur);
+        //playerService.poser(carte1, defausse, joueur);
+        //playerService.poser(carte2, defausse, joueur);
+        //playerService.poser(carte3, defausse, joueur);
+        //playerService.poser(carte4, defausse, joueur);
 
         // Je pose une carte dans les piles vitesse et bataille
-        playerService.poser(carteVitesse, joueur.getPlateau().getPile(TypePile.VITESSE), joueur);
-        playerService.poser(carteBATAILLE, joueur.getPlateau().getPile(TypePile.BATAILLE), joueur);
+        //playerService.poser(carteVitesse, joueur.getPlateau().getPile(TypePile.VITESSE), joueur);
+        //playerService.poser(carteBATAILLE, joueur.getPlateau().getPile(TypePile.BATAILLE), joueur);
+        //playerService.poser(carte4, joueur.getPlateau().getPile(TypePile.BOTTES), joueur);
 
 
 
@@ -49,38 +49,51 @@ public class PlateauLayout extends HorizontalLayout {
         //      - Ajout "cartes/" +
         //------------------------------------------------------
 
+        HorizontalLayout layout = new HorizontalLayout();
+
         VerticalLayout pileVitesse = new VerticalLayout();
-        pileVitesse.add("Pile vitesse");
-        pileVitesse
-            .add(new Image("cartes/" + joueur
-                .getPlateau()
-                .getPile(TypePile.VITESSE)
-                .getSommet()
-                .getStringImage(),
-            "carte/sommetPileVitesse"));
+
+        pileVitesse.add(new H3("Vitesse"));
+        try {
+            pileVitesse
+                .add(new Image("cartes/" +
+                    playerService.getLastCardInPile(joueur, TypePile.VITESSE).getStringImage(),
+                    "carte/sommetPileVitesse"));
+
+        } catch(IndexOutOfBoundsException except){
+            pileVitesse.add(new Image("cartes/back.png", "Dos de la carte"));
+        }
 
         //------------------------------------------------------
+
 
         VerticalLayout pileBataille = new VerticalLayout();
-        pileBataille.add("Pile Bataille");
-        pileBataille
-            .add(new Image("cartes/" +joueur
-                .getPlateau()
-                .getPile(TypePile.BATAILLE)
-                .getSommet()
-                .getStringImage(),
-            "carte/sommetPileBataille"));
+        pileBataille.add(new H3("Bataille"));
+
+        try {
+            pileBataille
+                .add(new Image("cartes/" +playerService.getLastCardInPile(joueur,TypePile.BATAILLE)
+                    .getStringImage(),
+                    "carte/sommetPileBataille"));
+
+        } catch(IndexOutOfBoundsException except){
+            pileBataille.add(new Image("cartes/back.png", "Dos de la carte"));
+        }
+
+
+
 
         //------------------------------------------------------
 
+
         VerticalLayout pileBornes = new VerticalLayout();
-        pileBornes.add("Pile bornes");
+        pileBornes.add(new H3("Bornes"));
 
         HorizontalLayout pileBornesCartes = new HorizontalLayout();
 
         Div vingtCinq = new Div();
         vingtCinq.add(new Image("cartes/borne_vingt_cinq.jpeg","cartes/borne_vingt_cinq"));
-        vingtCinq.add(new Paragraph(String
+        vingtCinq.add(new H4(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
@@ -88,7 +101,7 @@ public class PlateauLayout extends HorizontalLayout {
 
         Div cinquante = new Div();
         cinquante.add(new Image("cartes/borne_cinquante.jpeg","cartes/borne_cinquante"));
-        cinquante.add(new Paragraph(String
+        cinquante.add(new H4(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
@@ -96,7 +109,7 @@ public class PlateauLayout extends HorizontalLayout {
 
         Div soixanteQuinze = new Div();
         soixanteQuinze.add(new Image("cartes/borne_soixante_quinze.jpeg","cartes/borne_soixante_quinze"));
-        soixanteQuinze.add(new Paragraph(String
+        soixanteQuinze.add(new H4(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
@@ -104,7 +117,7 @@ public class PlateauLayout extends HorizontalLayout {
 
         Div cent = new Div();
         cent.add(new Image("cartes/borne_cent.jpeg","cartes/borne_cent"));
-        cent.add(new Paragraph(String
+        cent.add(new H4(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
@@ -112,7 +125,7 @@ public class PlateauLayout extends HorizontalLayout {
 
         Div deuxCents = new Div();
         deuxCents.add(new Image("cartes/borne_deux_cents.jpeg","cartes/borne_deux_cents"));
-        deuxCents.add(new Paragraph(String
+        deuxCents.add(new H4(String
             .valueOf(joueur
                 .getPlateau()
                 .getPile(TypePile.BORNES)
@@ -123,18 +136,23 @@ public class PlateauLayout extends HorizontalLayout {
         pileBornes.add(pileBornesCartes);
 
 
-        // Correction : Ajout "cartes/" +
         VerticalLayout pileBottes = new VerticalLayout();
-        pileBottes.add("Pile bottes");
-        for (int i = 0; i<joueur.getPlateau().getPile(TypePile.BOTTES).getTaille(); i++)
-        {
-            pileBottes.add(new Image("cartes/" +joueur
-                .getPlateau()
-                .getPile(TypePile.BOTTES)
-                .getCarte(i)
-                .getStringImage(),
-                "carte/carteBottes"));
+        pileBottes.add(new H3("Pile bottes"));
+
+        if (joueur.getPlateau().getPile(TypePile.BOTTES) != null){
+            for (int i = 0; i < playerService.getSizeDeck(joueur); i++) {
+
+                pileBottes.add(new Image("cartes/" + joueur
+                    .getPlateau()
+                    .getPile(TypePile.BOTTES)
+                    .getCarte(i)
+                    .getStringImage(),
+                    "carte/carteBottes"));
+            }
+        } else {
+            pileBottes.add(new Image("cartes/back.png", "Dos de la carte"));
         }
+
 
         pileVitesse.addClassName("piles-cards");
 
@@ -145,6 +163,8 @@ public class PlateauLayout extends HorizontalLayout {
         pileBottes.addClassName("piles-cards");
 
 
-        add(pileVitesse, pileBataille, pileBornes, pileBottes);
+        layout.add(pileVitesse, pileBataille, pileBornes, pileBottes);
+
+        add(layout);
     }
 }

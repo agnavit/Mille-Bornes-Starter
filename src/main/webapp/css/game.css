@@ -9,6 +9,10 @@
     border: solid #ff7a6e 4px;
 }
 
+.not-my-pile-cards h3 {
+    color: #ff7a6e;
+}
+
 .my-pile-cards vaadin-horizontal-layout vaadin-vertical-layout {
     background: linear-gradient(to bottom, #C0D0E5, #f5efef);
     border-radius: 10px;
@@ -31,9 +35,9 @@
 }
 
 h3 {
+    text-align: center;
     position: relative;
     bottom: 33px;
-    color: #ff7a6e;
     text-shadow: 0 0 6px white;
 }
 
