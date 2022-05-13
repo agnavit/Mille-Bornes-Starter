@@ -246,7 +246,7 @@ public class PartyView extends HtmlContainer implements Observer {
         ui.access(() -> {
             loading.close();
             //partieService.getPartieJoueur(player, listePartie).getId();
-            UI.getCurrent().navigate(GameView.class, new RouteParameters("idPartie", partieService.getPartieJoueur(player, listePartie).getId()));
+            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId() + "/" + player.getPseudo());
         });
     }
 }
