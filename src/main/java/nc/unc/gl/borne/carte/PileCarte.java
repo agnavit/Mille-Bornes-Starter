@@ -105,7 +105,7 @@ public class PileCarte {
         PileCarte pileCarte1 = (PileCarte) o;
         return (Objects.equals(pileCarte, pileCarte1.pileCarte));
     }
-    
+
     public boolean estVide(){
         return pileCarte.size() == 0;
     }
