@@ -31,14 +31,27 @@ public class JoueurDao {
         }
     }
 
-    public void insertJoueur(String pseudoJoueur, int ageJoueur) throws SQLException {
+    public void insertJoueur(String pseudoJoueur, int ageJoueur) {
         var connection = ConnectionHolder.INSTANCE.getConnection();
         try (var statement = connection.prepareStatement("INSERT INTO joueur ( PSEUDOJOUEUR, AGEJOUEUR, IDPARTIE) VALUES (?, ?, ?)")) {
             //statement.setString(1, "0");
             statement.setString(1, pseudoJoueur);
             statement.setInt(2, ageJoueur);
-            statement.setString(3, "1");
+            statement.setString(3, null);
             statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updatePartieJoueur(String idPartie, Joueur joueur) {
+        var connection = ConnectionHolder.INSTANCE.getConnection();
+        try (var statement = connection.prepareStatement("UPDATE JOUEUR SET IDPARTIE = ? WHERE PSEUDOJOUEUR = ?")) {
+            statement.setString(1, idPartie);
+            statement.setString(2, joueur.getPseudo());
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
