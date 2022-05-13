@@ -227,15 +227,10 @@ public class JoueurServiceTest {
         Carte carteAttaque = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
         Carte carteAttaque2 = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 3);
 
-        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 0);
         joueurService.attaquer(carteAttaque, j);
         assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 1);
-        //on verrifie qu'il y a déjà une carte dans la pile bataille : feu vert
+        joueurService.attaquer(carteAttaque2, j);
         assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 1);
-        joueurService.attaquer(carteAttaque2, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 2);
-        joueurService.attaquer(carteAttaque2, j);
-        //on ne peut pas poser 2 attaque pareil sur le même plateau
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 2);
+        assertFalse(joueurService.attaquer(carteAttaque2, j));
     }
 }
