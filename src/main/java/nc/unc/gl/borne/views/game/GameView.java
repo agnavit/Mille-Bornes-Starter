@@ -6,9 +6,10 @@ import com.vaadin.flow.router.*;
 import nc.unc.gl.borne.ObserverGame;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.partie.Game;
+import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
 
-@Route("game/:idPartie?")
+@Route("game/:idPartie?/:pseudoJoueur?")
 public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver, AfterNavigationObserver {
 
     private final UI ui;
@@ -59,6 +60,21 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
                 System.out.println(j.getPseudo());
             });
         });
+    }
+
+    @Override
+    public void updatePoser(Partie partie) {
+
+    }
+
+    @Override
+    public void updateJeter(Partie partie) {
+
+    }
+
+    @Override
+    public void updateScore(Partie partie) {
+
     }
 
     @Override
