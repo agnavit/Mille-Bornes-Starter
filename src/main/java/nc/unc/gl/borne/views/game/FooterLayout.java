@@ -45,7 +45,7 @@ public class FooterLayout extends HorizontalLayout {
         listPlayer.add(myPlayer);
         listPlayer.add(notMyPlayer);
 
-        Partie party = new Partie(listPlayer,2,3);
+        Partie party = new Partie(listPlayer,2,"3");
 
         deckPlayer.ajouter(carte1, myPlayer);
         deckPlayer.ajouter(carte2, myPlayer);

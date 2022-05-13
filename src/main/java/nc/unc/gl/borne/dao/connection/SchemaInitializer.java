@@ -21,11 +21,12 @@ public class SchemaInitializer {
                 //" IDJOUEUR NUMERIC(9,4) NOT NULL PRIMARY KEY, " +
                 " PSEUDOJOUEUR VARCHAR NOT NULL, " +
                 " AGEJOUEUR NUMERIC(9,4) NOT NULL, " +
-                " IDPARTIE NUMERIC(9,4) NOT NULL " +
+                " IDPARTIE VARCHAR " +
                 ")");
             /*statement.execute("CREATE TABLE Partie (" +
                 " idPartie INT PRIMARY KEY NOT NULL AUTO_INCREMENT, " +
-                " pseudoJoueurGagnant VARCHAR NOT NULL " +
+                " idJoueur1 INT," +
+                " idJoueur2 INT" +
                 ")");*/
         }
     }

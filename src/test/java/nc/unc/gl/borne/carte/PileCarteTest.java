@@ -62,7 +62,7 @@ public class PileCarteTest {
         JeuComplet jeuComplet = new JeuComplet();
         ArrayList<Joueur> listeJoueur = new ArrayList<>();
 
-        Partie partie = new Partie(listeJoueur, 2, 1);
+        Partie partie = new Partie(listeJoueur, 2, "1");
         assertNotEquals(jeuComplet.getJeuComplet(), partie.getPioche().getPileCarte());
     }
 

@@ -1,9 +1,11 @@
 package nc.unc.gl.borne.partie;
 
+import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.jeuComplet.JeuComplet;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,6 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PartieService {
 
     public JoueurService joueurService = new JoueurService();
+    public JoueurDao joueurDao = new JoueurDao();
 
     public void lancerPartie(Partie partie) {
         AtomicInteger score = new AtomicInteger();
@@ -64,6 +67,9 @@ public class PartieService {
 
     public void connectJoueur(Partie partie, Joueur joueur) {
         partie.getListejoueur().add(joueur);
+        if (partie.getNbJoueurMax() == partie.getListejoueur().size()) {
+            joueurDao.updatePartieJoueur(partie.getId(), joueur);
+        }
     }
 
     /*public Partie getPartie(String idPartie) {
