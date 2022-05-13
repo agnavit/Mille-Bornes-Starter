@@ -16,33 +16,8 @@ import nc.unc.gl.borne.joueur.JoueurService;
 @StyleSheet("css/plateau.css")
 public class PlateauLayout extends HorizontalLayout {
 
-    Carte carte1 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
-    Carte carte2 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
-    Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
-    Carte carte4 = new Carte(NomCarte.ACCIDENT, TypeCarte.BOTTE, 4);
-
-    PileCarte defausse = new PileCarte();
-
-    JoueurService playerService = new JoueurService();
-    Joueur joueur = new Joueur(2, "Anthony", 22);
-
-    // Création de deux nouvelles cartes
-    Carte carteVitesse = new Carte(NomCarte.FEU, TypeCarte.PARADE, 5);
-    Carte carteBATAILLE = new Carte(NomCarte.FEU, TypeCarte.PARADE, 6);
-
     public PlateauLayout(Joueur joueur){
-        //TODO version générique avec paramètre joueur
-        //playerService.poser(carte1, defausse, joueur);
-        //playerService.poser(carte2, defausse, joueur);
-        //playerService.poser(carte3, defausse, joueur);
-        //playerService.poser(carte4, defausse, joueur);
-
-        // Je pose une carte dans les piles vitesse et bataille
-        //playerService.poser(carteVitesse, joueur.getPlateau().getPile(TypePile.VITESSE), joueur);
-        //playerService.poser(carteBATAILLE, joueur.getPlateau().getPile(TypePile.BATAILLE), joueur);
-        //playerService.poser(carte4, joueur.getPlateau().getPile(TypePile.BOTTES), joueur);
-
-
+//TODO version générique avec paramètre joueur
 
         // Correction :
         //      - Ajout d'une carte dans les piles
@@ -94,7 +69,6 @@ public class PlateauLayout extends HorizontalLayout {
 
 
         pileBornesCartes.add(vingtCinq, cinquante, soixanteQuinze, cent, deuxCents);
-
         pileBornes.add(pileBornesCartes);
 
         //------------------------------------------------------
@@ -103,8 +77,7 @@ public class PlateauLayout extends HorizontalLayout {
         pileBottes.add(new H3("Pile bottes"));
 
         if (!joueur.getPlateau().getPile(TypePile.BOTTES).estVide()){
-            for (int i = 0; i < playerService.getSizeDeck(joueur); i++) {
-
+            for (int i = 0; i < joueur.getPlateau().getPile(TypePile.BOTTES).getTaille()-1; i++) {
                 pileBottes.add(new Image("cartes/" + joueur
                     .getPlateau()
                     .getPile(TypePile.BOTTES)
@@ -116,18 +89,14 @@ public class PlateauLayout extends HorizontalLayout {
             pileBottes.add(new Image("cartes/back.png", "Dos de la carte"));
         }
 
+        //------------------------------------------------------
 
-        pileVitesse.addClassName("piles-cards");
-
-        pileBataille.addClassName("piles-cards");
-
-        pileBornes.addClassName("piles-cards");
-
-        pileBottes.addClassName("piles-cards");
-
+        pileVitesse.addClassName("pile-vitesse");
+        pileBataille.addClassName("pile-bataille");
+        pileBornes.addClassName("pile-bornes");
+        pileBottes.addClassName("pile-bottes");
 
         layout.add(pileVitesse, pileBataille, pileBornes, pileBottes);
-
         add(layout);
     }
 
@@ -136,6 +105,7 @@ public class PlateauLayout extends HorizontalLayout {
             pileCible.add(new Image("cartes/back.png", "Dos de la carte"));
         }
         else{
+            JoueurService playerService = new JoueurService();
             pileCible
                 .add(new Image("cartes/" + playerService.getLastCardInPile(joueur, typePile)
                     .getStringImage(),
@@ -148,5 +118,34 @@ public class PlateauLayout extends HorizontalLayout {
                 .getPlateau()
                 .getPile(TypePile.BORNES)
                 .getNbCartePile(new Carte(nomCarte, TypeCarte.BORNE, 0)));
+    }
+
+    public static void main(String[] args){
+
+        Carte carte1 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
+        Carte carte2 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
+        Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
+        Carte carte4 = new Carte(NomCarte.ACCIDENT, TypeCarte.BOTTE, 4);
+
+        PileCarte defausse = new PileCarte();
+
+        JoueurService playerService = new JoueurService();
+        Joueur joueur = new Joueur(2, "Anthony", 22);
+
+        // Création de deux nouvelles cartes
+        Carte carteVitesse = new Carte(NomCarte.FEU, TypeCarte.PARADE, 5);
+        Carte carteBATAILLE = new Carte(NomCarte.FEU, TypeCarte.PARADE, 6);
+
+        playerService.poser(carte1, defausse, joueur);
+        playerService.poser(carte2, defausse, joueur);
+        playerService.poser(carte3, defausse, joueur);
+        playerService.poser(carte4, defausse, joueur);
+
+         //Je pose une carte dans les piles vitesse et bataille
+        playerService.poser(carteVitesse, joueur.getPlateau().getPile(TypePile.VITESSE), joueur);
+        playerService.poser(carteBATAILLE, joueur.getPlateau().getPile(TypePile.BATAILLE), joueur);
+        playerService.poser(carte4, joueur.getPlateau().getPile(TypePile.BOTTES), joueur);
+
+        PlateauLayout plateauLayout = new PlateauLayout(joueur);
     }
 }
