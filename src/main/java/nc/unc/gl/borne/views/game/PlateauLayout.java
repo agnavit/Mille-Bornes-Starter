@@ -30,7 +30,7 @@ public class PlateauLayout extends HorizontalLayout {
     Carte carteVitesse = new Carte(NomCarte.FEU, TypeCarte.PARADE, 5);
     Carte carteBATAILLE = new Carte(NomCarte.FEU, TypeCarte.PARADE, 6);
 
-    public PlateauLayout(){
+    public PlateauLayout(Joueur joueur){
         //TODO version générique avec paramètre joueur
         //playerService.poser(carte1, defausse, joueur);
         //playerService.poser(carte2, defausse, joueur);
@@ -135,10 +135,12 @@ public class PlateauLayout extends HorizontalLayout {
         if(joueur.getPlateau().getPile(typePile).estVide()){
             pileCible.add(new Image("cartes/back.png", "Dos de la carte"));
         }
-        pileCible
-            .add(new Image("cartes/" +playerService.getLastCardInPile(joueur,typePile)
-                .getStringImage(),
-                "carte/sommetPileBataille"));
+        else{
+            pileCible
+                .add(new Image("cartes/" + playerService.getLastCardInPile(joueur, typePile)
+                    .getStringImage(),
+                    "carte/sommetPileBataille"));
+        }
     }
 
     public String getNbCartePileBorneString(NomCarte nomCarte, Joueur joueur){
