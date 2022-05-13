@@ -1,6 +1,7 @@
 package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import nc.unc.gl.borne.ObserverGame;
@@ -10,6 +11,7 @@ import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
 
 @Route("game/:idPartie?/:pseudoJoueur?")
+@StyleSheet("css/game.css")
 public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver, AfterNavigationObserver {
 
     private final UI ui;
@@ -30,7 +32,9 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
         this.ui = UI.getCurrent();
 
         PlateauLayout plateauLayout = new PlateauLayout();
+        plateauLayout.addClassName("not-my-pile-cards");
         PlateauLayout plateauLayout2 = new PlateauLayout();
+        plateauLayout2.addClassName("my-pile-cards");
         FooterLayout footerLayout = new FooterLayout();
 
         VerticalLayout layout = new VerticalLayout();

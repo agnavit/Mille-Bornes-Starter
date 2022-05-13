@@ -13,7 +13,6 @@ import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
 
 @Route("testPlateauLayout")
-@StyleSheet("css/plateau.css")
 public class PlateauLayout extends HorizontalLayout {
 
     public PlateauLayout(Joueur joueur){
