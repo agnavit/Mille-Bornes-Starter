@@ -1,7 +1,6 @@
 package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.*;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import nc.unc.gl.borne.ObserverGame;
@@ -10,7 +9,7 @@ import nc.unc.gl.borne.partie.Game;
 import nc.unc.gl.borne.partie.PartieService;
 
 @Route("game/:idPartie?")
-public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver {
+public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver, AfterNavigationObserver {
 
     private final UI ui;
 
@@ -28,8 +27,6 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
 
     public GameView() {
         this.ui = UI.getCurrent();
-
-        game.getAllPlayer(idPartie);
 
         PlateauLayout plateauLayout = new PlateauLayout();
         PlateauLayout plateauLayout2 = new PlateauLayout();
@@ -62,5 +59,10 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
                 System.out.println(j.getPseudo());
             });
         });
+    }
+
+    @Override
+    public void afterNavigation(AfterNavigationEvent event) {
+        game.getAllPlayer(idPartie);
     }
 }
