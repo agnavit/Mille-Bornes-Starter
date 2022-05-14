@@ -34,7 +34,7 @@ public class PlateauLayout extends HorizontalLayout {
 
         playerService.attaquer(carteAttaqueFeu, joueur);
         playerService.poser(carteParadeFeu, defausse, joueur);
-        playerService.poser(carteBotteAccident, defausse, joueur);
+//        playerService.poser(carteBotteAccident, defausse, joueur);
         playerService.poser(carteBorne200, defausse, joueur);
         playerService.poser(carteBorne200Bis, defausse, joueur);
 
@@ -96,7 +96,7 @@ public class PlateauLayout extends HorizontalLayout {
         pileBottes.add(new H3("Pile bottes"));
 
         if (!joueur.getPlateau().getPile(TypePile.BOTTES).estVide()){
-            for (int i = 0; i < joueur.getPlateau().getPile(TypePile.BOTTES).getTaille()-1; i++) {
+            for (int i = 0; i < joueur.getPlateau().getPile(TypePile.BOTTES).getTaille(); i++) {
                 pileBottes.add(new Image("cartes/" + joueur
                     .getPlateau()
                     .getPile(TypePile.BOTTES)
@@ -138,6 +138,4 @@ public class PlateauLayout extends HorizontalLayout {
                 .getPile(TypePile.BORNES)
                 .getNbCartePile(new Carte(nomCarte, TypeCarte.BORNE, 0)));
     }
-
-
 }
