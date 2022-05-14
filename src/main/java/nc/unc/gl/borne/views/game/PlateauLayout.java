@@ -16,32 +16,7 @@ import nc.unc.gl.borne.joueur.JoueurService;
 @StyleSheet("css/plateau.css")
 public class PlateauLayout extends HorizontalLayout {
 
-        Carte carteAttaqueFeu = new Carte(NomCarte.FEU, TypeCarte.ATTAQUE,0);
-        Carte carteParadeFeu = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
-        Carte carteBorne200 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
-        Carte carteBorne200Bis = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
-        Carte carteBotteAccident = new Carte(NomCarte.ACCIDENT, TypeCarte.BOTTE, 4);
-
-        PileCarte defausse = new PileCarte();
-
-        JoueurService playerService = new JoueurService();
-        Joueur joueur = new Joueur(2, "Anthony", 22);
-
-
-
-    public PlateauLayout(){
-//TODO version générique avec paramètre joueur
-
-        playerService.attaquer(carteAttaqueFeu, joueur);
-        playerService.poser(carteParadeFeu, defausse, joueur);
-//        playerService.poser(carteBotteAccident, defausse, joueur);
-        playerService.poser(carteBorne200, defausse, joueur);
-        playerService.poser(carteBorne200Bis, defausse, joueur);
-
-        // Correction :
-        //      - Ajout d'une carte dans les piles
-        //      - Ajout "cartes/" +
-        //------------------------------------------------------
+    public PlateauLayout(Joueur joueur){
 
         HorizontalLayout layout = new HorizontalLayout();
 
