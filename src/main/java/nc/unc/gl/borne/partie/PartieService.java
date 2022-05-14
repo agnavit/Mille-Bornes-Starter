@@ -1,4 +1,5 @@
 package nc.unc.gl.borne.partie;
+import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.jeuComplet.JeuComplet;
 import nc.unc.gl.borne.joueur.Joueur;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class PartieService {
+public class PartieService extends Thread {
 
     public JoueurService joueurService = new JoueurService();
     public JoueurDao joueurDao = new JoueurDao();
@@ -67,6 +68,11 @@ public class PartieService {
         if (partie.getNbJoueurMax() == partie.getListejoueur().size()) {
             joueurDao.updatePartieJoueur(partie.getId(), joueur);
         }
+    }
+
+    public void run() {
+        lancerPartie(MilleBornesApplication.getPartieList().get(0));
+
     }
 
     /*public Partie getPartie(String idPartie) {
