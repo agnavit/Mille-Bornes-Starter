@@ -25,6 +25,7 @@ import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteParameters;
 import lombok.Data;
+import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.joueur.Joueur;
@@ -167,7 +168,8 @@ public class PartyView extends HtmlContainer implements Observer {
 
         createGameButton.addClickListener(event -> {
             Notification.show("Attente pour créer une partie");
-            joueurDao.updatePartieJoueur(party.creerPartieObserver(player).getId(), player);
+            var partie = party.creerPartieObserver(player);
+            joueurDao.updatePartieJoueur(partie.getId(), player);
             container.remove(createGameButton);
             container.add(cancelCreateGameButton);
             joinPartyTab.setEnabled(false);

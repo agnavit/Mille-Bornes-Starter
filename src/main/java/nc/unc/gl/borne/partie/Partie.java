@@ -1,6 +1,7 @@
 package nc.unc.gl.borne.partie;
 
 import lombok.Data;
+import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.carte.PileCarte;
 import nc.unc.gl.borne.joueur.Joueur;
@@ -46,6 +47,7 @@ public class Partie {
         listeJoueurs.add(joueur);
         Partie partie = new Partie(listeJoueurs, 2, String.valueOf(i));
         i+=1;
+        MilleBornesApplication.addPartieList(partie);
         this.observers.forEach(obs -> obs.update(partie));
         return partie;
     }
@@ -62,9 +64,5 @@ public class Partie {
 
     public void modifFenetreLancementPartie(Joueur player) {
         this.observers.forEach(obs -> obs.updateWindow(player));
-    }
-
-    public String toString() {
-        return this.getListejoueur().get(0).getPseudo();
     }
 }

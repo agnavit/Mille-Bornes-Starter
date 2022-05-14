@@ -11,5 +11,4 @@ public interface ObserverGame {
     void updateJeter(Partie partie);
 
     void updateScore(Partie partie);
-
 }

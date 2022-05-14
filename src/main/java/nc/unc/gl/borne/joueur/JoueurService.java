@@ -183,27 +183,10 @@ public class JoueurService {
         joueur.getMain().getMainJoueur().add(pioche.depiler());
     }
 
-    public void choisirCarte() {
-        Carte carte = null;
-        while(carte == null) {
-            //TODO écouter evenement
-            //TODO carte = evenement
-        }
-    }
-
-    public void choisirAction() {
-        Carte action = null;
-        while(action == null) {
-            //TODO écouter evenement
-            //TODO action = evenement
-        }
-    }
-
     public void jouer(PileCarte pioche, Joueur joueur) {
         piocher(pioche, joueur);
         while (joueur.getMain().getMainJoueur().size() > 6) {
-            choisirCarte();
-            choisirAction();
+
         }
     }
 
