@@ -1,7 +1,11 @@
 package nc.unc.gl.borne.views.game;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.dnd.DropEvent;
+import com.vaadin.flow.component.dnd.DropTarget;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -12,13 +16,22 @@ import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
 
+import java.util.Optional;
+
 public class PlateauLayout extends HorizontalLayout {
+
+    FooterLayout footerLayout = new FooterLayout();
+    VerticalLayout pileVitesse;
+    VerticalLayout pileBornes;
+    JoueurService playerService = new JoueurService();
+
+
 
     public PlateauLayout(Joueur joueur){
 
         HorizontalLayout layout = new HorizontalLayout();
 
-        VerticalLayout pileVitesse = new VerticalLayout();
+        pileVitesse = new VerticalLayout();
         pileVitesse.add(new H3("Vitesse"));
         getImageSommetPile(TypePile.VITESSE, joueur, pileVitesse);
 
@@ -31,7 +44,7 @@ public class PlateauLayout extends HorizontalLayout {
 
         //------------------------------------------------------
 
-        VerticalLayout pileBornes = new VerticalLayout();
+        pileBornes = new VerticalLayout();
         pileBornes.add(new H3("Bornes"));
 
         HorizontalLayout pileBornesCartes = new HorizontalLayout();
@@ -82,6 +95,10 @@ public class PlateauLayout extends HorizontalLayout {
         }
 
         //------------------------------------------------------
+        DropTarget.create(pileVitesse).addDropListener(this::onDrop);
+        DropTarget.create(pileBataille).addDropListener(this::onDrop);
+        DropTarget.create(pileBornes).addDropListener(this::onDrop);
+
 
         pileVitesse.addClassName("pile-vitesse");
         pileBataille.addClassName("pile-bataille");
@@ -111,4 +128,22 @@ public class PlateauLayout extends HorizontalLayout {
                 .getPile(TypePile.BORNES)
                 .getNbCartePile(new Carte(nomCarte, TypeCarte.BORNE, 0)));
     }
-}
+
+    private void onDrop(DropEvent<VerticalLayout> event) {
+        for (int i = 0; i < playerService.getSizeDeck(footerLayout.myPlayer); i++) {
+            Carte getOnDrop;
+            getOnDrop = playerService.getCardInDeck(footerLayout.myPlayer, i);
+            System.out.println(getOnDrop);
+        }
+//        if (event.getDragSourceComponent().isPresent()) {
+//            System.out.println(imageDrag);
+//            pileBornes.add(String.valueOf(imageDrag));
+            //poser dans le back
+
+            //poser dans le front
+            //pileVitesse.add(playerService.getCardInDeck(footerLayout.myPlayer, 2));
+            //update le back
+            //update le front
+        }
+    }
+

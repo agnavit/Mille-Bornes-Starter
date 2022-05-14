@@ -3,6 +3,7 @@ package nc.unc.gl.borne.views.game;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.dnd.DragSource;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -43,6 +44,9 @@ public class FooterLayout extends HorizontalLayout {
     ArrayList<Joueur> listPlayer = new ArrayList<Joueur>();
 
     PileCarte defausse = new PileCarte();
+
+    Carte getOnDrop;
+    DragSource<Image> dragSource;
 
     public FooterLayout(){
 
@@ -142,6 +146,13 @@ public class FooterLayout extends HorizontalLayout {
 
             var chosenCard = deckPlayerImage.get(i);
             int j = i;
+            dragSource = DragSource.create(image);
+            dragSource.setDraggable(true);
+            dragSource.addDragStartListener(event -> {
+                getOnDrop = playerService.getCardInDeck(myPlayer, j);
+                System.out.println(getOnDrop);
+                event.setDragData("From deck");
+            });
             deckPlayerImage.get(i).addClickListener(
                 click -> {
                     chosenCard.getElement().getStyle().set("border-color", "white");
