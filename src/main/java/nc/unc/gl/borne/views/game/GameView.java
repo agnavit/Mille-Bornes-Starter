@@ -83,5 +83,6 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
         game.getAllPlayer(idPartie);
+        partieService.start();
     }
 }
