@@ -50,6 +50,12 @@ public class JoueurService {
      * Si une attaque est contrée, alors l'attaque et la parade sont jetées dans la défausse
      */
     public void poserCarteParade(Carte carteParade, PileCarte defausse, Joueur joueur){
+        //TODO Tests
+
+        if(joueur.getPlateau().getPile(TypePile.BATAILLE).estVide()){
+            throw new IllegalArgumentException("Erreur : la pile bataille est vide!");
+        }
+
         Carte derniereCarte = joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet();
 
         // Si la carte parade est de type différent de la carte sur la pile bataille
@@ -97,6 +103,7 @@ public class JoueurService {
     }
 
     public void poserCarteBotte(Carte carteBotte, Joueur joueur, PileCarte defausse) {
+        //TODO tests
         joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BOTTES, carteBotte, joueur));
 
         // Si le joueur a une carte attaque du même nom que la carte botte alors cette attaque est enlevée
@@ -107,11 +114,13 @@ public class JoueurService {
             defausse.empiler(carteAJeter);
         }
         else {
-            NomCarte nomCarteSommetPileBataille = joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet().getNom();
-            if (joueur.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1
-                && nomCarteSommetPileBataille.equals(carteBotte.getNom())) {
-                Carte carteAJeter = plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur);
-                defausse.empiler(carteAJeter);
+
+            if (joueur.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1) {
+                NomCarte nomCarteSommetPileBataille = joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet().getNom();
+                if(nomCarteSommetPileBataille.equals(carteBotte.getNom())){
+                    Carte carteAJeter = plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur);
+                    defausse.empiler(carteAJeter);
+                }
             }
         }
         //TODO Tests
@@ -168,12 +177,13 @@ public class JoueurService {
             return false;
         }
 
-        if (nomCarteAttaque == NomCarte.VITESSE && joueurAttaque.getPlateau().getPile(TypePile.VITESSE).getTaille() == 1){
+        if (nomCarteAttaque == NomCarte.VITESSE && joueurAttaque.getPlateau().getPile(TypePile.VITESSE).estVide()){
             joueurAttaque.getPlateau().getPile(TypePile.VITESSE).empiler(carteAttaque);
             return true;
         }
-        if(joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1) {
+        if(joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).estVide()) {
             joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).empiler(carteAttaque);
+            // Suprimme la carte de la main du joueur
             return true;
         }
         return false;

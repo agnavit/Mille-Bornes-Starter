@@ -1,11 +1,16 @@
 package nc.unc.gl.borne.partie;
 
 import nc.unc.gl.borne.ObserverGame;
+import nc.unc.gl.borne.joueur.Joueur;
+import nc.unc.gl.borne.views.game.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
+
+    Joueur j1;
+    Joueur j2;
 
     public Game() {
 
@@ -22,6 +27,8 @@ public class Game {
     }
 
     public void getAllPlayer(String idPartie) {
-        this.observersPartie.forEach(obs -> obs.updateWindowParty(idPartie));
+        this.observersPartie.forEach(obs -> {
+            obs.updateWindowParty(idPartie);
+        });
     }
 }

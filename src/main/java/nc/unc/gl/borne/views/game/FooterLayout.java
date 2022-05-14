@@ -25,87 +25,64 @@ public class FooterLayout extends HorizontalLayout {
 
     protected DeckService deckPlayer = new DeckService();
 
-    Joueur myPlayer = new Joueur(1, "Anthony", 22);
-    Joueur notMyPlayer = new Joueur(2, "Jason", 21);
-
-    Carte carte1 = new Carte(NomCarte.ACCIDENT, TypeCarte.ATTAQUE, 1);
-    Carte carte2 = new Carte(NomCarte.ESSENCE, TypeCarte.ATTAQUE, 2);
-    Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
-    Carte carte4 = new Carte(NomCarte.VITESSE, TypeCarte.BOTTE, 4);
-    Carte carte5 = new Carte(NomCarte.ESSENCE, TypeCarte.PARADE, 5);
-    Carte carte6 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 6);
-    Carte carte7 = new Carte(NomCarte.CREVAISON, TypeCarte.BOTTE, 7);
-
-    Plateau plateau = new Plateau();
-
     JoueurService playerService = new JoueurService();
 
-    ArrayList<Joueur> listPlayer = new ArrayList<Joueur>();
-
-    public FooterLayout(){
-
-        listPlayer.add(myPlayer);
-        listPlayer.add(notMyPlayer);
-
-        Partie party = new Partie(listPlayer,2,"3");
-
-        deckPlayer.ajouter(carte1, myPlayer);
-        deckPlayer.ajouter(carte2, myPlayer);
-        deckPlayer.ajouter(carte3, myPlayer);
-        deckPlayer.ajouter(carte4, myPlayer);
-        deckPlayer.ajouter(carte5, myPlayer);
-        deckPlayer.ajouter(carte6, myPlayer);
-        deckPlayer.ajouter(carte7, myPlayer);
+    public FooterLayout(Partie refPartie, Joueur joueurDefensive, Joueur joueurAttaque){
 
         HorizontalLayout footer = new HorizontalLayout();
-
-        updateDeckPlayer(party, footer);
+        updateDeckPlayer(refPartie, footer, joueurDefensive, joueurAttaque);
     }
 
-    public void putCardPlayer(Partie party, HorizontalLayout footerLayout, Button putCardButton, Carte selectedCard){
+    public void putCardPlayer(Partie party, HorizontalLayout footerLayout, Button putCardButton,
+                              Carte selectedCard, Joueur joueurDefensif, Joueur joueurAttaque){
         putCardButton.addClickListener(
             clickPutCard -> {
                 if (selectedCard.getType() == TypeCarte.BORNE) {
-                    playerService.poserCarteBorne(
+                    playerService.poser(
                         selectedCard,
-                        myPlayer
+                        party.getDefausse(),
+                        joueurDefensif
                     );
                 } else if (selectedCard.getType() == TypeCarte.ATTAQUE) {
                     playerService.attaquer(
                         selectedCard,
-                        notMyPlayer
+                        joueurAttaque
                     );
+                    joueurDefensif.getMain().getMainJoueur().remove(selectedCard);
+
                 } else if (selectedCard.getType() == TypeCarte.BOTTE) {
                     playerService.poser(
                         selectedCard,
-                        plateau.getPile(TypePile.BOTTES),
-                        myPlayer
+                        party.getDefausse(),
+                        joueurDefensif
                     );
                 } else {
                     playerService.poser(
                         selectedCard,
-                        plateau.getPile(TypePile.VITESSE),
-                        myPlayer
+                        party.getDefausse(),
+                        joueurDefensif
                     );
                 }
                 System.out.println(party.getListejoueur().get(0).getMain().getMainJoueur());
-                updateDeckPlayer(party, footerLayout);
+                updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
+                System.out.println(selectedCard);
             }
         );
     }
 
-    public void throwCardPlayer(Partie party, HorizontalLayout footerLayout, Button throwCardButton, Carte selectedCard){
+    public void throwCardPlayer(Partie party, HorizontalLayout footerLayout, Button throwCardButton, Carte selectedCard,
+                                Joueur joueurDefensif, Joueur joueurAttaque){
         throwCardButton.addClickListener(
             click -> {
-                playerService.jeter(selectedCard, party.getDefausse(), party.getListejoueur().get(0));
-                System.out.println(party.getListejoueur().get(0).getMain().getMainJoueur());
-                updateDeckPlayer(party, footerLayout);
+                playerService.jeter(selectedCard, party.getDefausse(), joueurDefensif);
+                System.out.println(joueurDefensif.getMain().getMainJoueur());
+                updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
             }
         );
 
     }
 
-    public void updateDeckPlayer(Partie party , HorizontalLayout footerLayout){
+    public void updateDeckPlayer(Partie party , HorizontalLayout footerLayout, Joueur joueurDefensif, Joueur joueurAttaque){
 
         removeAll();
         footerLayout.removeAll();
@@ -124,14 +101,15 @@ public class FooterLayout extends HorizontalLayout {
         HorizontalLayout deckLayout = new HorizontalLayout();
 
 
-        ArrayList<Image> deckPlayerImage = new ArrayList<Image>(myPlayer.getMain().getMainJoueur().size());
+        ArrayList<Image> deckPlayerImage = new ArrayList<Image>(joueurDefensif.getMain().getMainJoueur().size());
 
-        for (int i = 0; i < playerService.getSizeDeck(myPlayer); i++) {
+        for (int i = 0; i < playerService.getSizeDeck(joueurDefensif); i++) {
 
             Image image = new Image(
-                "cartes/" + playerService.getCardInDeck(myPlayer,i).getStringImage(),
-                String.valueOf(playerService.getCardInDeck(myPlayer,i)));
+                "cartes/" + playerService.getCardInDeck(joueurDefensif,i).getStringImage(),
+                String.valueOf(playerService.getCardInDeck(joueurDefensif,i)));
             image.addClassName("card-deck");
+            System.out.println(image);
 
             deckPlayerImage.add(image);
 
@@ -140,17 +118,17 @@ public class FooterLayout extends HorizontalLayout {
             deckPlayerImage.get(i).addClickListener(
                 click -> {
                     chosenCard.getElement().getStyle().set("border-color", "white");
-                    System.out.println("Le joueur: " + myPlayer.getPseudo() + " a choisi la carte " + chosenCard.getAlt());
+                    System.out.println("Le joueur: " + joueurDefensif.getPseudo() + " a choisi la carte " + chosenCard.getAlt());
                     Carte selectedCard = new Carte(
-                        playerService.getCardInDeck(myPlayer,j).getNom(),
-                        playerService.getCardInDeck(myPlayer,j).getType(),
-                        playerService.getCardInDeck(myPlayer,j).getIdentifiant()
+                        playerService.getCardInDeck(joueurDefensif,j).getNom(),
+                        playerService.getCardInDeck(joueurDefensif,j).getType(),
+                        playerService.getCardInDeck(joueurDefensif,j).getIdentifiant()
                     );
                     putCardButton.setEnabled(true);
                     throwCardButton.setEnabled(true);
 
-                    putCardPlayer(party, footerLayout, putCardButton, selectedCard);
-                    throwCardPlayer(party, footerLayout, throwCardButton, selectedCard);
+                    putCardPlayer(party, footerLayout, putCardButton, selectedCard, joueurDefensif, joueurAttaque);
+                    throwCardPlayer(party, footerLayout, throwCardButton, selectedCard, joueurDefensif, joueurAttaque);
                 }
             );
         }

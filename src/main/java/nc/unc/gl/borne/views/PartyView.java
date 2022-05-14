@@ -59,6 +59,8 @@ public class PartyView extends HtmlContainer implements Observer {
     Dialog loading = new Dialog();
     JoueurDao joueurDao = new JoueurDao();
 
+    public String nomJoueur;
+
     public PartyView(){
 
         this.ui = UI.getCurrent();
@@ -99,6 +101,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
             // Récupération des données
             String username = userNameField.getValue();
+            nomJoueur = userNameField.getValue();
             Integer ageUser = ageUserField.getValue();
 
             Joueur player = new Joueur(this.hashCode(), username, ageUser);
@@ -178,6 +181,9 @@ public class PartyView extends HtmlContainer implements Observer {
 
         joinGameButton.addClickListener(event -> {
             partieService.connectJoueur(listBox.getValue(), player);
+            if (listBox.getValue().getNbJoueurMax() == listBox.getValue().getListejoueur().size()) {
+                partieService.start();
+            }
             party.modifFenetreLancementPartie(player);
         });
 
@@ -247,8 +253,7 @@ public class PartyView extends HtmlContainer implements Observer {
     public void updateWindow(Joueur player) {
         ui.access(() -> {
             loading.close();
-            //partieService.getPartieJoueur(player, listePartie).getId();
-            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId() + "/" + player.getPseudo());
+            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId() + "/" + nomJoueur);
         });
     }
 }

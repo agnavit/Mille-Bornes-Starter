@@ -14,10 +14,7 @@ import nc.unc.gl.borne.joueur.Joueur;
 @StyleSheet("css/toplayout.css")
 public class TopLayout extends VerticalLayout {
 
-    Joueur myPlayer = new Joueur(1, "Anthony", 22);
-    Joueur notMyPlayer = new Joueur(2, "Jason", 21);
-
-    public TopLayout(){
+    public TopLayout(Joueur myPlayer, Joueur notMyPlayer){
 
         VerticalLayout topLayout = new VerticalLayout();
 

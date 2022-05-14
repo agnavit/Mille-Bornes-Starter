@@ -23,6 +23,8 @@ public class MainView extends HtmlContainer {
 
     public MainView() {
 
+        // Rebase
+
         // Création de la div qui va servir de conteneur pour les autres balises
         Div container = new Div();
         appliedContainerStyle(container);
