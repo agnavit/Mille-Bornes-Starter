@@ -151,7 +151,7 @@ public class FooterLayout extends HorizontalLayout {
             dragSource.setDraggable(true);
             dragSource.addDragStartListener(event -> {
                 setGetOnDrop(playerService.getCardInDeck(myPlayer, j));
-                System.out.println(imageDrop);
+                System.out.println("Le joueur a drag " + imageDrop);
                 event.setDragData(imageDrop);
             });
             deckPlayerImage.get(i).addClickListener(

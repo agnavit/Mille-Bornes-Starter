@@ -26,7 +26,7 @@ public class PlateauLayout extends HorizontalLayout {
     JoueurService playerService = new JoueurService();
 
 
-    public PlateauLayout(Joueur joueur){
+    public PlateauLayout(Joueur joueur) {
 
         HorizontalLayout layout = new HorizontalLayout();
 
@@ -49,26 +49,26 @@ public class PlateauLayout extends HorizontalLayout {
         HorizontalLayout pileBornesCartes = new HorizontalLayout();
 
         Div vingtCinq = new Div();
-        vingtCinq.add(new Image("cartes/borne_vingt_cinq.jpeg","cartes/borne_vingt_cinq"));
+        vingtCinq.add(new Image("cartes/borne_vingt_cinq.jpeg", "cartes/borne_vingt_cinq"));
         vingtCinq.add(new H4(getNbCartePileBorneString(NomCarte.VINGT_CINQ, joueur)));
 
 
         Div cinquante = new Div();
-        cinquante.add(new Image("cartes/borne_cinquante.jpeg","cartes/borne_cinquante"));
+        cinquante.add(new Image("cartes/borne_cinquante.jpeg", "cartes/borne_cinquante"));
         cinquante.add(new H4(getNbCartePileBorneString(NomCarte.CINQUANTE, joueur)));
 
         Div soixanteQuinze = new Div();
-        soixanteQuinze.add(new Image("cartes/borne_soixante_quinze.jpeg","cartes/borne_soixante_quinze"));
+        soixanteQuinze.add(new Image("cartes/borne_soixante_quinze.jpeg", "cartes/borne_soixante_quinze"));
         soixanteQuinze.add(new H4(getNbCartePileBorneString(NomCarte.SOIXANTE_QUINZE, joueur)));
 
 
         Div cent = new Div();
-        cent.add(new Image("cartes/borne_cent.jpeg","cartes/borne_cent"));
+        cent.add(new Image("cartes/borne_cent.jpeg", "cartes/borne_cent"));
         cent.add(new H4(getNbCartePileBorneString(NomCarte.CENT, joueur)));
 
 
         Div deuxCents = new Div();
-        deuxCents.add(new Image("cartes/borne_deux_cents.jpeg","cartes/borne_deux_cents"));
+        deuxCents.add(new Image("cartes/borne_deux_cents.jpeg", "cartes/borne_deux_cents"));
         deuxCents.add(new H4(getNbCartePileBorneString(NomCarte.DEUX_CENTS, joueur)));
 
 
@@ -80,7 +80,7 @@ public class PlateauLayout extends HorizontalLayout {
         VerticalLayout pileBottes = new VerticalLayout();
         pileBottes.add(new H3("Pile bottes"));
 
-        if (!joueur.getPlateau().getPile(TypePile.BOTTES).estVide()){
+        if (!joueur.getPlateau().getPile(TypePile.BOTTES).estVide()) {
             for (int i = 0; i < joueur.getPlateau().getPile(TypePile.BOTTES).getTaille(); i++) {
                 pileBottes.add(new Image("cartes/" + joueur
                     .getPlateau()
@@ -108,11 +108,10 @@ public class PlateauLayout extends HorizontalLayout {
         add(layout);
     }
 
-    public void getImageSommetPile(TypePile typePile,Joueur joueur, VerticalLayout pileCible){
-        if(joueur.getPlateau().getPile(typePile).estVide()){
+    public void getImageSommetPile(TypePile typePile, Joueur joueur, VerticalLayout pileCible) {
+        if (joueur.getPlateau().getPile(typePile).estVide()) {
             pileCible.add(new Image("cartes/back.png", "Dos de la carte"));
-        }
-        else{
+        } else {
             JoueurService playerService = new JoueurService();
             pileCible
                 .add(new Image("cartes/" + playerService.getLastCardInPile(joueur, typePile)
@@ -121,27 +120,34 @@ public class PlateauLayout extends HorizontalLayout {
         }
     }
 
-    public String getNbCartePileBorneString(NomCarte nomCarte, Joueur joueur){
+    public String getNbCartePileBorneString(NomCarte nomCarte, Joueur joueur) {
         return String.valueOf(joueur
-                .getPlateau()
-                .getPile(TypePile.BORNES)
-                .getNbCartePile(new Carte(nomCarte, TypeCarte.BORNE, 0)));
+            .getPlateau()
+            .getPile(TypePile.BORNES)
+            .getNbCartePile(new Carte(nomCarte, TypeCarte.BORNE, 0)));
     }
 
     private void onDrop(DropEvent<VerticalLayout> event) {
-        Optional<Object> carte = event.getDragData();
-        Object imageDrag = carte.get();
-        System.out.println(imageDrag);
-
-//        if (event.getDragSourceComponent().isPresent()) {
-//            System.out.println(imageDrag);
-//            pileBornes.add(String.valueOf(imageDrag));
+        Optional<Object> carteFooter = event.getDragData(); //carte du footerlayout getter
+        Component imageCarte = event.getDragSourceComponent().get();//composant image@5555
+        Component carteDrag = event.getComponent();//ComponentVerticalLayout ou on pose
+        Carte carte = (Carte) carteFooter.get();//Carte poser
+        if (event.getDragSourceComponent().isPresent() && event.getDragSourceComponent().get() == imageCarte) {
             //poser dans le back
-
             //poser dans le front
-            //pileVitesse.add(playerService.getCardInDeck(footerLayout.myPlayer, 2));
+            pileBornes.add(imageCarte);
             //update le back
-            //update le front
+            footerLayout.add(imageCarte);
         }
+        else {
+            Notification.show("Mouvement impossible");
+        }
+//        private void onDrop(DropEvent<VerticalLayout> event) {
+//            if (event.getDragSourceComponent().isPresent() && event.getDragSourceComponent().get() == image) {
+//                String dragData = (String) event.getDragData().orElse("");
+//                if ("From bataille".equals(dragData) && event.getComponent() == bataille) {
+//                    deck.remove(image);
+//                    bataille.add(image);
+//                }
     }
-
+}
