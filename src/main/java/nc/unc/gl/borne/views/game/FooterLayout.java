@@ -25,41 +25,9 @@ public class FooterLayout extends HorizontalLayout {
 
     protected DeckService deckPlayer = new DeckService();
 
-//    Joueur myPlayer = new Joueur(1, "Anthony", 22);
-//    Joueur notMyPlayer = new Joueur(2, "Jason", 21);
-
-    Carte carte1 = new Carte(NomCarte.ACCIDENT, TypeCarte.ATTAQUE, 1);
-    Carte carte2 = new Carte(NomCarte.ESSENCE, TypeCarte.ATTAQUE, 2);
-    Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
-    Carte carte4 = new Carte(NomCarte.VITESSE, TypeCarte.BOTTE, 4);
-    Carte carte5 = new Carte(NomCarte.ESSENCE, TypeCarte.PARADE, 5);
-    Carte carte6 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 6);
-    Carte carte7 = new Carte(NomCarte.CREVAISON, TypeCarte.BOTTE, 7);
-
-    Plateau plateau = new Plateau();
-
     JoueurService playerService = new JoueurService();
 
-//    ArrayList<Joueur> listPlayer = new ArrayList<Joueur>();
-
-//    PileCarte defausse = new PileCarte();
-
-
     public FooterLayout(Partie refPartie, Joueur joueurDefensive, Joueur joueurAttaque){
-
-//
-//        listPlayer.add(joueurDefensive);
-//        listPlayer.add(joueurAttaque);
-
-//        Partie party = new Partie(listPlayer,2,idPartie);
-
-//        deckPlayer.ajouter(carte1, myPlayer);
-//        deckPlayer.ajouter(carte2, myPlayer);
-//        deckPlayer.ajouter(carte3, myPlayer);
-//        deckPlayer.ajouter(carte4, myPlayer);
-//        deckPlayer.ajouter(carte5, myPlayer);
-//        deckPlayer.ajouter(carte6, myPlayer);
-//        deckPlayer.ajouter(carte7, myPlayer);
 
         HorizontalLayout footer = new HorizontalLayout();
         updateDeckPlayer(refPartie, footer, joueurDefensive, joueurAttaque);
