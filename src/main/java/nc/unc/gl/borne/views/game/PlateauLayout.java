@@ -16,8 +16,27 @@ import nc.unc.gl.borne.joueur.JoueurService;
 @StyleSheet("css/plateau.css")
 public class PlateauLayout extends HorizontalLayout {
 
-    public PlateauLayout(Joueur joueur){
+        Carte carteAttaqueFeu = new Carte(NomCarte.FEU, TypeCarte.ATTAQUE,0);
+        Carte carteParadeFeu = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
+        Carte carteBorne200 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
+        Carte carteBorne200Bis = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
+        Carte carteBotteAccident = new Carte(NomCarte.ACCIDENT, TypeCarte.BOTTE, 4);
+
+        PileCarte defausse = new PileCarte();
+
+        JoueurService playerService = new JoueurService();
+        Joueur joueur = new Joueur(2, "Anthony", 22);
+
+
+
+    public PlateauLayout(){
 //TODO version générique avec paramètre joueur
+
+        playerService.attaquer(carteAttaqueFeu, joueur);
+        playerService.poser(carteParadeFeu, defausse, joueur);
+        playerService.poser(carteBotteAccident, defausse, joueur);
+        playerService.poser(carteBorne200, defausse, joueur);
+        playerService.poser(carteBorne200Bis, defausse, joueur);
 
         // Correction :
         //      - Ajout d'une carte dans les piles
@@ -120,32 +139,5 @@ public class PlateauLayout extends HorizontalLayout {
                 .getNbCartePile(new Carte(nomCarte, TypeCarte.BORNE, 0)));
     }
 
-    public static void main(String[] args){
 
-        Carte carte1 = new Carte(NomCarte.FEU, TypeCarte.PARADE, 1);
-        Carte carte2 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 3);
-        Carte carte3 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 4);
-        Carte carte4 = new Carte(NomCarte.ACCIDENT, TypeCarte.BOTTE, 4);
-
-        PileCarte defausse = new PileCarte();
-
-        JoueurService playerService = new JoueurService();
-        Joueur joueur = new Joueur(2, "Anthony", 22);
-
-        // Création de deux nouvelles cartes
-        Carte carteVitesse = new Carte(NomCarte.FEU, TypeCarte.PARADE, 5);
-        Carte carteBATAILLE = new Carte(NomCarte.FEU, TypeCarte.PARADE, 6);
-
-        playerService.poser(carte1, defausse, joueur);
-        playerService.poser(carte2, defausse, joueur);
-        playerService.poser(carte3, defausse, joueur);
-        playerService.poser(carte4, defausse, joueur);
-
-         //Je pose une carte dans les piles vitesse et bataille
-        playerService.poser(carteVitesse, joueur.getPlateau().getPile(TypePile.VITESSE), joueur);
-        playerService.poser(carteBATAILLE, joueur.getPlateau().getPile(TypePile.BATAILLE), joueur);
-        playerService.poser(carte4, joueur.getPlateau().getPile(TypePile.BOTTES), joueur);
-
-        PlateauLayout plateauLayout = new PlateauLayout(joueur);
-    }
 }
