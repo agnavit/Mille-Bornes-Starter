@@ -3,11 +3,14 @@ package nc.unc.gl.borne.views.game;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
+import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.ObserverGame;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.partie.Game;
 import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
+
+import java.util.ArrayList;
 
 @Route("game/:idPartie?/:pseudoJoueur?")
 public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver, AfterNavigationObserver {
