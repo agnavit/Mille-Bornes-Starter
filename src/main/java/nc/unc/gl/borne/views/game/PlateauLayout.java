@@ -26,7 +26,6 @@ public class PlateauLayout extends HorizontalLayout {
     JoueurService playerService = new JoueurService();
 
 
-
     public PlateauLayout(Joueur joueur){
 
         HorizontalLayout layout = new HorizontalLayout();
@@ -130,11 +129,10 @@ public class PlateauLayout extends HorizontalLayout {
     }
 
     private void onDrop(DropEvent<VerticalLayout> event) {
-        for (int i = 0; i < playerService.getSizeDeck(footerLayout.myPlayer); i++) {
-            Carte getOnDrop;
-            getOnDrop = playerService.getCardInDeck(footerLayout.myPlayer, i);
-            System.out.println(getOnDrop);
-        }
+        Optional<Object> carte = event.getDragData();
+        Object imageDrag = carte.get();
+        System.out.println(imageDrag);
+
 //        if (event.getDragSourceComponent().isPresent()) {
 //            System.out.println(imageDrag);
 //            pileBornes.add(String.valueOf(imageDrag));

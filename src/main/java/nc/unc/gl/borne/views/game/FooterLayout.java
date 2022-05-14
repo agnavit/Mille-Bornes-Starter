@@ -45,7 +45,7 @@ public class FooterLayout extends HorizontalLayout {
 
     PileCarte defausse = new PileCarte();
 
-    Carte getOnDrop;
+    Carte imageDrop;
     DragSource<Image> dragSource;
 
     public FooterLayout(){
@@ -104,6 +104,7 @@ public class FooterLayout extends HorizontalLayout {
     }
 
     public void throwCardPlayer(Partie party, HorizontalLayout footerLayout, Button throwCardButton, Carte selectedCard){
+
         throwCardButton.addClickListener(
             click -> {
                 playerService.jeter(selectedCard, party.getDefausse(), party.getListejoueur().get(0));
@@ -149,9 +150,9 @@ public class FooterLayout extends HorizontalLayout {
             dragSource = DragSource.create(image);
             dragSource.setDraggable(true);
             dragSource.addDragStartListener(event -> {
-                getOnDrop = playerService.getCardInDeck(myPlayer, j);
-                System.out.println(getOnDrop);
-                event.setDragData("From deck");
+                setGetOnDrop(playerService.getCardInDeck(myPlayer, j));
+                System.out.println(imageDrop);
+                event.setDragData(imageDrop);
             });
             deckPlayerImage.get(i).addClickListener(
                 click -> {
@@ -184,5 +185,11 @@ public class FooterLayout extends HorizontalLayout {
             .set("background", "linear-gradient(to right, #B0C4DE, #f5efef)");
 
         add(footerLayout);
+    }
+    public Carte getGetOnDrop(){
+        return imageDrop;
+    }
+    public void setGetOnDrop(Carte carte){
+        this.imageDrop = carte;
     }
 }
