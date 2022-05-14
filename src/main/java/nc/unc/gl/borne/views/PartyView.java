@@ -21,7 +21,9 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteParameters;
 import lombok.Data;
 import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.carte.Carte;
@@ -32,6 +34,7 @@ import java.sql.SQLException;
 import nc.unc.gl.borne.dao.connection.ConnectionHolder;
 import nc.unc.gl.borne.dao.connection.SchemaInitializer;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
+import nc.unc.gl.borne.views.game.GameView;
 
 import java.util.ArrayList;
 
@@ -99,13 +102,9 @@ public class PartyView extends HtmlContainer implements Observer {
 
             Joueur player = new Joueur(this.hashCode(), username, ageUser);
 
-            try {
-                joueurDao.insertJoueur(player.getPseudo(), player.getAge());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            joueurDao.insertJoueur(player.getPseudo(), player.getAge());
 
-            System.out.println(username + " viens de choisir sont pseudo, il a " + ageUser + " ans " + this.hashCode());
+            System.out.println(username + " viens de choisir son pseudo, il a " + ageUser + " ans " + this.hashCode());
             userNameField.setEnabled(false);
             ageUserField.setEnabled(false);
             layout.remove(pendingConfirmation);
@@ -166,21 +165,21 @@ public class PartyView extends HtmlContainer implements Observer {
         VerticalLayout loadingLayout = showLoading();
         loading.add(loadingLayout);
 
-        createGameButton.getElement().addEventListener("click", event -> {
+        createGameButton.addClickListener(event -> {
             Notification.show("Attente pour créer une partie");
-            party.creerPartieObserver(player);
+            joueurDao.updatePartieJoueur(party.creerPartieObserver(player).getId(), player);
             container.remove(createGameButton);
             container.add(cancelCreateGameButton);
             joinPartyTab.setEnabled(false);
             loading.open();
         });
 
-        joinGameButton.getElement().addEventListener("click", event -> {
+        joinGameButton.addClickListener(event -> {
             partieService.connectJoueur(listBox.getValue(), player);
             party.modifFenetreLancementPartie(player);
         });
 
-        cancelCreateGameButton.getElement().addEventListener("click", event -> {
+        cancelCreateGameButton.addClickListener(event -> {
             container.remove(cancelCreateGameButton);
             container.add(createGameButton);
             joinPartyTab.setEnabled(true);
@@ -246,7 +245,8 @@ public class PartyView extends HtmlContainer implements Observer {
     public void updateWindow(Joueur player) {
         ui.access(() -> {
             loading.close();
-            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId());
+            //partieService.getPartieJoueur(player, listePartie).getId();
+            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId() + "/" + player.getPseudo());
         });
     }
 }
