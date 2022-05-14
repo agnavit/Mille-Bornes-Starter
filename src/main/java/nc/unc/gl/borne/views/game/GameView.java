@@ -39,7 +39,7 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
 
         VerticalLayout layout = new VerticalLayout();
 
-        layout.add(plateauLayout, plateauLayout2, footerLayout);
+//        layout.add(plateauLayout, plateauLayout2, footerLayout);
         layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         layout.setAlignItems(Alignment.CENTER);
 
