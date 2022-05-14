@@ -65,6 +65,7 @@ public class FooterLayout extends HorizontalLayout {
                 }
                 System.out.println(party.getListejoueur().get(0).getMain().getMainJoueur());
                 updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
+                System.out.println(selectedCard);
             }
         );
     }
@@ -108,6 +109,7 @@ public class FooterLayout extends HorizontalLayout {
                 "cartes/" + playerService.getCardInDeck(joueurDefensif,i).getStringImage(),
                 String.valueOf(playerService.getCardInDeck(joueurDefensif,i)));
             image.addClassName("card-deck");
+            System.out.println(image);
 
             deckPlayerImage.add(image);
 
