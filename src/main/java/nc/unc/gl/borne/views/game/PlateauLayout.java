@@ -12,7 +12,6 @@ import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
 
-@Route("testPlateauLayout")
 public class PlateauLayout extends HorizontalLayout {
 
     public PlateauLayout(Joueur joueur){

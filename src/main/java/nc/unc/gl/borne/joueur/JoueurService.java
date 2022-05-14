@@ -183,6 +183,7 @@ public class JoueurService {
         }
         if(joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).estVide()) {
             joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).empiler(carteAttaque);
+            // Suprimme la carte de la main du joueur
             return true;
         }
         return false;
