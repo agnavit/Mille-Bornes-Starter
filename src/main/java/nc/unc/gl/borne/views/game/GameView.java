@@ -8,11 +8,8 @@ import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.ObserverGame;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.joueur.Joueur;
-import nc.unc.gl.borne.partie.Game;
 import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
-
-import java.util.ArrayList;
 
 @Route("game/:idPartie?/:pseudoJoueur?")
 @StyleSheet("css/game.css")
@@ -27,7 +24,6 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
 
     public PartieService partieService = new PartieService();
     JoueurDao joueurDao = new JoueurDao();
-    Game game = new Game();
 
     private String idPartie;
 
@@ -42,12 +38,12 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
     public GameView() {
         this.ui = UI.getCurrent();
 
-        if (nomJoueur == partie.getListejoueur().get(0).getPseudo()) {
-            p1 = partie.getListejoueur().get(0);
-            p2 = partie.getListejoueur().get(1);
+        if (nomJoueur == partie.getPlayers().get(0).getPseudo()) {
+            p1 = partie.getPlayers().get(0);
+            p2 = partie.getPlayers().get(1);
         } else {
-            p1 = partie.getListejoueur().get(1);
-            p2 = partie.getListejoueur().get(0);
+            p1 = partie.getPlayers().get(1);
+            p2 = partie.getPlayers().get(0);
         }
 
         PlateauLayout plateauLayout = new PlateauLayout(p2);
@@ -63,17 +59,10 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
         layout.setAlignItems(Alignment.CENTER);
 
         add(layout);
+        System.out.println("Joueur" + p1);
+        System.out.println("Joueur" + p2);
     }
 
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        game.addObserveurPartie(this);
-    }
-
-    @Override
-    protected void onDetach(DetachEvent detachEvent) {
-        game.removeObserveurPartie(this);
-    }
 
     @Override
     public void updateWindowParty(String idPartie) {
@@ -102,6 +91,7 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
 
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
-        game.getAllPlayer(idPartie);
+        System.out.println(p1);
+        System.out.println(p2);
     }
 }

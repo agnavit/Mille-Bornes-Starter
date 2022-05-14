@@ -25,7 +25,6 @@ import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteParameters;
 import lombok.Data;
-import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.joueur.Joueur;
@@ -58,8 +57,7 @@ public class PartyView extends HtmlContainer implements Observer {
     VerticalLayout container = new VerticalLayout();
     Dialog loading = new Dialog();
     JoueurDao joueurDao = new JoueurDao();
-
-    public String nomJoueur;
+    private Joueur currentPlayer;
 
     public PartyView(){
 
@@ -101,12 +99,11 @@ public class PartyView extends HtmlContainer implements Observer {
 
             // Récupération des données
             String username = userNameField.getValue();
-            nomJoueur = userNameField.getValue();
             Integer ageUser = ageUserField.getValue();
 
-            Joueur player = new Joueur(this.hashCode(), username, ageUser);
+            currentPlayer = new Joueur(this.hashCode(), username, ageUser);
 
-            joueurDao.insertJoueur(player.getPseudo(), player.getAge());
+            joueurDao.insertJoueur(currentPlayer.getPseudo(), currentPlayer.getAge());
 
             System.out.println(username + " viens de choisir son pseudo, il a " + ageUser + " ans " + this.hashCode());
             userNameField.setEnabled(false);
@@ -120,7 +117,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
             layout.add(confirmed);
 
-            showTabs(player, container);
+            showTabs(currentPlayer, container);
         });
         layout.addClassName("chose-username");
         container.add(layout);
@@ -171,8 +168,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
         createGameButton.addClickListener(event -> {
             Notification.show("Attente pour créer une partie");
-            var partie = party.creerPartieObserver(player);
-            joueurDao.updatePartieJoueur(partie.getId(), player);
+            joueurDao.updatePartieJoueur(party.creerPartieObserver(player).getId(), player);
             container.remove(createGameButton);
             container.add(cancelCreateGameButton);
             joinPartyTab.setEnabled(false);
@@ -181,10 +177,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
         joinGameButton.addClickListener(event -> {
             partieService.connectJoueur(listBox.getValue(), player);
-            if (listBox.getValue().getNbJoueurMax() == listBox.getValue().getListejoueur().size()) {
-                partieService.start();
-            }
-            party.modifFenetreLancementPartie(player);
+            party.modifFenetreLancementPartie();
         });
 
         cancelCreateGameButton.addClickListener(event -> {
@@ -219,12 +212,12 @@ public class PartyView extends HtmlContainer implements Observer {
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-        party.addObserveur(this);
+        party.addObserver(this);
     }
 
     @Override
     protected void onDetach(DetachEvent detachEvent) {
-        party.removeObserveur(this);
+        party.removeObserver(this);
     }
 
     public void update(Partie partie) {
@@ -232,7 +225,7 @@ public class PartyView extends HtmlContainer implements Observer {
             listePartie.add(partie);
             listBox.setItems(listePartie);
             listBox.setRenderer(new ComponentRenderer<>(parti -> {
-                Span pseudo = new Span(new Text(parti.getListejoueur().get(0).getPseudo()));
+                Span pseudo = new Span(new Text(parti.getPlayers().get(0).getPseudo()));
                 return new Div(new HorizontalLayout(pseudo));
             }));
             listBox.getDataProvider().refreshAll();
@@ -243,17 +236,17 @@ public class PartyView extends HtmlContainer implements Observer {
         ui.access(() -> {
             listBox.setItems(listePartie);
             listBox.setRenderer(new ComponentRenderer<>(parti -> {
-                Span pseudo = new Span(new Text(parti.getListejoueur().get(0).getPseudo()));
+                Span pseudo = new Span(new Text(parti.getPlayers().get(0).getPseudo()));
                 return new Div(new HorizontalLayout(pseudo));
             }));
             listBox.getDataProvider().refreshAll();
         });
     }
 
-    public void updateWindow(Joueur player) {
+    public void updateWindow() {
         ui.access(() -> {
             loading.close();
-            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId() + "/" + nomJoueur);
+            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(currentPlayer, listePartie).getId() + "/" + currentPlayer.getPseudo());
         });
     }
 }

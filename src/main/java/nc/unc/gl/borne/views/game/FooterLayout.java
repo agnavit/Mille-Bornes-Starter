@@ -63,7 +63,7 @@ public class FooterLayout extends HorizontalLayout {
                         joueurDefensif
                     );
                 }
-                System.out.println(party.getListejoueur().get(0).getMain().getMainJoueur());
+                System.out.println(party.getPlayers().get(0).getMain().getMainJoueur());
                 updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
                 System.out.println(selectedCard);
             }

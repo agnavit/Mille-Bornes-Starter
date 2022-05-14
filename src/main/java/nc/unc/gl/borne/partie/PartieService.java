@@ -19,12 +19,12 @@ public class PartieService extends Thread {
 
         partie.getPioche().setPileCarte(jeuComplet.getJeuComplet());
         //distribution de feu vert à mes joueur
-        partie.getListejoueur().forEach(j -> j.getMain().getMainJoueur().add(partie.getPioche().depiler()));
+        partie.getPlayers().forEach(j -> j.getMain().getMainJoueur().add(partie.getPioche().depiler()));
         partie.getPioche().melanger();
         distribuerCarte(partie);
         determinerOrdrePassage(partie);
         while (partie.getPioche().getPileCarte().size() != 0 || score.get() != 1000) {
-            partie.getListejoueur().forEach(j -> {
+            partie.getPlayers().forEach(j -> {
                 joueurService.jouer(partie.getPioche(), j);
                 score.set(j.getScore());
             });
@@ -33,20 +33,20 @@ public class PartieService extends Thread {
 
     private void determinerOrdrePassage(Partie partie) {
         ArrayList<Integer> listeAge = new ArrayList<>();
-        partie.getListejoueur().forEach(j -> listeAge.add(j.getAge()));
+        partie.getPlayers().forEach(j -> listeAge.add(j.getAge()));
         Collections.sort(listeAge);
         ArrayList<Joueur> listejoueurTrie = new ArrayList<>();
-        listeAge.forEach(age -> partie.getListejoueur().forEach(j -> {
+        listeAge.forEach(age -> partie.getPlayers().forEach(j -> {
             if (j.getAge() == age) {
                 listejoueurTrie.add(j);
             }
         }));
-        partie.setListejoueur(listejoueurTrie);
+        partie.setPlayers(listejoueurTrie);
     }
 
     private void distribuerCarte(Partie partie) {
-        while (partie.getListejoueur().get(0).getMain().getMainJoueur().size() != 6) {
-            for (Joueur j : partie.getListejoueur()) {
+        while (partie.getPlayers().get(0).getMain().getMainJoueur().size() != 6) {
+            for (Joueur j : partie.getPlayers()) {
                 joueurService.piocher(partie.getPioche(), j);
             }
         }
@@ -54,7 +54,7 @@ public class PartieService extends Thread {
 
     public Partie getPartieJoueur(Joueur joueur, ArrayList<Partie> parties) {
         for (Partie partie : parties) {
-            for (Joueur j : partie.getListejoueur()) {
+            for (Joueur j : partie.getPlayers()) {
                 if (j.getPseudo() == joueur.getPseudo()) {
                     return partie;
                 }
@@ -64,8 +64,8 @@ public class PartieService extends Thread {
     }
 
     public void connectJoueur(Partie partie, Joueur joueur) {
-        partie.getListejoueur().add(joueur);
-        if (partie.getNbJoueurMax() == partie.getListejoueur().size()) {
+        partie.getPlayers().add(joueur);
+        if (partie.getMaxPlayers() == partie.getPlayers().size()) {
             joueurDao.updatePartieJoueur(partie.getId(), joueur);
         }
     }
@@ -74,8 +74,4 @@ public class PartieService extends Thread {
         lancerPartie(MilleBornesApplication.getPartieList().get(0));
 
     }
-
-    /*public Partie getPartie(String idPartie) {
-
-    }*/
 }

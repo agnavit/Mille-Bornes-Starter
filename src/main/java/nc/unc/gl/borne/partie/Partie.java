@@ -13,30 +13,22 @@ import java.util.List;
 public class Partie {
 
     private final List<Observer> observers = new ArrayList<>();
-
-    int i = 0;
-
-    public void addObserveur(Observer obs) {
-        this.observers.add(obs);
-    }
-
-    public void removeObserveur(Observer obs) {
-        this.observers.remove(obs);
-    }
-
-    private ArrayList<Joueur> listejoueur = new ArrayList<Joueur>();
-    private int nbJoueurMax;
+    private ArrayList<Joueur> players = new ArrayList<Joueur>();
+    private int maxPlayers;
     private PileCarte pioche;
     private PileCarte defausse;
     private String id;
+    
     public PartieService partieService = new PartieService();
+
+    int i = 0;
 
     public Partie(){
     }
 
-    public Partie(ArrayList<Joueur> listejoueur,int nbJoueurMax, String id){
-        this.listejoueur = listejoueur;
-        this.nbJoueurMax = nbJoueurMax;
+    public Partie(ArrayList<Joueur> players, int maxPlayers, String id){
+        this.players = players;
+        this.maxPlayers = maxPlayers;
         this.pioche = new PileCarte();
         this.defausse = new PileCarte();
         this.id = id;
@@ -54,7 +46,8 @@ public class Partie {
 
     public void suppPartieObserver(Joueur joueur, ArrayList<Partie> listePartie) {
         for (Partie partie : listePartie) {
-            if (partie.getListejoueur().get(0).getPseudo().equals(joueur.getPseudo())) {
+
+            if (partie.getPlayers().get(0).getPseudo().equals(joueur.getPseudo())) {
                 listePartie.remove(partie);
                 break;
             }
@@ -62,7 +55,17 @@ public class Partie {
         this.observers.forEach(obs -> obs.updateListBox(listePartie));
     }
 
-    public void modifFenetreLancementPartie(Joueur player) {
-        this.observers.forEach(obs -> obs.updateWindow(player));
+    public void modifFenetreLancementPartie() {
+        this.observers.forEach(obs -> obs.updateWindow());
     }
+
+    public void addObserver(Observer obs) {
+        this.observers.add(obs);
+    }
+
+    public void removeObserver(Observer obs) {
+        this.observers.remove(obs);
+    }
+
+
 }
