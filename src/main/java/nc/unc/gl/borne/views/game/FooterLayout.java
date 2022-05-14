@@ -42,6 +42,8 @@ public class FooterLayout extends HorizontalLayout {
 
     ArrayList<Joueur> listPlayer = new ArrayList<Joueur>();
 
+    PileCarte defausse = new PileCarte();
+
     public FooterLayout(){
 
         listPlayer.add(myPlayer);
@@ -66,8 +68,9 @@ public class FooterLayout extends HorizontalLayout {
         putCardButton.addClickListener(
             clickPutCard -> {
                 if (selectedCard.getType() == TypeCarte.BORNE) {
-                    playerService.poserCarteBorne(
+                    playerService.poser(
                         selectedCard,
+                        defausse,
                         myPlayer
                     );
                 } else if (selectedCard.getType() == TypeCarte.ATTAQUE) {
@@ -75,16 +78,18 @@ public class FooterLayout extends HorizontalLayout {
                         selectedCard,
                         notMyPlayer
                     );
+                    myPlayer.getMain().getMainJoueur().remove(selectedCard);
+
                 } else if (selectedCard.getType() == TypeCarte.BOTTE) {
                     playerService.poser(
                         selectedCard,
-                        plateau.getPile(TypePile.BOTTES),
+                        defausse,
                         myPlayer
                     );
                 } else {
                     playerService.poser(
                         selectedCard,
-                        plateau.getPile(TypePile.VITESSE),
+                        defausse,
                         myPlayer
                     );
                 }

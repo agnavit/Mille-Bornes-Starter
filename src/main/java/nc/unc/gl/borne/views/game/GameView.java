@@ -1,11 +1,13 @@
 package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.ObserverGame;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
+import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.partie.Game;
 import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
@@ -13,9 +15,12 @@ import nc.unc.gl.borne.partie.PartieService;
 import java.util.ArrayList;
 
 @Route("game/:idPartie?/:pseudoJoueur?")
+@StyleSheet("css/game.css")
 public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver, AfterNavigationObserver {
 
     private final UI ui;
+    Joueur p1 = new Joueur(1, "Anthony", 22);
+    Joueur p2 = new Joueur(2, "Jason", 21);
 
     public PartieService partieService = new PartieService();
     JoueurDao joueurDao = new JoueurDao();
@@ -32,8 +37,10 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
     public GameView() {
         this.ui = UI.getCurrent();
 
-        PlateauLayout plateauLayout = new PlateauLayout();
-        PlateauLayout plateauLayout2 = new PlateauLayout();
+        PlateauLayout plateauLayout = new PlateauLayout(p2);
+        plateauLayout.addClassName("not-my-pile-cards");
+        PlateauLayout plateauLayout2 = new PlateauLayout(p1);
+        plateauLayout2.addClassName("my-pile-cards");
         FooterLayout footerLayout = new FooterLayout();
 
         VerticalLayout layout = new VerticalLayout();
