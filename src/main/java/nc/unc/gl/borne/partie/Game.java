@@ -28,12 +28,6 @@ public class Game {
         this.observersPartie.remove(obsPartie);
     }
 
-    public void getAllPlayer(String idPartie) {
-        this.observersPartie.forEach(obs -> {
-            obs.updateWindowParty(idPartie);
-        });
-    }
-
     public void updateFenetreEnGame() {
         this.observersPartie.forEach(obs -> obs.updateWindowEnGame());
     }

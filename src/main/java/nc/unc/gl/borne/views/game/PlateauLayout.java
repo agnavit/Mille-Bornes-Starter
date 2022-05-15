@@ -94,7 +94,7 @@ public class PlateauLayout extends HorizontalLayout {
         pileBottes.addClassName("pile-bottes");
 
         layout.add(pileVitesse, pileBataille, pileBornes, pileBottes);
-        add(layout, new Text(joueur.getPseudo()));
+        add(layout);
     }
 
     public void getImageSommetPile(TypePile typePile,Joueur joueur, VerticalLayout pileCible){

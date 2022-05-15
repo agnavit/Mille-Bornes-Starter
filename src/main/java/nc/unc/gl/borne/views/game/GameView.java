@@ -2,6 +2,12 @@ package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.html.H5;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -19,7 +25,7 @@ import java.util.ArrayList;
 
 @Route("game/:idPartie?/:pseudoJoueur?")
 @StyleSheet("css/game.css")
-public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver, AfterNavigationObserver {
+public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver {
 
     private final UI ui;
     String nomJoueur;
@@ -34,8 +40,11 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
 
     private String idPartie;
 
+    Span span = new Span();
+
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
+
         idPartie = event.getRouteParameters().get("idPartie").
             orElse("error");
         nomJoueur = event.getRouteParameters().get("pseudoJoueur").
@@ -71,20 +80,28 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
         layout.setAlignItems(Alignment.CENTER);
 
         if (p1.getMain().getTaille() == 7) {
-            Notification.show(
-                "C'est à votre tour de jouer!",
-                5000,
-                Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
-            );
+            span.setText("C'est à votre tour de jouer !");
         } else {
-            Notification.show(
-                "C'est au tou de " + p2.getPseudo() + " de jouer",
-                5000,
-                Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
-            );
+            span.setText("C'est au tour de " + p2.getPseudo() + " de jouer.");
         }
 
+        Span notiff = new Span(createIcon(VaadinIcon.HAND), span);
+        notiff.getElement().getThemeList().add("badge success");
+
+        layout.add(notiff);
+
         add(layout);
+
+        this.getStyle().set("height", "100%")
+            .set("background-image", "url(background.jpg)")
+            .set("background-size", "cover")
+            .set("background-repeat", "no-repeat");
+    }
+
+    private Icon createIcon(VaadinIcon vaadinIcon) {
+        Icon icon = vaadinIcon.create();
+        icon.getStyle().set("padding", "var(--lumo-space-xs");
+        return icon;
     }
 
     public GameView() {
@@ -99,16 +116,6 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
     @Override
     protected void onDetach(DetachEvent detachEvent) {
         game.removeObserveur(this);
-    }
-
-    @Override
-    public void updateWindowParty(String idPartie) {
-        ui.access(() -> {
-            joueurDao.findJoueurWherePartieId(idPartie).forEach(j -> {
-                add(j.getPseudo());
-                System.out.println(j.getPseudo());
-            });
-        });
     }
 
     @Override
@@ -134,25 +141,17 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
             layout.setAlignItems(Alignment.CENTER);
 
             if (p1.getMain().getTaille() == 7) {
-                Notification.show(
-                    "C'est à votre tour de jouer !",
-                    7000,
-                    Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
-                );
+                span.setText("C'est à votre tour de jouer !");
             } else {
-                Notification.show(
-                    "C'est au tour de " + p2.getPseudo() + " de jouer",
-                    7000,
-                    Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_ERROR
-                );
+                span.setText("C'est au tour de " + p2.getPseudo() + " de jouer.");
             }
+
+            Span notiff = new Span(createIcon(VaadinIcon.HAND), span);
+            notiff.getElement().getThemeList().add("badge success");
+
+            layout.add(notiff);
 
             add(layout);
         });
-    }
-
-    @Override
-    public void afterNavigation(AfterNavigationEvent event) {
-        game.getAllPlayer(idPartie);
     }
 }
