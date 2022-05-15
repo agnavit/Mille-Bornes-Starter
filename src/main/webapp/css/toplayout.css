@@ -1,14 +1,15 @@
-.not-my-score {
-    color: #ff7a6e;
+.seconde-player {
+    color: #D7D7D7;
+    text-shadow: 0 0 2px #B4B4B4;
 }
 
-.my-score {
-    color: #9eb0c7;
+.first-player {
+    color:  #C9B037;
+    text-shadow: 0 0 2px #AF9500;
 }
 
 h2 {
     text-align: center;
-    position: relative;
-    bottom: 33px;
-    text-shadow: 0 0 6px white;
+
 }
+

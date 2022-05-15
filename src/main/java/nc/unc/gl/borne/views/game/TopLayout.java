@@ -14,17 +14,41 @@ import nc.unc.gl.borne.joueur.Joueur;
 @StyleSheet("css/toplayout.css")
 public class TopLayout extends VerticalLayout {
 
+    private Joueur firstPlayer;
+    private Joueur secondePlayer;
+
     public TopLayout(Joueur myPlayer, Joueur notMyPlayer){
 
         VerticalLayout topLayout = new VerticalLayout();
 
-        H2 myScore = new H2(myPlayer.getPseudo() + " : " + myPlayer.getScore());
-        myScore.addClassName("my-score");
+        if(myPlayer.getScore() == notMyPlayer.getScore()){
+            H2 highScore = new H2("1er " + myPlayer.getPseudo() + " : " + myPlayer.getScore());
+            highScore.addClassName("first-player");
 
-        H2 notMyScore = new H2(notMyPlayer.getPseudo() + " : " + notMyPlayer.getScore());
-        notMyScore.addClassName("not-my-score");
+            H2 lowScore = new H2("1er " + notMyPlayer.getPseudo() + " : " + notMyPlayer.getScore());
+            lowScore.addClassName("first-player");
+            topLayout.add(highScore, lowScore);
+            topLayout.addClassName("top");
 
-        topLayout.add(myScore, notMyScore);
+        } else {
+
+            if(myPlayer.getScore() > notMyPlayer.getScore()){
+                firstPlayer = myPlayer;
+                secondePlayer = notMyPlayer;
+            } else if(myPlayer.getScore() < notMyPlayer.getScore()){
+                firstPlayer = notMyPlayer;
+                secondePlayer = myPlayer;
+            }
+
+            H2 highScore = new H2("1er " + firstPlayer.getPseudo() + " : " + firstPlayer.getScore());
+            highScore.addClassName("first-player");
+
+            H2 lowScore = new H2("2nd " +secondePlayer.getPseudo() + " : " + secondePlayer.getScore());
+            lowScore.addClassName("seconde-player");
+
+            topLayout.add(highScore, lowScore);
+            topLayout.addClassName("top");
+        }
 
         add(topLayout);
     }
