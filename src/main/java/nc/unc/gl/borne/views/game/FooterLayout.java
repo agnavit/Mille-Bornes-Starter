@@ -81,7 +81,6 @@ public class FooterLayout extends HorizontalLayout {
         throwCardButton.addClickListener(
             click -> {
                 playerService.jeter(this.selectedCard, party.getDefausse(), joueurDefensif);
-                System.out.println(joueurDefensif.getMain().getMainJoueur());
                 updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
             }
         );
@@ -106,7 +105,6 @@ public class FooterLayout extends HorizontalLayout {
 
         HorizontalLayout deckLayout = new HorizontalLayout();
 
-
         deckPlayerImage = new ArrayList<Image>(playerService.getSizeDeck(joueurDefensif));
 
         for (int i = 0; i < playerService.getSizeDeck(joueurDefensif); i++) {
@@ -115,16 +113,11 @@ public class FooterLayout extends HorizontalLayout {
                 "cartes/" + playerService.getCardInDeck(joueurDefensif,i).getStringImage(),
                 String.valueOf(playerService.getCardInDeck(joueurDefensif,i)));
             image.addClassName("card-deck");
-            System.out.println(image);
 
             deckPlayerImage.add(image);
 
             var chosenCard = deckPlayerImage.get(i);
             int j = i;
-            //TODO pas de clique sur les cartes quand il n'y a que six carte
-            //TODO Spam sur les cartes = multiplicateur
-            //TODO piocher /!\
-
 
             deckPlayerImage.get(i).addClickListener(
                 click -> {
@@ -148,7 +141,6 @@ public class FooterLayout extends HorizontalLayout {
         }
 
         footerLayout.add(deckLayout, buttonsLayout);
-        System.out.println(deckPlayerImage);
         footerLayout.getStyle()
             .set("border-radius", "10px")
             .set("padding", "20px")
@@ -164,7 +156,6 @@ public class FooterLayout extends HorizontalLayout {
             selec.getElement().getStyle().set("border-color", "#9eb0c7");
         }
 
-
         System.out.println("Le joueur: " + joueurDefensif.getPseudo() + " a choisi la carte " + image.getAlt());
         selectedCard = new Carte(
             playerService.getCardInDeck(joueurDefensif,j).getNom(),
@@ -173,7 +164,5 @@ public class FooterLayout extends HorizontalLayout {
         );
         this.selec = image;
         image.getElement().getStyle().set("border-color", "white");
-
-
     }
 }
