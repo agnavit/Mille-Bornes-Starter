@@ -33,7 +33,7 @@ public class PartieService extends Thread {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //score.set(j.getScore());
+                score.set(j.getScore());
             });
 
         }

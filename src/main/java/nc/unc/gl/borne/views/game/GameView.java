@@ -2,6 +2,8 @@ package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
@@ -68,6 +70,20 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
         layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         layout.setAlignItems(Alignment.CENTER);
 
+        if (p1.getMain().getTaille() == 7) {
+            Notification.show(
+                "C'est à votre tour de jouer!",
+                5000,
+                Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
+            );
+        } else {
+            Notification.show(
+                "C'est au tou de " + p2.getPseudo() + " de jouer",
+                5000,
+                Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
+            );
+        }
+
         add(layout);
     }
 
@@ -116,6 +132,20 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
             layout.add(top, plateauLayout2, footerLayout);
             layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
             layout.setAlignItems(Alignment.CENTER);
+
+            if (p1.getMain().getTaille() == 7) {
+                Notification.show(
+                    "C'est à votre tour de jouer !",
+                    10000,
+                    Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
+                );
+            } else {
+                Notification.show(
+                    "C'est au tour de " + p2.getPseudo() + " de jouer",
+                    10000,
+                    Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
+                );
+            }
 
             add(layout);
         });
