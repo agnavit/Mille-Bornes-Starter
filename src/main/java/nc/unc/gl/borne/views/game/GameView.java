@@ -19,7 +19,7 @@ import java.util.ArrayList;
 @StyleSheet("css/game.css")
 public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver, AfterNavigationObserver {
 
-    private UI ui;
+    private final UI ui;
     String nomJoueur;
     Partie partie = MilleBornesApplication.getPartieList().get(0);
 
@@ -28,7 +28,7 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
 
     public PartieService partieService = new PartieService();
     JoueurDao joueurDao = new JoueurDao();
-    Game game = new Game();
+    public static Game game = new Game();
 
     private String idPartie;
 
@@ -38,8 +38,6 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
             orElse("error");
         nomJoueur = event.getRouteParameters().get("pseudoJoueur").
             orElse("error");
-
-        this.ui = UI.getCurrent();
 
         if (nomJoueur.equals(partie.getListejoueur().get(0).getPseudo())) {
             p1 = partie.getListejoueur().get(0);
@@ -74,17 +72,17 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
     }
 
     public GameView() {
-
+        this.ui = UI.getCurrent();
     }
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-        game.addObserveurPartie(this);
+        game.addObserveur(this);
     }
 
     @Override
     protected void onDetach(DetachEvent detachEvent) {
-        game.removeObserveurPartie(this);
+        game.removeObserveur(this);
     }
 
     @Override
