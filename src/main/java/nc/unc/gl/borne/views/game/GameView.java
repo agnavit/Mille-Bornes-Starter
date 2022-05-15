@@ -136,14 +136,14 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
             if (p1.getMain().getTaille() == 7) {
                 Notification.show(
                     "C'est à votre tour de jouer !",
-                    10000,
+                    7000,
                     Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
                 );
             } else {
                 Notification.show(
                     "C'est au tour de " + p2.getPseudo() + " de jouer",
-                    10000,
-                    Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_PRIMARY
+                    7000,
+                    Notification.Position.BOTTOM_CENTER).addThemeVariants(NotificationVariant.LUMO_ERROR
                 );
             }
 
