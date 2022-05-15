@@ -6,9 +6,5 @@ public interface ObserverGame {
 
     void updateWindowParty(String idPartie);
 
-    void updatePoser(Partie partie);
-
-    void updateJeter(Partie partie);
-
-    void updateScore(Partie partie);
+    void updateWindowEnGame();
 }

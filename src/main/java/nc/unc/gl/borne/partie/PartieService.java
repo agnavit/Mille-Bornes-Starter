@@ -19,6 +19,7 @@ public class PartieService extends Thread {
 
         partie.getPioche().setPileCarte(jeuComplet.getJeuComplet());
         //distribution de feu vert à mes joueur
+        //TODO mettre feu vert dans la pile bataille
         partie.getListejoueur().forEach(j -> j.getMain().getMainJoueur().add(partie.getPioche().depiler()));
         partie.getPioche().melanger();
         distribuerCarte(partie);

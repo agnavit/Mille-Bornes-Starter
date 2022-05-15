@@ -188,7 +188,6 @@ public class JoueurServiceTest {
         Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
         deckService.ajouter(carte1, j);
-//        .ajouter(carte2).ajouter(carte3).ajouter(carte4).ajouter(carte5).ajouter(carte6)
         j.setMain(mainJoueur);
 
         // Si on pose une carte ATTAQUE -> erreur
@@ -214,7 +213,7 @@ public class JoueurServiceTest {
         assertEquals(defausse.getPileCarte().size(),4);
 
         assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(),0);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),1);
+        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(),0);
         assertEquals(j.getPlateau().getPile(TypePile.BORNES).getPileCarte().size(),1);
         assertEquals(j.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(),1);
     }
