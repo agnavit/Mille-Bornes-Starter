@@ -39,12 +39,12 @@ public class PlateauLayout extends HorizontalLayout {
 
         Div vingtCinq = new Div();
         vingtCinq.add(new Image("cartes/borne_vingt_cinq.jpeg","cartes/borne_vingt_cinq"));
-        vingtCinq.add(new H4(getNbCartePileBorneString(NomCarte.VINGT_CINQ, joueur)));
+        vingtCinq.add(new H4("x " + getNbCartePileBorneString(NomCarte.VINGT_CINQ, joueur)));
 
 
         Div cinquante = new Div();
         cinquante.add(new Image("cartes/borne_cinquante.jpeg","cartes/borne_cinquante"));
-        cinquante.add(new H4(getNbCartePileBorneString(NomCarte.CINQUANTE, joueur)));
+        cinquante.add(new H4("x " + getNbCartePileBorneString(NomCarte.CINQUANTE, joueur)));
 
         Div soixanteQuinze = new Div();
         soixanteQuinze.add(new Image("cartes/borne_soixante_quinze.jpeg","cartes/borne_soixante_quinze"));
@@ -53,12 +53,12 @@ public class PlateauLayout extends HorizontalLayout {
 
         Div cent = new Div();
         cent.add(new Image("cartes/borne_cent.jpeg","cartes/borne_cent"));
-        cent.add(new H4(getNbCartePileBorneString(NomCarte.CENT, joueur)));
+        cent.add(new H4("x " + getNbCartePileBorneString(NomCarte.CENT, joueur)));
 
 
         Div deuxCents = new Div();
         deuxCents.add(new Image("cartes/borne_deux_cents.jpeg","cartes/borne_deux_cents"));
-        deuxCents.add(new H4(getNbCartePileBorneString(NomCarte.DEUX_CENTS, joueur)));
+        deuxCents.add(new H4("x " + getNbCartePileBorneString(NomCarte.DEUX_CENTS, joueur)));
 
 
         pileBornesCartes.add(vingtCinq, cinquante, soixanteQuinze, cent, deuxCents);
