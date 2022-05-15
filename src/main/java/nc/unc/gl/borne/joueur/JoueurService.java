@@ -5,6 +5,7 @@ import nc.unc.gl.borne.carte.*;
 import nc.unc.gl.borne.carte.enumerations.NomCarte;
 import nc.unc.gl.borne.carte.enumerations.TypeCarte;
 import nc.unc.gl.borne.carte.enumerations.TypePile;
+import nc.unc.gl.borne.partie.Game;
 import nc.unc.gl.borne.plateau.PlateauService;
 
 
@@ -12,6 +13,7 @@ public class JoueurService {
 
     public PlateauService plateauService = new PlateauService();
     public DeckService deckService = new DeckService();
+    public Game game = new Game();
 
 
     public void jeter(Carte carteChoisie, PileCarte defausse, Joueur joueur){
@@ -148,7 +150,7 @@ public class JoueurService {
         else if(carteChoisie.getType() == TypeCarte.BOTTE){
             poserCarteBotte(carteChoisie, joueur, defausse);
         }
-        joueur.setMain(deckService.enlever(carteChoisie, joueur));
+        deckService.enlever(carteChoisie, joueur);
     }
 
     public boolean attaquer(Carte carteAttaque, Joueur joueurAttaque) {
@@ -195,9 +197,11 @@ public class JoueurService {
 
     public void jouer(PileCarte pioche, Joueur joueur) {
         piocher(pioche, joueur);
-        while (joueur.getMain().getMainJoueur().size() > 6) {
-
+        System.out.println(joueur.getMain().getTaille());
+        while (joueur.getMain().getTaille() != 6) {
+            System.out.println(joueur.getMain().getTaille());
         }
+        game.updateFenetreEnGame();
     }
 
     public int getSizeDeck(Joueur player){

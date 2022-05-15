@@ -3,6 +3,7 @@ package nc.unc.gl.borne.partie;
 import nc.unc.gl.borne.ObserverGame;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.views.game.GameView;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Game {
 
     }
 
-    private final List<ObserverGame> observersPartie = new CopyOnWriteArrayList<>();
+    private final List<ObserverGame> observersPartie = new ArrayList<>();
 
     public void addObserveurPartie(ObserverGame obsPartie) {
         this.observersPartie.add(obsPartie);
@@ -31,5 +32,9 @@ public class Game {
         this.observersPartie.forEach(obs -> {
             obs.updateWindowParty(idPartie);
         });
+    }
+
+    public void updateFenetreEnGame() {
+        this.observersPartie.forEach(obs -> obs.updateWindowEnGame());
     }
 }

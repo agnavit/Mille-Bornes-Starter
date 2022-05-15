@@ -88,18 +88,23 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
     }
 
     @Override
-    public void updatePoser(Partie partie) {
+    public void updateWindowEnGame() {
+        ui.access(() -> {
+            removeAll();
+            PlateauLayout plateauLayout = new PlateauLayout(p2);
+            plateauLayout.addClassName("not-my-pile-cards");
+            PlateauLayout plateauLayout2 = new PlateauLayout(p1);
+            plateauLayout2.addClassName("my-pile-cards");
+            FooterLayout footerLayout = new FooterLayout(partie, p1, p2);
 
-    }
+            VerticalLayout layout = new VerticalLayout();
 
-    @Override
-    public void updateJeter(Partie partie) {
+            layout.add(plateauLayout, plateauLayout2, footerLayout);
+            layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
+            layout.setAlignItems(Alignment.CENTER);
 
-    }
-
-    @Override
-    public void updateScore(Partie partie) {
-
+            add(layout);
+        });
     }
 
     @Override
