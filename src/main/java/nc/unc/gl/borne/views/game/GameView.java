@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @StyleSheet("css/game.css")
 public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver, AfterNavigationObserver {
 
-    private final UI ui;
+    private UI ui;
     String nomJoueur;
     Partie partie = MilleBornesApplication.getPartieList().get(0);
 
@@ -37,12 +37,10 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
             orElse("error");
         nomJoueur = event.getRouteParameters().get("pseudoJoueur").
             orElse("error");
-    }
 
-    public GameView() {
         this.ui = UI.getCurrent();
 
-        if (nomJoueur == partie.getListejoueur().get(0).getPseudo()) {
+        if (nomJoueur.equals(partie.getListejoueur().get(0).getPseudo())) {
             p1 = partie.getListejoueur().get(0);
             p2 = partie.getListejoueur().get(1);
         } else {
@@ -63,6 +61,10 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
         layout.setAlignItems(Alignment.CENTER);
 
         add(layout);
+    }
+
+    public GameView() {
+
     }
 
     @Override
