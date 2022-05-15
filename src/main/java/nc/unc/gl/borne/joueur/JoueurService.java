@@ -7,14 +7,14 @@ import nc.unc.gl.borne.carte.enumerations.TypeCarte;
 import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.partie.Game;
 import nc.unc.gl.borne.plateau.PlateauService;
+import nc.unc.gl.borne.views.game.GameView;
 
 
 public class JoueurService {
 
     public PlateauService plateauService = new PlateauService();
     public DeckService deckService = new DeckService();
-    public Game game = new Game();
-
+    public Game game = GameView.game;
 
     public void jeter(Carte carteChoisie, PileCarte defausse, Joueur joueur){
         deckService.enlever(carteChoisie, joueur);
@@ -197,10 +197,10 @@ public class JoueurService {
 
     public void jouer(PileCarte pioche, Joueur joueur) throws InterruptedException {
         piocher(pioche, joueur);
+        game.updateFenetreEnGame();
         while (joueur.getMain().getTaille() != 6) {
             Thread.sleep(1000);
         }
-        game.updateFenetreEnGame();
         System.out.println(joueur +" à jouer");
     }
 

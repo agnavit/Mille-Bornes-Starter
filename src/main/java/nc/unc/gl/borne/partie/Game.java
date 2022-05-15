@@ -18,13 +18,13 @@ public class Game {
 
     }
 
-    private final List<ObserverGame> observersPartie = new ArrayList<>();
+    private final List<ObserverGame> observersPartie = new CopyOnWriteArrayList<>();
 
-    public void addObserveurPartie(ObserverGame obsPartie) {
+    public void addObserveur(ObserverGame obsPartie) {
         this.observersPartie.add(obsPartie);
     }
 
-    public void removeObserveurPartie(ObserverGame obsPartie) {
+    public void removeObserveur(ObserverGame obsPartie) {
         this.observersPartie.remove(obsPartie);
     }
 

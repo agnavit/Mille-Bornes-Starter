@@ -15,6 +15,7 @@ import nc.unc.gl.borne.carte.enumerations.TypeCarte;
 import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
+import nc.unc.gl.borne.partie.Game;
 import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.plateau.Plateau;
 
@@ -70,7 +71,6 @@ public class FooterLayout extends HorizontalLayout {
                         joueurDefensif
                     );
                 }
-                System.out.println(party.getListejoueur().get(0).getMain().getMainJoueur());
                 updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
             }
         );

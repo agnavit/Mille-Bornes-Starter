@@ -4,6 +4,8 @@ import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.jeuComplet.JeuComplet;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
+import nc.unc.gl.borne.views.game.GameView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
