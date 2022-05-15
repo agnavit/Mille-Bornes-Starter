@@ -197,9 +197,7 @@ public class JoueurService {
 
     public void jouer(PileCarte pioche, Joueur joueur) {
         piocher(pioche, joueur);
-        System.out.println(joueur.getMain().getTaille());
         while (joueur.getMain().getTaille() != 6) {
-            System.out.println(joueur.getMain().getTaille());
         }
         game.updateFenetreEnGame();
     }

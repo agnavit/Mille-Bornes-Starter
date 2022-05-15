@@ -23,18 +23,23 @@ import java.util.ArrayList;
 @Route("testFooterLayout")
 public class FooterLayout extends HorizontalLayout {
 
+    Carte selectedCard;
+    Image selec;
+
     protected DeckService deckPlayer = new DeckService();
 
     JoueurService playerService = new JoueurService();
 
-    public FooterLayout(Partie refPartie, Joueur joueurDefensive, Joueur joueurAttaque){
+    Joueur joueurDefensif;
 
+    public FooterLayout(Partie refPartie, Joueur joueurDefensive, Joueur joueurAttaque){
+        this.joueurDefensif = joueurDefensive;
         HorizontalLayout footer = new HorizontalLayout();
         updateDeckPlayer(refPartie, footer, joueurDefensive, joueurAttaque);
     }
 
     public void putCardPlayer(Partie party, HorizontalLayout footerLayout, Button putCardButton,
-                              Carte selectedCard, Joueur joueurDefensif, Joueur joueurAttaque){
+                              Joueur joueurDefensif, Joueur joueurAttaque){
         putCardButton.addClickListener(
             clickPutCard -> {
                 if (selectedCard.getType() == TypeCarte.BORNE) {
@@ -70,11 +75,11 @@ public class FooterLayout extends HorizontalLayout {
         );
     }
 
-    public void throwCardPlayer(Partie party, HorizontalLayout footerLayout, Button throwCardButton, Carte selectedCard,
+    public void throwCardPlayer(Partie party, HorizontalLayout footerLayout, Button throwCardButton,
                                 Joueur joueurDefensif, Joueur joueurAttaque){
         throwCardButton.addClickListener(
             click -> {
-                playerService.jeter(selectedCard, party.getDefausse(), joueurDefensif);
+                playerService.jeter(this.selectedCard, party.getDefausse(), joueurDefensif);
                 System.out.println(joueurDefensif.getMain().getMainJoueur());
                 updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
             }
@@ -115,22 +120,24 @@ public class FooterLayout extends HorizontalLayout {
 
             var chosenCard = deckPlayerImage.get(i);
             int j = i;
+            //TODO pas de clique sur les cartes
+            //TODO Spam sur les cartes = multiplicateur
+            //TODO piocher /!\
             deckPlayerImage.get(i).addClickListener(
                 click -> {
-                    chosenCard.getElement().getStyle().set("border-color", "white");
-                    System.out.println("Le joueur: " + joueurDefensif.getPseudo() + " a choisi la carte " + chosenCard.getAlt());
-                    Carte selectedCard = new Carte(
-                        playerService.getCardInDeck(joueurDefensif,j).getNom(),
-                        playerService.getCardInDeck(joueurDefensif,j).getType(),
-                        playerService.getCardInDeck(joueurDefensif,j).getIdentifiant()
-                    );
+
+                    chosenCardMethode(chosenCard, j);
+
                     putCardButton.setEnabled(true);
                     throwCardButton.setEnabled(true);
 
-                    putCardPlayer(party, footerLayout, putCardButton, selectedCard, joueurDefensif, joueurAttaque);
-                    throwCardPlayer(party, footerLayout, throwCardButton, selectedCard, joueurDefensif, joueurAttaque);
+                    putCardPlayer(party, footerLayout, putCardButton, joueurDefensif, joueurAttaque);
+                    throwCardPlayer(party, footerLayout, throwCardButton, joueurDefensif, joueurAttaque);
+
                 }
+
             );
+
         }
 
         for(Image image: deckPlayerImage){
@@ -146,5 +153,25 @@ public class FooterLayout extends HorizontalLayout {
             .set("background", "linear-gradient(to right, #B0C4DE, #f5efef)");
 
         add(footerLayout);
+    }
+
+    public void chosenCardMethode(Image image, int j){
+
+        if(selec != null){
+            System.out.println( selectedCard.getClass().getComponentType());
+            selec.getElement().getStyle().set("border-color", "#9eb0c7");
+        }
+
+
+        System.out.println("Le joueur: " + joueurDefensif.getPseudo() + " a choisi la carte " + image.getAlt());
+        selectedCard = new Carte(
+            playerService.getCardInDeck(joueurDefensif,j).getNom(),
+            playerService.getCardInDeck(joueurDefensif,j).getType(),
+            playerService.getCardInDeck(joueurDefensif,j).getIdentifiant()
+        );
+        this.selec = image;
+        image.getElement().getStyle().set("border-color", "white");
+
+
     }
 }
