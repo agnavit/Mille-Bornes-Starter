@@ -195,11 +195,13 @@ public class JoueurService {
         joueur.getMain().getMainJoueur().add(pioche.depiler());
     }
 
-    public void jouer(PileCarte pioche, Joueur joueur) {
+    public void jouer(PileCarte pioche, Joueur joueur) throws InterruptedException {
         piocher(pioche, joueur);
         while (joueur.getMain().getTaille() != 6) {
+            Thread.sleep(1000);
         }
         game.updateFenetreEnGame();
+        System.out.println(joueur +" à jouer");
     }
 
     public int getSizeDeck(Joueur player){

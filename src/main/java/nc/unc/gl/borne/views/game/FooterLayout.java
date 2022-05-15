@@ -72,7 +72,6 @@ public class FooterLayout extends HorizontalLayout {
                 }
                 System.out.println(party.getListejoueur().get(0).getMain().getMainJoueur());
                 updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
-                System.out.println(selectedCard);
             }
         );
     }
@@ -126,13 +125,6 @@ public class FooterLayout extends HorizontalLayout {
             //TODO Spam sur les cartes = multiplicateur
             //TODO piocher /!\
 
-            ArrayList<Image> deckPlayerCopy =  new ArrayList<Image>();
-            deckPlayerCopy.addAll(deckPlayerImage);
-
-            if(selectedCard != null){
-                deckPlayerImage.remove(chosenCard);
-                System.out.println(deckPlayerImage);
-            }
 
             deckPlayerImage.get(i).addClickListener(
                 click -> {
@@ -169,7 +161,6 @@ public class FooterLayout extends HorizontalLayout {
     public void chosenCardMethode(Image image, int j){
 
         if(selec != null){
-            System.out.println( selectedCard.getClass().getComponentType());
             selec.getElement().getStyle().set("border-color", "#9eb0c7");
         }
 

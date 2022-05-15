@@ -18,19 +18,14 @@ public class TopLayout extends VerticalLayout {
 
         VerticalLayout topLayout = new VerticalLayout();
 
-        VerticalLayout scoresPlayers = new VerticalLayout();
         H2 myScore = new H2(myPlayer.getPseudo() + " : " + myPlayer.getScore());
-        myScore.addClassName("test2");
+        myScore.addClassName("my-score");
 
         H2 notMyScore = new H2(notMyPlayer.getPseudo() + " : " + notMyPlayer.getScore());
-        notMyScore.addClassName("test2");
+        notMyScore.addClassName("not-my-score");
 
-        scoresPlayers.add(myScore, notMyScore);
-        H1 top2 = new H1("Score");
-        topLayout.add(top2, scoresPlayers);
-        top2.addClassName("test2");
+        topLayout.add(myScore, notMyScore);
 
-        topLayout.addClassName("test");
         add(topLayout);
     }
 }

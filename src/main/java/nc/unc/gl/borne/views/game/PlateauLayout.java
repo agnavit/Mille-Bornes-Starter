@@ -69,9 +69,11 @@ public class PlateauLayout extends HorizontalLayout {
         VerticalLayout pileBottes = new VerticalLayout();
         pileBottes.add(new H3("Pile bottes"));
 
+        HorizontalLayout contentePileBotte = new HorizontalLayout();
+
         if (!joueur.getPlateau().getPile(TypePile.BOTTES).estVide()){
             for (int i = 0; i < joueur.getPlateau().getPile(TypePile.BOTTES).getTaille(); i++) {
-                pileBottes.add(new Image("cartes/" + joueur
+                contentePileBotte.add(new Image("cartes/" + joueur
                     .getPlateau()
                     .getPile(TypePile.BOTTES)
                     .getCarte(i)
@@ -79,8 +81,10 @@ public class PlateauLayout extends HorizontalLayout {
                     "carte/carteBottes"));
             }
         } else {
-            pileBottes.add(new Image("cartes/back.png", "Dos de la carte"));
+            contentePileBotte.add(new Image("cartes/back.png", "Dos de la carte"));
         }
+
+        pileBottes.add(contentePileBotte);
 
         //------------------------------------------------------
 

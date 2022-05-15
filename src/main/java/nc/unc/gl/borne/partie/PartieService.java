@@ -26,9 +26,14 @@ public class PartieService extends Thread {
         determinerOrdrePassage(partie);
         while (partie.getPioche().getPileCarte().size() != 0 || score.get() != 1000) {
             partie.getListejoueur().forEach(j -> {
-                joueurService.jouer(partie.getPioche(), j);
-                score.set(j.getScore());
+                try {
+                    joueurService.jouer(partie.getPioche(), j);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //score.set(j.getScore());
             });
+
         }
     }
 
