@@ -11,5 +11,5 @@ public interface Observer {
 
     void updateListBox(ArrayList<Partie> listParty);
 
-    void updateWindow(Joueur player);
+    void updateWindow();
 }

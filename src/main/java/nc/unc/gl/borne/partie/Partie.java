@@ -8,11 +8,12 @@ import nc.unc.gl.borne.joueur.Joueur;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Data
 public class Partie {
 
-    private final List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new CopyOnWriteArrayList<>();
 
     int i = 0;
 
@@ -62,7 +63,7 @@ public class Partie {
         this.observers.forEach(obs -> obs.updateListBox(listePartie));
     }
 
-    public void modifFenetreLancementPartie(Joueur player) {
-        this.observers.forEach(obs -> obs.updateWindow(player));
+    public void modifFenetreLancementPartie() {
+        this.observers.forEach(obs -> obs.updateWindow());
     }
 }
