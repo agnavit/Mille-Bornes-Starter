@@ -72,7 +72,6 @@ public class PartieService extends Thread {
 
     public void run() {
         lancerPartie(MilleBornesApplication.getPartieList().get(0));
-
     }
 
     /*public Partie getPartie(String idPartie) {

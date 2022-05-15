@@ -6,6 +6,7 @@ import nc.unc.gl.borne.views.game.GameView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Game {
 
@@ -16,7 +17,7 @@ public class Game {
 
     }
 
-    private final List<ObserverGame> observersPartie = new ArrayList<>();
+    private final List<ObserverGame> observersPartie = new CopyOnWriteArrayList<>();
 
     public void addObserveurPartie(ObserverGame obsPartie) {
         this.observersPartie.add(obsPartie);

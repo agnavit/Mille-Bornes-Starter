@@ -8,11 +8,12 @@ import nc.unc.gl.borne.joueur.Joueur;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Data
 public class Partie {
 
-    private final List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new CopyOnWriteArrayList<>();
 
     int i = 0;
 
