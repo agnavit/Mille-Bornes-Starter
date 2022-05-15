@@ -22,10 +22,8 @@ public class JoueurServiceTest {
     void jeter(){
         Joueur j = new Joueur(1, "mayaSixtine", 24);
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
-        Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
         deckService.ajouter(carte1, j);
-        j.setMain(mainJoueur);
         joueurService.jeter(carte1, defausse, j);
         assertEquals(defausse.getSommet(), carte1);
         assertFalse(deckService.contains(carte1, j));
@@ -37,11 +35,9 @@ public class JoueurServiceTest {
         Joueur j = new Joueur(1, "mayaSixtine", 24);
         Carte carteParadeVitesse = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
         Carte carteAttaqueVitesse = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
-        Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
         deckService.ajouter(carteParadeVitesse, j);
         deckService.ajouter(carteAttaqueVitesse, j);
-        j.setMain(mainJoueur);
 
         // Si la pile Vitesse est vide -> Erreur
         IllegalArgumentException thrown1 = Assertions
@@ -76,7 +72,7 @@ public class JoueurServiceTest {
         Carte carteAttaqueCrevaison = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 1);
         Carte carteParadeCrevaison = new Carte(NomCarte.CREVAISON, TypeCarte.PARADE, 2);
         Carte carteParadeAccident = new Carte(NomCarte.ACCIDENT, TypeCarte.PARADE, 3);
-        PileCarte defausse = new PileCarte();;
+        PileCarte defausse = new PileCarte();
         deckService.ajouter(carteAttaqueCrevaison, j);
         deckService.ajouter(carteParadeCrevaison, j);
         deckService.ajouter(carteParadeAccident, j);
@@ -114,13 +110,11 @@ public class JoueurServiceTest {
         Carte carteVitesseAttaque = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 6);
         Carte carteAccidentAttaque = new Carte(NomCarte.ACCIDENT, TypeCarte.ATTAQUE, 7);
 
-        Deck mainJoueur = new Deck();
         deckService.ajouter(carteBorne25, j);
         deckService.ajouter(carteBorne50, j);
         deckService.ajouter(carteBorne75, j);
         deckService.ajouter(carteBorne100, j);
         deckService.ajouter(carteBorne200, j);
-        j.setMain(mainJoueur);
 
         plateauService.ajouterCartePlateau(TypePile.VITESSE,carteVitesseAttaque, j);
         IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteBorne(carteBorne100, j));
@@ -156,11 +150,9 @@ public class JoueurServiceTest {
         Carte carteAccidentAttaque = new Carte(NomCarte.ACCIDENT, TypeCarte.ATTAQUE, 0);
         Carte carteVitesseAttaque = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 0);
 
-        Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
         deckService.ajouter(carteBotteAccident, j);
         deckService.ajouter(carteBotteVitesse, j);
-        j.setMain(mainJoueur);
 
         plateauService.ajouterCartePlateau(TypePile.BATAILLE,carteAccidentAttaque, j);
         joueurService.poserCarteBotte(carteBotteAccident, j, defausse);
@@ -185,10 +177,8 @@ public class JoueurServiceTest {
         Carte carte5 = new Carte(NomCarte.DEUX_CENTS, TypeCarte.BORNE, 5);
         Carte carte6 = new Carte(NomCarte.ESSENCE, TypeCarte.BOTTE, 6);
 
-        Deck mainJoueur = new Deck();
         PileCarte defausse = new PileCarte();
         deckService.ajouter(carte1, j);
-        j.setMain(mainJoueur);
 
         // Si on pose une carte ATTAQUE -> erreur
         IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poser(carte2, defausse, j));
@@ -200,7 +190,7 @@ public class JoueurServiceTest {
         assertEquals(defausse.getPileCarte().size(),2);
 
         plateauService.ajouterCartePlateau(TypePile.BATAILLE, carte3, j);
-        j.setMain(deckService.ajouter(carte4, j));
+        deckService.ajouter(carte4, j);
         joueurService.poser(carte4, defausse, j);
         assertEquals(j.getMain().getMainJoueur().size(), 0);
         assertEquals(defausse.getPileCarte().size(),4);

@@ -199,7 +199,7 @@ public class JoueurService {
         piocher(pioche, joueur);
         game.updateFenetreEnGame();
         while (joueur.getMain().getTaille() != 6) {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         }
         System.out.println(joueur +" à jouer");
     }

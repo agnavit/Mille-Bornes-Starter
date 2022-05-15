@@ -8,7 +8,6 @@ public class JeuCompletTest {
     @Test
     void jeuComplet(){
         JeuComplet jeu = new JeuComplet();
-        System.out.println(jeu);
         assertEquals(jeu.getJeuComplet().size(),106);
     }
 }
