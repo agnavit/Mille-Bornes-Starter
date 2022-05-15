@@ -62,7 +62,7 @@ public class Partie {
         this.observers.forEach(obs -> obs.updateListBox(listePartie));
     }
 
-    public void modifFenetreLancementPartie(Joueur player) {
-        this.observers.forEach(obs -> obs.updateWindow(player));
+    public void modifFenetreLancementPartie() {
+        this.observers.forEach(obs -> obs.updateWindow());
     }
 }
