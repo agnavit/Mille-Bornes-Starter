@@ -58,6 +58,7 @@ public class PartyView extends HtmlContainer implements Observer {
     VerticalLayout container = new VerticalLayout();
     Dialog loading = new Dialog();
     JoueurDao joueurDao = new JoueurDao();
+    private Joueur currentPlayer;
 
     public String nomJoueur;
 
@@ -101,12 +102,11 @@ public class PartyView extends HtmlContainer implements Observer {
 
             // Récupération des données
             String username = userNameField.getValue();
-            nomJoueur = userNameField.getValue();
             Integer ageUser = ageUserField.getValue();
 
-            Joueur player = new Joueur(this.hashCode(), username, ageUser);
+            currentPlayer = new Joueur(this.hashCode(), username, ageUser);
 
-            joueurDao.insertJoueur(player.getPseudo(), player.getAge());
+            joueurDao.insertJoueur(currentPlayer.getPseudo(), currentPlayer.getAge());
 
             System.out.println(username + " viens de choisir son pseudo, il a " + ageUser + " ans " + this.hashCode());
             userNameField.setEnabled(false);
@@ -120,7 +120,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
             layout.add(confirmed);
 
-            showTabs(player, container);
+            showTabs(currentPlayer, container);
         });
         layout.addClassName("chose-username");
         container.add(layout);
@@ -184,7 +184,7 @@ public class PartyView extends HtmlContainer implements Observer {
             if (listBox.getValue().getNbJoueurMax() == listBox.getValue().getListejoueur().size()) {
                 partieService.start();
             }
-            party.modifFenetreLancementPartie(player);
+            party.modifFenetreLancementPartie();
         });
 
         cancelCreateGameButton.addClickListener(event -> {
@@ -250,10 +250,10 @@ public class PartyView extends HtmlContainer implements Observer {
         });
     }
 
-    public void updateWindow(Joueur player) {
+    public void updateWindow() {
         ui.access(() -> {
             loading.close();
-            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(player, listePartie).getId() + "/" + nomJoueur);
+            UI.getCurrent().navigate("game/" + partieService.getPartieJoueur(currentPlayer, listePartie).getId() + "/" + currentPlayer.getPseudo());
         });
     }
 }
