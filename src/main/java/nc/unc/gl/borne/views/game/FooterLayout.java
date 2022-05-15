@@ -23,10 +23,12 @@ import java.util.ArrayList;
 @Route("testFooterLayout")
 public class FooterLayout extends HorizontalLayout {
 
+    ArrayList<Image> deckPlayerImage;
     Carte selectedCard;
     Image selec;
 
     protected DeckService deckPlayer = new DeckService();
+
 
     JoueurService playerService = new JoueurService();
 
@@ -106,7 +108,7 @@ public class FooterLayout extends HorizontalLayout {
         HorizontalLayout deckLayout = new HorizontalLayout();
 
 
-        ArrayList<Image> deckPlayerImage = new ArrayList<Image>(joueurDefensif.getMain().getMainJoueur().size());
+        deckPlayerImage = new ArrayList<Image>(playerService.getSizeDeck(joueurDefensif));
 
         for (int i = 0; i < playerService.getSizeDeck(joueurDefensif); i++) {
 
@@ -120,9 +122,18 @@ public class FooterLayout extends HorizontalLayout {
 
             var chosenCard = deckPlayerImage.get(i);
             int j = i;
-            //TODO pas de clique sur les cartes
+            //TODO pas de clique sur les cartes quand il n'y a que six carte
             //TODO Spam sur les cartes = multiplicateur
             //TODO piocher /!\
+
+            ArrayList<Image> deckPlayerCopy =  new ArrayList<Image>();
+            deckPlayerCopy.addAll(deckPlayerImage);
+
+            if(selectedCard != null){
+                deckPlayerImage.remove(chosenCard);
+                System.out.println(deckPlayerImage);
+            }
+
             deckPlayerImage.get(i).addClickListener(
                 click -> {
 
@@ -145,7 +156,7 @@ public class FooterLayout extends HorizontalLayout {
         }
 
         footerLayout.add(deckLayout, buttonsLayout);
-
+        System.out.println(deckPlayerImage);
         footerLayout.getStyle()
             .set("border-radius", "10px")
             .set("padding", "20px")
