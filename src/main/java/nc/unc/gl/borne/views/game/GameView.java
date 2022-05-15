@@ -2,6 +2,7 @@ package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import nc.unc.gl.borne.MilleBornesApplication;
@@ -48,15 +49,24 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
             p2 = partie.getListejoueur().get(0);
         }
 
+
+        HorizontalLayout top = new HorizontalLayout();
+        TopLayout topLayout = new TopLayout(p1, p2);
+
+
         PlateauLayout plateauLayout = new PlateauLayout(p2);
         plateauLayout.addClassName("not-my-pile-cards");
+
+
+        top.add(topLayout, plateauLayout);
+
         PlateauLayout plateauLayout2 = new PlateauLayout(p1);
         plateauLayout2.addClassName("my-pile-cards");
         FooterLayout footerLayout = new FooterLayout(partie, p1, p2);
 
         VerticalLayout layout = new VerticalLayout();
 
-        layout.add(plateauLayout, plateauLayout2, footerLayout);
+        layout.add(top, plateauLayout2, footerLayout);
         layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         layout.setAlignItems(Alignment.CENTER);
 
@@ -91,7 +101,13 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
     public void updateWindowEnGame() {
         ui.access(() -> {
             removeAll();
+
+            HorizontalLayout top = new HorizontalLayout();
+            TopLayout topLayout = new TopLayout(p1, p2);
             PlateauLayout plateauLayout = new PlateauLayout(p2);
+
+            top.add(topLayout, plateauLayout);
+
             plateauLayout.addClassName("not-my-pile-cards");
             PlateauLayout plateauLayout2 = new PlateauLayout(p1);
             plateauLayout2.addClassName("my-pile-cards");
@@ -99,7 +115,7 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
 
             VerticalLayout layout = new VerticalLayout();
 
-            layout.add(plateauLayout, plateauLayout2, footerLayout);
+            layout.add(top, plateauLayout2, footerLayout);
             layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
             layout.setAlignItems(Alignment.CENTER);
 

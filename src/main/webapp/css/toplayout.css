@@ -1,16 +1,14 @@
-.disabling-cards{
-    border: solid 2px;
-    width: 50px;
+.not-my-score {
+    color: #ff7a6e;
 }
 
-.test {
-    border-radius: 10px;
-    height: 14em;
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
-    background: linear-gradient(to bottom, #feada6, #f5efef);
+.my-score {
+    color: #9eb0c7;
 }
 
-.test2{
-    color: #fa8378;
+h2 {
+    text-align: center;
+    position: relative;
+    bottom: 33px;
     text-shadow: 0 0 6px white;
 }
