@@ -28,8 +28,8 @@ import nc.unc.gl.borne.metier.classes.carte.Carte;
 import nc.unc.gl.borne.metier.classes.Joueur;
 import nc.unc.gl.borne.metier.classes.partie.Partie;
 import nc.unc.gl.borne.metier.services.JoueurService;
-import nc.unc.gl.borne.metier.services.partie.PartieService;
-import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
+import nc.unc.gl.borne.metier.services.PartieService;
+
 import java.util.ArrayList;
 
 

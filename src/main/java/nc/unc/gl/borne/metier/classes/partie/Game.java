@@ -27,4 +27,8 @@ public class Game {
     public void updateFenetreEnGame() {
         this.observersPartie.forEach(obs -> obs.updateWindowEnGame());
     }
+
+    public void updateWinner(Joueur player) {
+        this.observersPartie.forEach(obs -> obs.updateWinner(player));
+    }
 }
