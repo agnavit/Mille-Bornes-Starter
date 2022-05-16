@@ -8,8 +8,9 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+
 @Route("test")
-@StyleSheet("css/end.css")
+@StyleSheet("css/end-view.css")
 public class EndView extends VerticalLayout {
 
     public EndView(){

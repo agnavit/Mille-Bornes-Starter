@@ -5,7 +5,6 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.metier.classes.Joueur;
 import nc.unc.gl.borne.metier.classes.carte.Carte;
 import nc.unc.gl.borne.metier.classes.carte.enumerations.TypeCarte;
@@ -14,7 +13,7 @@ import nc.unc.gl.borne.metier.services.JoueurService;
 
 import java.util.ArrayList;
 
-@Route("testFooterLayout")
+
 public class FooterLayout extends HorizontalLayout {
 
     ArrayList<Image> deckPlayerImage;

@@ -35,7 +35,7 @@ import java.util.ArrayList;
 @Data
 @Tag("party")
 @Route(value = "party")
-@StyleSheet("css/party.css")
+@StyleSheet("css/party-view.css")
 public class PartyView extends HtmlContainer implements Observer {
 
     private final UI ui;

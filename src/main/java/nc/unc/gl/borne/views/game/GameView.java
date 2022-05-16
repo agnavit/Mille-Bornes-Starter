@@ -18,7 +18,7 @@ import nc.unc.gl.borne.metier.classes.partie.Partie;
 import nc.unc.gl.borne.metier.services.partie.PartieService;
 
 @Route("game/:idPartie?/:pseudoJoueur?")
-@StyleSheet("css/game.css")
+@StyleSheet("css/game-view.css")
 public class GameView extends VerticalLayout implements ObserverGame, BeforeEnterObserver {
 
     private final UI ui;
