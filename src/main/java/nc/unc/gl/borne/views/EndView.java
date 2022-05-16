@@ -7,13 +7,21 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
+import nc.unc.gl.borne.metier.classes.Joueur;
 
-@Route("test")
+@Route("endView/:user?")
 @StyleSheet("css/end-view.css")
-public class EndView extends VerticalLayout {
+public class EndView extends VerticalLayout implements BeforeEnterObserver {
 
-    public EndView(){
+    String gagnant;
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        gagnant = event.getRouteParameters().get("user").orElse("error");
+
         VerticalLayout container = new VerticalLayout();
 
         container.setSpacing(true);
@@ -23,10 +31,14 @@ public class EndView extends VerticalLayout {
 
         H3 end = new H3("Fin du jeu");
         H2 winner = new H2("Le gagnant est :");
-        H1 theWinner = new H1("Anthony");
+        H1 theWinner = new H1(gagnant);
 
         container.add(image, end, winner, theWinner);
 
         add(container);
+    }
+
+    public EndView(){
+
     }
 }

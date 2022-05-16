@@ -4,18 +4,16 @@ import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.metier.classes.ObserverGame;
-import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.metier.classes.Joueur;
 import nc.unc.gl.borne.metier.classes.partie.Game;
 import nc.unc.gl.borne.metier.classes.partie.Partie;
-import nc.unc.gl.borne.metier.services.partie.PartieService;
+import nc.unc.gl.borne.metier.services.PartieService;
+import nc.unc.gl.borne.views.EndView;
 
 @Route("game/:idPartie?/:pseudoJoueur?")
 @StyleSheet("css/game-view.css")
@@ -140,4 +138,13 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
 
         });
     }
+
+    @Override
+    public void updateWinner(Joueur player) {
+        ui.access(() -> {
+            UI.getCurrent().navigate("endView/" + player.getPseudo());
+        });
+    }
+
+
 }
