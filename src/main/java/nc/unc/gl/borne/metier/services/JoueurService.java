@@ -78,29 +78,32 @@ public class JoueurService {
 
     public void poserCarteBorne(Carte carteBorne, Joueur joueur){
         // S'il y a une limitation de vitesse
-        if(joueur.getPlateau().getPile(TypePile.VITESSE).getTaille() == 1){
-            if(carteBorne.getNom() != NomCarte.VINGT_CINQ && carteBorne.getNom() != NomCarte.CINQUANTE){
+        if (joueur.getScore() + carteBorne.getIdentifiant() > 1000) {
+            throw new IllegalArgumentException("Erreur : il faut terminer avec un score égale à 1000");
+        }else {
+            if (joueur.getPlateau().getPile(TypePile.VITESSE).getTaille() == 1) {
+                if (carteBorne.getNom() != NomCarte.VINGT_CINQ && carteBorne.getNom() != NomCarte.CINQUANTE) {
+                    throw new IllegalArgumentException("Erreur : la carte borne ne peut être posée, en raison " +
+                        "d'une limitation de vitesse! ");
+                }
+            }
+
+            if (joueur.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1) {
                 throw new IllegalArgumentException("Erreur : la carte borne ne peut être posée, en raison " +
-                    "d'une limitation de vitesse! ");
+                    "d'une carte attaque présente! ");
+            }
+
+            joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
+            switch (carteBorne.getNom()) {
+                case VINGT_CINQ -> joueur.setScore(joueur.getScore() + 25);
+                case CINQUANTE -> joueur.setScore(joueur.getScore() + 50);
+                case SOIXANTE_QUINZE -> joueur.setScore(joueur.getScore() + 75);
+                case CENT -> joueur.setScore(joueur.getScore() + 100);
+                case DEUX_CENTS -> joueur.setScore(joueur.getScore() + 200);
+                default -> throw new IllegalArgumentException("Erreur: la carte borne n'as pas un nom de carte correct " +
+                    "(valeur en km)!");
             }
         }
-
-        if(joueur.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1){
-            throw new IllegalArgumentException("Erreur : la carte borne ne peut être posée, en raison " +
-                "d'une carte attaque présente! ");
-        }
-
-        joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
-        switch (carteBorne.getNom()) {
-            case VINGT_CINQ -> joueur.setScore(joueur.getScore() + 25);
-            case CINQUANTE -> joueur.setScore(joueur.getScore() + 50);
-            case SOIXANTE_QUINZE -> joueur.setScore(joueur.getScore() + 75);
-            case CENT -> joueur.setScore(joueur.getScore() + 100);
-            case DEUX_CENTS -> joueur.setScore(joueur.getScore() + 200);
-            default -> throw new IllegalArgumentException("Erreur: la carte borne n'as pas un nom de carte correct " +
-                "(valeur en km)!");
-        }
-
     }
 
     public void poserCarteBotte(Carte carteBotte, Joueur joueur, PileCarte defausse) {
