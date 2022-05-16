@@ -1,11 +1,13 @@
-package nc.unc.gl.borne.metier.services.partie;
+package nc.unc.gl.borne.metier.services;
 
 import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.metier.classes.JeuComplet;
 import nc.unc.gl.borne.metier.classes.Joueur;
+import nc.unc.gl.borne.metier.classes.partie.Game;
 import nc.unc.gl.borne.metier.classes.partie.Partie;
 import nc.unc.gl.borne.metier.services.JoueurService;
+import nc.unc.gl.borne.views.game.GameView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,26 +17,33 @@ public class PartieService extends Thread {
 
     public JoueurService joueurService = new JoueurService();
     public JoueurDao joueurDao = new JoueurDao();
+    public Game game = GameView.game;
 
     public void lancerPartie(Partie partie) {
-        AtomicInteger score = new AtomicInteger();
+        int score = 0;
         JeuComplet jeuComplet = new JeuComplet();
+        Joueur winner = new Joueur();
 
         partie.getPioche().setPileCarte(jeuComplet.getJeuComplet());
         partie.getListejoueur().forEach(j -> j.getMain().getMainJoueur().add(partie.getPioche().depiler()));
         partie.getPioche().melanger();
         distribuerCarte(partie);
         determinerOrdrePassage(partie);
-        while (partie.getPioche().getPileCarte().size() != 0 || score.get() != 1000) {
-            partie.getListejoueur().forEach(j -> {
+        while (partie.getPioche().getPileCarte().size() != 0 && score != 1000) {
+            for (Joueur j : partie.getListejoueur()) {
                 try {
                     joueurService.jouer(partie.getPioche(), j);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                score.set(j.getScore());
-            });
+                score = j.getScore();
+                if (score == 1000) {
+                    winner = j;
+                    break;
+                }
+            }
         }
+        game.updateWinner(winner);
     }
 
     private void determinerOrdrePassage(Partie partie) {

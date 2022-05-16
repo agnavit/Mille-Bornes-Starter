@@ -5,7 +5,7 @@ import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.metier.classes.Observer;
 import nc.unc.gl.borne.metier.classes.carte.PileCarte;
 import nc.unc.gl.borne.metier.classes.Joueur;
-import nc.unc.gl.borne.metier.services.partie.PartieService;
+import nc.unc.gl.borne.metier.services.PartieService;
 
 import java.util.ArrayList;
 import java.util.List;
