@@ -8,11 +8,8 @@ import java.sql.SQLException;
  * Singleton permettant de garder la connection JDBC ouverte.
  */
 public enum ConnectionHolder {
-
     INSTANCE;
-
     private static final String URL = "jdbc:h2:mem:ces";
-
     private final Connection connection;
 
     ConnectionHolder() {

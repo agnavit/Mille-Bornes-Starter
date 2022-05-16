@@ -2,7 +2,6 @@ package nc.unc.gl.borne.dao.connection.partieDao;
 
 import nc.unc.gl.borne.dao.connection.ConnectionHolder;
 import nc.unc.gl.borne.joueur.Joueur;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

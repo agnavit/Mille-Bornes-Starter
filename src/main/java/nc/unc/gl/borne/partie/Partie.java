@@ -5,7 +5,6 @@ import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.carte.PileCarte;
 import nc.unc.gl.borne.joueur.Joueur;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -14,8 +13,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Partie {
 
     private final List<Observer> observers = new CopyOnWriteArrayList<>();
-
     int i = 0;
+    private ArrayList<Joueur> listejoueur = new ArrayList<Joueur>();
+    private int nbJoueurMax;
+    private PileCarte pioche;
+    private PileCarte defausse;
+    private String id;
+    public PartieService partieService = new PartieService();
 
     public void addObserveur(Observer obs) {
         this.observers.add(obs);
@@ -24,13 +28,6 @@ public class Partie {
     public void removeObserveur(Observer obs) {
         this.observers.remove(obs);
     }
-
-    private ArrayList<Joueur> listejoueur = new ArrayList<Joueur>();
-    private int nbJoueurMax;
-    private PileCarte pioche;
-    private PileCarte defausse;
-    private String id;
-    public PartieService partieService = new PartieService();
 
     public Partie(){
     }

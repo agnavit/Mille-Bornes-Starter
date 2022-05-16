@@ -2,7 +2,6 @@ package nc.unc.gl.borne.Deck;
 
 import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.joueur.Joueur;
-
 public class DeckService {
 
     static final int TAILLE_MAX = 7;
@@ -15,7 +14,6 @@ public class DeckService {
         joueur.getMain().getMainJoueur().add(carteAjoute);
         return joueur.getMain();
     }
-
 
     public Deck enlever(Carte carteEnlever, Joueur joueur){
         if(joueur.getMain().getMainJoueur().size() == 6){

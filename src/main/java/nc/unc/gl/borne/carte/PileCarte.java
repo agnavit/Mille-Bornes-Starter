@@ -17,11 +17,9 @@ public class PileCarte {
 
 
     private ArrayList<Carte> pileCarte;
-
     public PileCarte() {
         this.pileCarte = new ArrayList<>();
     }
-
     public ArrayList<Carte> getPileCarte() {
         return pileCarte;
     }
@@ -39,7 +37,6 @@ public class PileCarte {
         return this.pileCarte.get(i);
     }
 
-
     public Carte getSommet(){
         return this.getCarte(this.getPileCarte().size()-1);
     }
@@ -48,12 +45,10 @@ public class PileCarte {
         return this.pileCarte.size();
     }
 
-
     public PileCarte empiler(Carte carteAAjouter){
         this.pileCarte.add(carteAAjouter);
         return this;
     }
-
 
     public Carte depiler(){
         if(this.pileCarte.size() == 0){
@@ -64,14 +59,10 @@ public class PileCarte {
         return carteDepile;
     }
 
-
     public void melanger(){
         Collections.shuffle(this.pileCarte);
     }
 
-    /**
-     * Compte l'effectif d'une carte passée en paramètre
-     */
     public int getNbCartePile(Carte carteACompter){
         int res = 0;
         for (Carte carte : pileCarte) {

@@ -2,8 +2,6 @@ package nc.unc.gl.borne.partie;
 
 import nc.unc.gl.borne.ObserverGame;
 import nc.unc.gl.borne.joueur.Joueur;
-import nc.unc.gl.borne.views.game.GameView;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,6 @@ public class Game {
     Joueur j2;
 
     public Game() {
-
     }
 
     private final List<ObserverGame> observersPartie = new CopyOnWriteArrayList<>();

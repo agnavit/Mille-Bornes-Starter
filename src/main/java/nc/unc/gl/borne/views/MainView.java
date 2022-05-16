@@ -23,13 +23,9 @@ public class MainView extends HtmlContainer {
 
     public MainView() {
 
-        // Rebase
-
-        // Création de la div qui va servir de conteneur pour les autres balises
         Div container = new Div();
         appliedContainerStyle(container);
 
-        // Création du titre de la page
         Div title = new Div();
         Image titleImage = new Image("cartes/header.png", "header");
         titleImage.addClassName("main-view-title");
@@ -41,13 +37,11 @@ public class MainView extends HtmlContainer {
         VerticalLayout dialogLayout = showRules();
         rules.add(dialogLayout);
 
-        // Création des sous-titres
         H2 playSubtitle = new H2("play");
         playSubtitle.addClassName("main-view-subtitle");
         H2 rulesSubtitle = new H2("rules");
         rulesSubtitle.addClassName("main-view-subtitle");
 
-        // Création des événements des sous-titres
         playSubtitle.addClickListener(
             click -> UI.getCurrent().navigate("party")
         );
@@ -103,5 +97,4 @@ public class MainView extends HtmlContainer {
 
         return dialogLayout;
     }
-
 }

@@ -52,8 +52,6 @@ public class JoueurService {
      * Si une attaque est contrée, alors l'attaque et la parade sont jetées dans la défausse
      */
     public void poserCarteParade(Carte carteParade, PileCarte defausse, Joueur joueur){
-        //TODO Tests
-
         if(joueur.getPlateau().getPile(TypePile.BATAILLE).estVide()){
             throw new IllegalArgumentException("Erreur : la pile bataille est vide!");
         }
@@ -104,7 +102,6 @@ public class JoueurService {
     }
 
     public void poserCarteBotte(Carte carteBotte, Joueur joueur, PileCarte defausse) {
-        //TODO tests
         joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BOTTES, carteBotte, joueur));
 
         // Si le joueur a une carte attaque du même nom que la carte botte alors cette attaque est enlevée
@@ -126,7 +123,6 @@ public class JoueurService {
                 defausse.empiler(carteAJeter);
             }
         }
-        //TODO : on rejoue dans le code main principal non ?
     }
 
     /**

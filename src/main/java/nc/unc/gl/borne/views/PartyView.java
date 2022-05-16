@@ -21,22 +21,14 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.router.QueryParameters;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteParameters;
 import lombok.Data;
-import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.Observer;
 import nc.unc.gl.borne.carte.Carte;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.partie.Partie;
 import nc.unc.gl.borne.partie.PartieService;
-import java.sql.SQLException;
-import nc.unc.gl.borne.dao.connection.ConnectionHolder;
-import nc.unc.gl.borne.dao.connection.SchemaInitializer;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
-import nc.unc.gl.borne.views.game.GameView;
-
 import java.util.ArrayList;
 
 
@@ -50,16 +42,13 @@ public class PartyView extends HtmlContainer implements Observer {
     private static Partie party = new Partie();
     ListBox<Partie> listBox = new ListBox<>();
     RadioButtonGroup<Partie> radioGroup = new RadioButtonGroup<>();
-
     ArrayList<Partie> listePartie = new ArrayList<>();
-
     public Carte carteChoisie = null;
     public PartieService partieService = new PartieService();
     VerticalLayout container = new VerticalLayout();
     Dialog loading = new Dialog();
     JoueurDao joueurDao = new JoueurDao();
     private Joueur currentPlayer;
-
     public String nomJoueur;
 
     public PartyView(){
@@ -100,7 +89,6 @@ public class PartyView extends HtmlContainer implements Observer {
 
         pendingConfirmation.addClickListener(click -> {
 
-            // Récupération des données
             String username = userNameField.getValue();
             Integer ageUser = ageUserField.getValue();
 

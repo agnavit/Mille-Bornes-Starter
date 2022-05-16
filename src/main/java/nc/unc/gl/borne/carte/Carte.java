@@ -48,5 +48,4 @@ public class Carte {
         Carte carte = (Carte) o;
         return nom == carte.nom && type == carte.type;
     }
-
 }

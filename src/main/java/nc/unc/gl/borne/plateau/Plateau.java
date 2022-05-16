@@ -18,11 +18,6 @@ public class Plateau {
      */
     private HashMap<TypePile, PileCarte> plateau;
 
-    /**
-     * Constructeur
-     *
-     * NB: Créer chaque clé dans le constructeur et initialiser la pile associée à vide
-     */
     public Plateau() {
         this.plateau = new HashMap<>();
         this.plateau.put(TypePile.VITESSE, new PileCarte());

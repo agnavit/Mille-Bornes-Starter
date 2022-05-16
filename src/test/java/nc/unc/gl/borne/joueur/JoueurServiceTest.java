@@ -1,6 +1,5 @@
 package nc.unc.gl.borne.joueur;
 
-import nc.unc.gl.borne.Deck.Deck;
 import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.*;
 import nc.unc.gl.borne.carte.enumerations.NomCarte;
@@ -169,7 +168,6 @@ public class JoueurServiceTest {
 
     @Test
     void poser(){
-        //TODO Check
         Joueur j = new Joueur(1, "mayaSixtine", 24);
         Carte carte1 = new Carte(NomCarte.VITESSE, TypeCarte.PARADE, 1);
         Carte carte2 = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
@@ -211,7 +209,6 @@ public class JoueurServiceTest {
 
     @Test
     void attaquer() {
-        //TODO Check
         Joueur jDef = new Joueur(1, "mayaSixtine", 24);
         Joueur jAtt = new Joueur(2, "yo", 24);
 

@@ -1,11 +1,10 @@
 package nc.unc.gl.borne.partie;
+
 import nc.unc.gl.borne.MilleBornesApplication;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.jeuComplet.JeuComplet;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
-import nc.unc.gl.borne.views.game.GameView;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,8 +19,6 @@ public class PartieService extends Thread {
         JeuComplet jeuComplet = new JeuComplet();
 
         partie.getPioche().setPileCarte(jeuComplet.getJeuComplet());
-        //distribution de feu vert à mes joueur
-        //TODO mettre feu vert dans la pile bataille
         partie.getListejoueur().forEach(j -> j.getMain().getMainJoueur().add(partie.getPioche().depiler()));
         partie.getPioche().melanger();
         distribuerCarte(partie);
@@ -35,7 +32,6 @@ public class PartieService extends Thread {
                 }
                 score.set(j.getScore());
             });
-
         }
     }
 
@@ -63,7 +59,7 @@ public class PartieService extends Thread {
     public Partie getPartieJoueur(Joueur joueur, ArrayList<Partie> parties) {
         for (Partie partie : parties) {
             for (Joueur j : partie.getListejoueur()) {
-                if (j.getPseudo() == joueur.getPseudo()) {
+                if (j.getPseudo().equals(joueur.getPseudo())) {
                     return partie;
                 }
             }
@@ -82,7 +78,4 @@ public class PartieService extends Thread {
         lancerPartie(MilleBornesApplication.getPartieList().get(0));
     }
 
-    /*public Partie getPartie(String idPartie) {
-
-    }*/
 }
