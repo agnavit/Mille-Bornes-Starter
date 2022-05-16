@@ -139,11 +139,8 @@ public class FooterLayout extends HorizontalLayout {
         }
 
         System.out.println("Le joueur: " + me.getPseudo() + " a choisi la carte " + image.getAlt());
-        selectedCard = new Carte(
-            playerService.getCardInDeck(me, j).getNom(),
-            playerService.getCardInDeck(me, j).getType(),
-            playerService.getCardInDeck(me, j).getIdentifiant()
-        );
+        selectedCard = playerService.getCardInDeck(me, j);
+
         this.selectedImage = image;
         image.getElement().getStyle().set("border-color", "white");
     }
