@@ -27,6 +27,7 @@ import nc.unc.gl.borne.metier.classes.Observer;
 import nc.unc.gl.borne.metier.classes.carte.Carte;
 import nc.unc.gl.borne.metier.classes.Joueur;
 import nc.unc.gl.borne.metier.classes.partie.Partie;
+import nc.unc.gl.borne.metier.services.JoueurService;
 import nc.unc.gl.borne.metier.services.partie.PartieService;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class PartyView extends HtmlContainer implements Observer {
     public PartieService partieService = new PartieService();
     VerticalLayout container = new VerticalLayout();
     Dialog loading = new Dialog();
-    JoueurDao joueurDao = new JoueurDao();
+    JoueurService joueurService = new JoueurService();
     private Joueur currentPlayer;
     public String nomJoueur;
 
@@ -94,7 +95,7 @@ public class PartyView extends HtmlContainer implements Observer {
 
             currentPlayer = new Joueur(this.hashCode(), username, ageUser);
 
-            joueurDao.insertJoueur(currentPlayer.getPseudo(), currentPlayer.getAge());
+            joueurService.insertPlayer(currentPlayer.getPseudo(), currentPlayer.getAge());
 
             System.out.println(username + " viens de choisir son pseudo, il a " + ageUser + " ans " + this.hashCode());
             userNameField.setEnabled(false);
@@ -160,7 +161,7 @@ public class PartyView extends HtmlContainer implements Observer {
         createGameButton.addClickListener(event -> {
             Notification.show("Attente pour créer une partie");
             var partie = party.creerPartieObserver(player);
-            joueurDao.updatePartieJoueur(partie.getId(), player);
+            joueurService.updatePartyPlayer(partie.getId(), player);
             container.remove(createGameButton);
             container.add(cancelCreateGameButton);
             joinPartyTab.setEnabled(false);

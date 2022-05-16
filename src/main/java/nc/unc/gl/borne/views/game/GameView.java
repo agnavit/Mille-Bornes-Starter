@@ -29,7 +29,6 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
     Joueur p2;
 
     public PartieService partieService = new PartieService();
-    JoueurDao joueurDao = new JoueurDao();
     public static Game game = new Game();
 
     private String idPartie;
@@ -89,12 +88,6 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
             .set("background-image", "url(background.jpg)")
             .set("background-size", "cover")
             .set("background-repeat", "no-repeat");
-    }
-
-    private Icon createIcon(VaadinIcon vaadinIcon) {
-        Icon icon = vaadinIcon.create();
-        icon.getStyle().set("padding", "var(--lumo-space-xs");
-        return icon;
     }
 
     public GameView() {

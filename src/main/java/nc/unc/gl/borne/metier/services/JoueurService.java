@@ -1,5 +1,6 @@
 package nc.unc.gl.borne.metier.services;
 
+import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import nc.unc.gl.borne.metier.classes.Joueur;
 import nc.unc.gl.borne.metier.classes.carte.Carte;
 import nc.unc.gl.borne.metier.classes.carte.PileCarte;
@@ -14,6 +15,7 @@ public class JoueurService {
 
     public PlateauService plateauService = new PlateauService();
     public DeckService deckService = new DeckService();
+    public JoueurDao joueurDao = new JoueurDao();
     public Game game = GameView.game;
 
     public void jeter(Carte carteChoisie, PileCarte defausse, Joueur joueur){
@@ -215,6 +217,14 @@ public class JoueurService {
             Thread.sleep(500);
         }
         System.out.println(joueur +" à jouer");
+    }
+
+    public void insertPlayer(String pseudo, int age) {
+        joueurDao.insertJoueur(pseudo, age);
+    }
+
+    public void updatePartyPlayer(String id, Joueur joueur) {
+        joueurDao.updatePartieJoueur(id, joueur);
     }
 
     public int getSizeDeck(Joueur player){
