@@ -136,7 +136,12 @@ public class JoueurService {
         if(carteChoisie.getType() == TypeCarte.ATTAQUE){
             throw new IllegalArgumentException("Erreur: on ne peut pas utiliser une carte attaque sur son plateau!");
         }
-        if(carteChoisie.getNom() == NomCarte.VITESSE){
+
+        if(carteChoisie.getType() == TypeCarte.BOTTE){
+            poserCarteBotte(carteChoisie, joueur, defausse);
+        }
+
+        else if(carteChoisie.getNom() == NomCarte.VITESSE){
             poserCarteVitesse(carteChoisie, defausse, joueur);
         }
         // Le feu vert n'est pas pris en compte lorsqu'il est posé sur une carte parade : faire sous fonction poserFeuVert()
@@ -145,10 +150,6 @@ public class JoueurService {
         }
         else if(carteChoisie.getType() == TypeCarte.BORNE){
             poserCarteBorne(carteChoisie, joueur);
-
-        }
-        else if(carteChoisie.getType() == TypeCarte.BOTTE){
-            poserCarteBotte(carteChoisie, joueur, defausse);
         }
         deckService.enlever(carteChoisie, joueur);
     }
