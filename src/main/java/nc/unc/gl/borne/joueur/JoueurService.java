@@ -77,10 +77,9 @@ public class JoueurService {
     }
 
     public void poserCarteBorne(Carte carteBorne, Joueur joueur){
-        // TODO test
         // S'il y a une limitation de vitesse
-        if(joueur.getPlateau().getPile(TypePile.VITESSE).contientCarte(NomCarte.VITESSE, TypeCarte.ATTAQUE)){
-            if(carteBorne.getNom() != NomCarte.VINGT_CINQ || carteBorne.getNom() != NomCarte.CINQUANTE){
+        if(joueur.getPlateau().getPile(TypePile.VITESSE).getTaille() == 1){
+            if(carteBorne.getNom() != NomCarte.VINGT_CINQ && carteBorne.getNom() != NomCarte.CINQUANTE){
                 throw new IllegalArgumentException("Erreur : la carte borne ne peut être posée, en raison " +
                     "d'une limitation de vitesse! ");
             }

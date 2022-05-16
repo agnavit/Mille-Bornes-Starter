@@ -120,7 +120,10 @@ public class JoueurServiceTest {
         IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteBorne(carteBorne100, j));
         Assertions.assertEquals("Erreur : la carte borne ne peut être posée, en raison " +
             "d'une limitation de vitesse! ", thrown1.getMessage());
+        joueurService.poserCarteBorne(carteBorne25, j);
+        joueurService.poserCarteBorne(carteBorne50, j);
         plateauService.enleverCartePlateau(TypePile.VITESSE,j);
+        assertEquals(j.getScore(),75);
 
         plateauService.ajouterCartePlateau(TypePile.BATAILLE,carteAccidentAttaque, j);
         IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.poserCarteBorne(carteBorne50, j));
@@ -128,10 +131,7 @@ public class JoueurServiceTest {
             "d'une carte attaque présente! ", thrown2.getMessage());
         plateauService.enleverCartePlateau(TypePile.BATAILLE,j);
 
-        joueurService.poserCarteBorne(carteBorne25, j);
-        assertEquals(j.getScore(),25);
-        joueurService.poserCarteBorne(carteBorne50, j);
-        assertEquals(j.getScore(),75);
+
         joueurService.poserCarteBorne(carteBorne75, j);
         assertEquals(j.getScore(),150);
         joueurService.poserCarteBorne(carteBorne100, j);
