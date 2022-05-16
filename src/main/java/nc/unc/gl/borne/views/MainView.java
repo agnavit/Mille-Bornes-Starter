@@ -17,7 +17,7 @@ import com.vaadin.flow.component.html.*;
 
 @Route("")
 @Tag("main-view")
-@StyleSheet("css/mainview.css")
+@StyleSheet("css/main-view.css")
 @PageTitle("Menu | Mille Bornes")
 public class MainView extends HtmlContainer {
 

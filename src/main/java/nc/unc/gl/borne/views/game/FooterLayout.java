@@ -5,32 +5,30 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
 import nc.unc.gl.borne.metier.classes.Joueur;
 import nc.unc.gl.borne.metier.classes.carte.Carte;
 import nc.unc.gl.borne.metier.classes.carte.enumerations.TypeCarte;
 import nc.unc.gl.borne.metier.classes.partie.Partie;
 import nc.unc.gl.borne.metier.services.JoueurService;
-
 import java.util.ArrayList;
 
-@Route("testFooterLayout")
 public class FooterLayout extends HorizontalLayout {
 
-    ArrayList<Image> deckPlayerImage;
+    Joueur me;
+    Joueur notMe;
+    Partie party;
     Carte selectedCard;
-    Image selectedIm;
-    JoueurService playerService = new JoueurService();
+    Image selectedImage;
     Button putCardButton;
     Button throwCardButton;
-    Partie party;
-    Joueur joueurDefensif;
-    Joueur joueurAttaque;
+    ArrayList<Image> deckPlayerImage;
+    JoueurService playerService = new JoueurService();
 
-    public FooterLayout(Partie refPartie, Joueur joueurDefensive, Joueur joueurAttaque){
-        this.party = refPartie;
-        this.joueurDefensif = joueurDefensive;
-        this.joueurAttaque = joueurAttaque;
+    public FooterLayout(Partie party, Joueur me, Joueur notMe) {
+
+        this.me = me;
+        this.notMe = notMe;
+        this.party = party;
 
         HorizontalLayout footer = new HorizontalLayout();
 
@@ -49,45 +47,42 @@ public class FooterLayout extends HorizontalLayout {
         updateDeckPlayer(deckLayout);
 
         footer.add(deckLayout, buttonsLayout);
-        footer.getStyle()
-            .set("border-radius", "10px")
-            .set("padding", "20px")
-            .set("box-shadow", "0px 6px 10px rgba(0, 0, 0, 0.25)")
-            .set("background", "linear-gradient(to right, #B0C4DE, #f5efef)");
+        footer.addClassName("footer");
 
         add(footer);
+
         this.throwCardButton = throwCardButton;
         this.putCardButton = putCardButton;
     }
 
-    public void putCardPlayer( HorizontalLayout deckLayout, Button putCardButton){
+    public void putCardPlayer(HorizontalLayout deckLayout, Button putCardButton){
         putCardButton.addClickListener(
             clickPutCard -> {
                 if (selectedCard.getType() == TypeCarte.BORNE) {
                     playerService.poser(
                         selectedCard,
                         party.getDefausse(),
-                        joueurDefensif
+                        me
                     );
                 } else if (selectedCard.getType() == TypeCarte.ATTAQUE) {
                     playerService.attaquer(
                         selectedCard,
-                        joueurDefensif,
-                        joueurAttaque
+                        me,
+                        notMe
                     );
-                    joueurDefensif.getMain().getMainJoueur().remove(selectedCard);
+                    me.getMain().getMainJoueur().remove(selectedCard);
 
                 } else if (selectedCard.getType() == TypeCarte.BOTTE) {
                     playerService.poser(
                         selectedCard,
                         party.getDefausse(),
-                        joueurDefensif
+                        me
                     );
                 } else {
                     playerService.poser(
                         selectedCard,
                         party.getDefausse(),
-                        joueurDefensif
+                        me
                     );
                 }
                 updateDeckPlayer(deckLayout);
@@ -95,70 +90,67 @@ public class FooterLayout extends HorizontalLayout {
         );
     }
 
-    public void throwCardPlayer(HorizontalLayout deckLayout, Button throwCardButton){
+    public void throwCardPlayer(HorizontalLayout deckLayout, Button throwCardButton) {
         throwCardButton.addClickListener(
             click -> {
-                playerService.jeter(this.selectedCard, party.getDefausse(), joueurDefensif);
+                playerService.jeter(this.selectedCard, party.getDefausse(), me);
                 updateDeckPlayer(deckLayout);
             }
         );
-
     }
 
-    public void updateDeckPlayer(HorizontalLayout deckLayout){
+    public void updateDeckPlayer(HorizontalLayout deckLayout) {
 
         deckLayout.removeAll();
+        deckPlayerImage = new ArrayList<>(playerService.getSizeDeck(me));
 
-        deckPlayerImage = new ArrayList<Image>(playerService.getSizeDeck(joueurDefensif));
-
-        for (int i = 0; i < playerService.getSizeDeck(joueurDefensif); i++) {
+        for (int i = 0; i < playerService.getSizeDeck(me); i++) {
 
             Image image = new Image(
-                "cartes/" + playerService.getCardInDeck(joueurDefensif, i).getStringImage(),
-                String.valueOf(playerService.getCardInDeck(joueurDefensif, i)));
-            image.addClassName("card-deck");
+                "cartes/" + playerService.getCardInDeck(me, i).getStringImage(),
+                String.valueOf(playerService.getCardInDeck(me, i))
+            );
 
+            image.addClassName("card-deck");
             deckPlayerImage.add(image);
 
             var chosenCard = deckPlayerImage.get(i);
             int j = i;
 
-            if (joueurDefensif.getMain().getTaille() == 7) {
+            if (me.getMain().getTaille() == 7) {
                 deckPlayerImage.get(i).addClickListener(
                     click -> {
-                        if (chosenCard != selectedIm) {
+                        if (chosenCard != selectedImage) {
                             eventImage(chosenCard, j, deckLayout);
                         }
                     }
-
                 );
             }
-
         }
-        for(Image image: deckPlayerImage){
+        for(Image image: deckPlayerImage) {
             deckLayout.add(image);
         }
     }
 
-    public void chosenCardMethode(Image image, int j){
+    public void chosenCardMethode(Image image, int j) {
 
-        if(selectedIm != null){
-            selectedIm.getElement().getStyle().set("border-color", "#9eb0c7");
+        if(selectedImage != null){
+            selectedImage.getElement().getStyle().set("border-color", "#9eb0c7");
         }
 
-        System.out.println("Le joueur: " + joueurDefensif.getPseudo() + " a choisi la carte " + image.getAlt());
+        System.out.println("Le joueur: " + me.getPseudo() + " a choisi la carte " + image.getAlt());
         selectedCard = new Carte(
-            playerService.getCardInDeck(joueurDefensif,j).getNom(),
-            playerService.getCardInDeck(joueurDefensif,j).getType(),
-            playerService.getCardInDeck(joueurDefensif,j).getIdentifiant()
+            playerService.getCardInDeck(me, j).getNom(),
+            playerService.getCardInDeck(me, j).getType(),
+            playerService.getCardInDeck(me, j).getIdentifiant()
         );
-        this.selectedIm = image;
+        this.selectedImage = image;
         image.getElement().getStyle().set("border-color", "white");
     }
 
-    public void eventImage(Image chosenCard, int j, HorizontalLayout deckLayout){
+    public void eventImage(Image image, int j, HorizontalLayout deckLayout) {
 
-        chosenCardMethode(chosenCard, j);
+        chosenCardMethode(image, j);
 
         putCardButton.setEnabled(true);
         throwCardButton.setEnabled(true);

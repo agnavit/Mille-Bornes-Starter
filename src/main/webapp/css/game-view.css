@@ -1,0 +1,96 @@
+/* ----- CSS: Général ----- */
+
+h3 {
+    text-align: center;
+    position: relative;
+    bottom: 33px;
+    text-shadow: 0 0 6px white;
+}
+
+img {
+    position: relative;
+    bottom: 45px;
+    width: 100px;
+}
+
+div h4 {
+    color: #ff7a6e;
+    text-shadow: 0 0 8px white;
+    position: relative;
+    bottom: 155px;
+    left: 42px;
+    background-color: #fac3be;
+    border: solid 3px;
+    border-radius: 30px;
+    border-color: #ff7a6e;
+    text-align: center;
+    margin-left: 28px;
+    margin-right: 28px;
+}
+
+.card-deck {
+    position: relative;
+    top: 2px;
+    width: 100px;
+    border: solid #9eb0c7 4px;
+}
+
+
+/* ----- CSS: Score ----- */
+
+.seconde-player {
+    color: #D7D7D7;
+    text-shadow: 0 0 2px #B4B4B4;
+}
+
+.first-player {
+    color:  #C9B037;
+    text-shadow: 0 0 2px #AF9500;
+}
+
+/* ----- CSS: Mon jeu ----- */
+
+.my-pile-cards vaadin-horizontal-layout vaadin-vertical-layout {
+    background: linear-gradient(to bottom, #C0D0E5, #f5efef);
+    border-radius: 10px;
+    height: 14em;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+}
+
+.my-pile-cards h4 {
+    color: #9eb0c7;
+    border-color: #9eb0c7;
+    background: #D7E1EE;
+}
+
+.my-pile-cards img {
+    border: solid #9eb0c7 4px;
+}
+
+.my-pile-cards h3 {
+    color: #9eb0c7;
+}
+
+.footer {
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(to right, #B0C4DE, #f5efef);
+}
+
+/* ----- CSS: Jeu de l'adversaire ----- */
+
+.not-my-pile-cards vaadin-horizontal-layout vaadin-vertical-layout{
+    background: linear-gradient(to bottom, #feada6, #f5efef);
+    border-radius: 10px;
+    height: 14em;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+}
+
+.not-my-pile-cards img {
+    border: solid #ff7a6e 4px;
+}
+
+.not-my-pile-cards h3 {
+    color: #ff7a6e;
+}

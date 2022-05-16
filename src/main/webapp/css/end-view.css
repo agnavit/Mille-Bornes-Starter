@@ -1,0 +1,23 @@
+@import url('http://fonts.cdnfonts.com/css/minecraft-4');
+
+H1{
+    -webkit-text-stroke: 2px red;
+    font-family: 'Minecraft', sans-serif;
+    color: white;
+    font-size: 140px;
+}
+
+H2{
+    -webkit-text-stroke: 2px blue;
+    font-family: 'Minecraft', sans-serif;
+    color: white;
+    font-size: 120px;
+}
+
+H3 {
+    font-family: 'Minecraft', sans-serif;
+    font-size: 100px;
+    color: white;
+    -webkit-text-stroke: 2px black;
+}
+
