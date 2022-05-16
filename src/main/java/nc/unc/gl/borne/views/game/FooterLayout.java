@@ -2,22 +2,15 @@ package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.dependency.StyleSheet;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import nc.unc.gl.borne.Deck.DeckService;
 import nc.unc.gl.borne.carte.*;
-import nc.unc.gl.borne.carte.enumerations.NomCarte;
 import nc.unc.gl.borne.carte.enumerations.TypeCarte;
-import nc.unc.gl.borne.carte.enumerations.TypePile;
 import nc.unc.gl.borne.joueur.Joueur;
 import nc.unc.gl.borne.joueur.JoueurService;
-import nc.unc.gl.borne.partie.Game;
 import nc.unc.gl.borne.partie.Partie;
-import nc.unc.gl.borne.plateau.Plateau;
 
 import java.util.ArrayList;
 
@@ -26,23 +19,48 @@ public class FooterLayout extends HorizontalLayout {
 
     ArrayList<Image> deckPlayerImage;
     Carte selectedCard;
-    Image selec;
-
-    protected DeckService deckPlayer = new DeckService();
-
-
+    Image selectedIm;
     JoueurService playerService = new JoueurService();
-
+    Button putCardButton;
+    Button throwCardButton;
+    Partie party;
     Joueur joueurDefensif;
+    Joueur joueurAttaque;
 
     public FooterLayout(Partie refPartie, Joueur joueurDefensive, Joueur joueurAttaque){
+        this.party = refPartie;
         this.joueurDefensif = joueurDefensive;
+        this.joueurAttaque = joueurAttaque;
+
         HorizontalLayout footer = new HorizontalLayout();
-        updateDeckPlayer(refPartie, footer, joueurDefensive, joueurAttaque);
+
+        Button putCardButton = new Button("Poser");
+        putCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        Button throwCardButton = new Button("Jeter");
+        throwCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        putCardButton.setEnabled(false);
+        throwCardButton.setEnabled(false);
+
+        VerticalLayout buttonsLayout = new VerticalLayout(putCardButton, throwCardButton);
+        HorizontalLayout deckLayout = new HorizontalLayout();
+
+        updateDeckPlayer(deckLayout);
+
+        footer.add(deckLayout, buttonsLayout);
+        footer.getStyle()
+            .set("border-radius", "10px")
+            .set("padding", "20px")
+            .set("box-shadow", "0px 6px 10px rgba(0, 0, 0, 0.25)")
+            .set("background", "linear-gradient(to right, #B0C4DE, #f5efef)");
+
+        add(footer);
+        this.throwCardButton = throwCardButton;
+        this.putCardButton = putCardButton;
     }
 
-    public void putCardPlayer(Partie party, HorizontalLayout footerLayout, Button putCardButton,
-                              Joueur joueurDefensif, Joueur joueurAttaque){
+    public void putCardPlayer( HorizontalLayout deckLayout, Button putCardButton){
         putCardButton.addClickListener(
             clickPutCard -> {
                 if (selectedCard.getType() == TypeCarte.BORNE) {
@@ -72,47 +90,32 @@ public class FooterLayout extends HorizontalLayout {
                         joueurDefensif
                     );
                 }
-                updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
+                updateDeckPlayer(deckLayout);
             }
         );
     }
 
-    public void throwCardPlayer(Partie party, HorizontalLayout footerLayout, Button throwCardButton,
-                                Joueur joueurDefensif, Joueur joueurAttaque){
+    public void throwCardPlayer(HorizontalLayout deckLayout, Button throwCardButton){
         throwCardButton.addClickListener(
             click -> {
                 playerService.jeter(this.selectedCard, party.getDefausse(), joueurDefensif);
-                updateDeckPlayer(party, footerLayout, joueurDefensif, joueurAttaque);
+                updateDeckPlayer(deckLayout);
             }
         );
 
     }
 
-    public void updateDeckPlayer(Partie party , HorizontalLayout footerLayout, Joueur joueurDefensif, Joueur joueurAttaque){
+    public void updateDeckPlayer(HorizontalLayout deckLayout){
 
-        removeAll();
-        footerLayout.removeAll();
-
-        Button putCardButton = new Button("Poser");
-        putCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-        Button throwCardButton = new Button("Jeter");
-        throwCardButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
-        putCardButton.setEnabled(false);
-        throwCardButton.setEnabled(false);
-
-        VerticalLayout buttonsLayout = new VerticalLayout(putCardButton, throwCardButton);
-
-        HorizontalLayout deckLayout = new HorizontalLayout();
+        deckLayout.removeAll();
 
         deckPlayerImage = new ArrayList<Image>(playerService.getSizeDeck(joueurDefensif));
 
         for (int i = 0; i < playerService.getSizeDeck(joueurDefensif); i++) {
 
             Image image = new Image(
-                "cartes/" + playerService.getCardInDeck(joueurDefensif,i).getStringImage(),
-                String.valueOf(playerService.getCardInDeck(joueurDefensif,i)));
+                "cartes/" + playerService.getCardInDeck(joueurDefensif, i).getStringImage(),
+                String.valueOf(playerService.getCardInDeck(joueurDefensif, i)));
             image.addClassName("card-deck");
 
             deckPlayerImage.add(image);
@@ -120,41 +123,27 @@ public class FooterLayout extends HorizontalLayout {
             var chosenCard = deckPlayerImage.get(i);
             int j = i;
 
-            deckPlayerImage.get(i).addClickListener(
-                click -> {
+            if (joueurDefensif.getMain().getTaille() == 7) {
+                deckPlayerImage.get(i).addClickListener(
+                    click -> {
+                        if (chosenCard != selectedIm) {
+                            eventImage(chosenCard, j, deckLayout);
+                        }
+                    }
 
-                    chosenCardMethode(chosenCard, j);
-
-                    putCardButton.setEnabled(true);
-                    throwCardButton.setEnabled(true);
-
-                    putCardPlayer(party, footerLayout, putCardButton, joueurDefensif, joueurAttaque);
-                    throwCardPlayer(party, footerLayout, throwCardButton, joueurDefensif, joueurAttaque);
-
-                }
-
-            );
+                );
+            }
 
         }
-
         for(Image image: deckPlayerImage){
             deckLayout.add(image);
         }
-
-        footerLayout.add(deckLayout, buttonsLayout);
-        footerLayout.getStyle()
-            .set("border-radius", "10px")
-            .set("padding", "20px")
-            .set("box-shadow", "0px 6px 10px rgba(0, 0, 0, 0.25)")
-            .set("background", "linear-gradient(to right, #B0C4DE, #f5efef)");
-
-        add(footerLayout);
     }
 
     public void chosenCardMethode(Image image, int j){
 
-        if(selec != null){
-            selec.getElement().getStyle().set("border-color", "#9eb0c7");
+        if(selectedIm != null){
+            selectedIm.getElement().getStyle().set("border-color", "#9eb0c7");
         }
 
         System.out.println("Le joueur: " + joueurDefensif.getPseudo() + " a choisi la carte " + image.getAlt());
@@ -163,7 +152,18 @@ public class FooterLayout extends HorizontalLayout {
             playerService.getCardInDeck(joueurDefensif,j).getType(),
             playerService.getCardInDeck(joueurDefensif,j).getIdentifiant()
         );
-        this.selec = image;
+        this.selectedIm = image;
         image.getElement().getStyle().set("border-color", "white");
+    }
+
+    public void eventImage(Image chosenCard, int j, HorizontalLayout deckLayout){
+
+        chosenCardMethode(chosenCard, j);
+
+        putCardButton.setEnabled(true);
+        throwCardButton.setEnabled(true);
+
+        putCardPlayer(deckLayout, putCardButton);
+        throwCardPlayer(deckLayout, throwCardButton);
     }
 }
