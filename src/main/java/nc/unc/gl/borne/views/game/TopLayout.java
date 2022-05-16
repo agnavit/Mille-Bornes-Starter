@@ -2,12 +2,10 @@ package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.StyleSheet;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import nc.unc.gl.borne.joueur.Joueur;
+import nc.unc.gl.borne.metier.classes.Joueur;
 
 @Route("testTopLayout")
 @Tag("testTopLayout")

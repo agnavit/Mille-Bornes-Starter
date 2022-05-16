@@ -23,11 +23,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import lombok.Data;
-import nc.unc.gl.borne.Observer;
-import nc.unc.gl.borne.carte.Carte;
-import nc.unc.gl.borne.joueur.Joueur;
-import nc.unc.gl.borne.partie.Partie;
-import nc.unc.gl.borne.partie.PartieService;
+import nc.unc.gl.borne.metier.classes.Observer;
+import nc.unc.gl.borne.metier.classes.carte.Carte;
+import nc.unc.gl.borne.metier.classes.Joueur;
+import nc.unc.gl.borne.metier.classes.partie.Partie;
+import nc.unc.gl.borne.metier.services.partie.PartieService;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
 import java.util.ArrayList;
 

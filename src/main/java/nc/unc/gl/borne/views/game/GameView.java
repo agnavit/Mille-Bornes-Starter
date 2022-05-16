@@ -4,26 +4,18 @@ import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H4;
-import com.vaadin.flow.component.html.H5;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import nc.unc.gl.borne.MilleBornesApplication;
-import nc.unc.gl.borne.ObserverGame;
+import nc.unc.gl.borne.metier.classes.ObserverGame;
 import nc.unc.gl.borne.dao.connection.partieDao.JoueurDao;
-import nc.unc.gl.borne.joueur.Joueur;
-import nc.unc.gl.borne.partie.Game;
-import nc.unc.gl.borne.partie.Partie;
-import nc.unc.gl.borne.partie.PartieService;
-
-import java.util.ArrayList;
+import nc.unc.gl.borne.metier.classes.Joueur;
+import nc.unc.gl.borne.metier.classes.partie.Game;
+import nc.unc.gl.borne.metier.classes.partie.Partie;
+import nc.unc.gl.borne.metier.services.partie.PartieService;
 
 @Route("game/:idPartie?/:pseudoJoueur?")
 @StyleSheet("css/game.css")

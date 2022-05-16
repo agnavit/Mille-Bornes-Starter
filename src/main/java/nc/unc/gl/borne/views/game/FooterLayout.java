@@ -6,11 +6,11 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import nc.unc.gl.borne.carte.*;
-import nc.unc.gl.borne.carte.enumerations.TypeCarte;
-import nc.unc.gl.borne.joueur.Joueur;
-import nc.unc.gl.borne.joueur.JoueurService;
-import nc.unc.gl.borne.partie.Partie;
+import nc.unc.gl.borne.metier.classes.Joueur;
+import nc.unc.gl.borne.metier.classes.carte.Carte;
+import nc.unc.gl.borne.metier.classes.carte.enumerations.TypeCarte;
+import nc.unc.gl.borne.metier.classes.partie.Partie;
+import nc.unc.gl.borne.metier.services.JoueurService;
 
 import java.util.ArrayList;
 

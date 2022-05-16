@@ -1,6 +1,6 @@
 package nc.unc.gl.borne;
 
-import nc.unc.gl.borne.partie.Partie;
+import nc.unc.gl.borne.metier.classes.partie.Partie;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

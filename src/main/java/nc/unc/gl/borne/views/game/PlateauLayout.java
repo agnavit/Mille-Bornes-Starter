@@ -1,17 +1,17 @@
 package nc.unc.gl.borne.views.game;
 
-import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.dependency.StyleSheet;
-import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
-import nc.unc.gl.borne.carte.*;
-import nc.unc.gl.borne.carte.enumerations.NomCarte;
-import nc.unc.gl.borne.carte.enumerations.TypeCarte;
-import nc.unc.gl.borne.carte.enumerations.TypePile;
-import nc.unc.gl.borne.joueur.Joueur;
-import nc.unc.gl.borne.joueur.JoueurService;
+import nc.unc.gl.borne.metier.classes.Joueur;
+import nc.unc.gl.borne.metier.classes.carte.Carte;
+import nc.unc.gl.borne.metier.classes.carte.enumerations.NomCarte;
+import nc.unc.gl.borne.metier.classes.carte.enumerations.TypeCarte;
+import nc.unc.gl.borne.metier.classes.carte.enumerations.TypePile;
+import nc.unc.gl.borne.metier.services.JoueurService;
 
 public class PlateauLayout extends HorizontalLayout {
 
