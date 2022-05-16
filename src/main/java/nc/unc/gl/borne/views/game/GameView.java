@@ -1,6 +1,8 @@
 package nc.unc.gl.borne.views.game;
 
 import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
@@ -40,7 +42,7 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
 
     private String idPartie;
 
-    Span span = new Span();
+    Button notiff = new Button();
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
@@ -79,14 +81,13 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
         layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         layout.setAlignItems(Alignment.CENTER);
 
-        if (p1.getMain().getTaille() == 7) {
-            span.setText("C'est à votre tour de jouer !");
-        } else {
-            span.setText("C'est au tour de " + p2.getPseudo() + " de jouer.");
-        }
+        notiff.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        Span notiff = new Span(createIcon(VaadinIcon.HAND), span);
-        notiff.getElement().getThemeList().add("badge success");
+        if (p1.getMain().getTaille() == 7) {
+            notiff.setText("C'est à votre tour de jouer !");
+        } else {
+            notiff.setText("C'est au tour de " + p2.getPseudo() + " de jouer.");
+        }
 
         layout.add(notiff);
 
@@ -140,18 +141,18 @@ public class GameView extends VerticalLayout implements ObserverGame, BeforeEnte
             layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
             layout.setAlignItems(Alignment.CENTER);
 
-            if (p1.getMain().getTaille() == 7) {
-                span.setText("C'est à votre tour de jouer !");
-            } else {
-                span.setText("C'est au tour de " + p2.getPseudo() + " de jouer.");
-            }
+            notiff.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-            Span notiff = new Span(createIcon(VaadinIcon.HAND), span);
-            notiff.getElement().getThemeList().add("badge success");
+            if (p1.getMain().getTaille() == 7) {
+                notiff.setText("C'est à votre tour de jouer !");
+            } else {
+                notiff.setText("C'est au tour de " + p2.getPseudo() + " de jouer.");
+            }
 
             layout.add(notiff);
 
             add(layout);
+
         });
     }
 }
