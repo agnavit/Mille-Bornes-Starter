@@ -114,17 +114,18 @@ public class JoueurService {
             Carte carteAJeter = plateauService.enleverCartePlateau(TypePile.VITESSE, joueur);
             defausse.empiler(carteAJeter);
         }
-        else {
 
-            if (joueur.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1) {
-                NomCarte nomCarteSommetPileBataille = joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet().getNom();
-                if(nomCarteSommetPileBataille.equals(carteBotte.getNom())){
-                    Carte carteAJeter = plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur);
-                    defausse.empiler(carteAJeter);
-                }
+        if (joueur.getPlateau().getPile(TypePile.BATAILLE).getTaille() == 1) {
+            NomCarte nomCarteSommetPileBataille = joueur.getPlateau().getPile(TypePile.BATAILLE).getSommet().getNom();
+            if(nomCarteSommetPileBataille.equals(NomCarte.FEU) && carteBotte.getNom()== NomCarte.VITESSE){
+                Carte carteAJeter = plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur);
+                defausse.empiler(carteAJeter);
+            }
+            if (nomCarteSommetPileBataille.equals(carteBotte.getNom())) {
+                Carte carteAJeter = plateauService.enleverCartePlateau(TypePile.BATAILLE, joueur);
+                defausse.empiler(carteAJeter);
             }
         }
-        //TODO Tests
         //TODO : on rejoue dans le code main principal non ?
     }
 
@@ -152,7 +153,7 @@ public class JoueurService {
         deckService.enlever(carteChoisie, joueur);
     }
 
-    public boolean attaquer(Carte carteAttaque, Joueur joueurAttaque) {
+    public void attaquer(Carte carteAttaque, Joueur joueurDefensif, Joueur joueurAttaque) {
         if(carteAttaque.getType() != TypeCarte.ATTAQUE){
             throw new IllegalArgumentException("Erreur : on peut attaquer que avec une carte de type attaque!");
         }
@@ -161,33 +162,49 @@ public class JoueurService {
         // La botte véhicule prioritaire contre les attaques feu et vitesse
         if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.VITESSE, TypeCarte.BOTTE)
             && (nomCarteAttaque == NomCarte.VITESSE || nomCarteAttaque == NomCarte.FEU)) {
-            return false;
+            throw new IllegalArgumentException("Erreur : on peut attaquer, le joueur en face possède la botte véhicule" +
+                " prioritaire!");
         }
 
         if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.ACCIDENT, TypeCarte.BOTTE)
             && nomCarteAttaque == NomCarte.ACCIDENT){
-            return false;
+            throw new IllegalArgumentException("Erreur : on peut attaquer, le joueur en face possède la botte as du" +
+                " volant!");
         }
 
         if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.CREVAISON, TypeCarte.BOTTE)
             && nomCarteAttaque == NomCarte.CREVAISON){
-            return false;
+            throw new IllegalArgumentException("Erreur : on peut attaquer, le joueur en face possède la botte roue" +
+                " increvable!");
         }
         if(joueurAttaque.getPlateau().getPile(TypePile.BOTTES).contientCarte(NomCarte.ESSENCE, TypeCarte.BOTTE)
             && nomCarteAttaque == NomCarte.ESSENCE ){
-            return false;
+            throw new IllegalArgumentException("Erreur : on peut attaquer, le joueur en face possède la botte camion" +
+                " citerne!");
         }
 
-        if (nomCarteAttaque == NomCarte.VITESSE && joueurAttaque.getPlateau().getPile(TypePile.VITESSE).estVide()){
-            joueurAttaque.getPlateau().getPile(TypePile.VITESSE).empiler(carteAttaque);
-            return true;
+
+        if (nomCarteAttaque == NomCarte.VITESSE){
+            if(joueurAttaque.getPlateau().getPile(TypePile.VITESSE).estVide()){
+                joueurAttaque.getPlateau().getPile(TypePile.VITESSE).empiler(carteAttaque);
+                deckService.enlever(carteAttaque, joueurDefensif);
+            }
+            else{
+                throw new IllegalArgumentException("Erreur : on peut attaquer, le joueur en face a déjà une attaque sur " +
+                    "sa pile vitesse");
+            }
         }
-        if(joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).estVide()) {
+
+        else{
+            if(joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).estVide()){
             joueurAttaque.getPlateau().getPile(TypePile.BATAILLE).empiler(carteAttaque);
-            // Suprimme la carte de la main du joueur
-            return true;
+            deckService.enlever(carteAttaque, joueurDefensif);
+            }
+            else{
+                throw new IllegalArgumentException("Erreur : on peut attaquer, le joueur en face a déjà une attaque sur " +
+                    "sa pile bataille");
+            }
         }
-        return false;
     }
 
     public void piocher(PileCarte pioche, Joueur joueur) {

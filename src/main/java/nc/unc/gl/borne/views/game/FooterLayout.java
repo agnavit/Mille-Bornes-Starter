@@ -54,6 +54,7 @@ public class FooterLayout extends HorizontalLayout {
                 } else if (selectedCard.getType() == TypeCarte.ATTAQUE) {
                     playerService.attaquer(
                         selectedCard,
+                        joueurDefensif,
                         joueurAttaque
                     );
                     joueurDefensif.getMain().getMainJoueur().remove(selectedCard);

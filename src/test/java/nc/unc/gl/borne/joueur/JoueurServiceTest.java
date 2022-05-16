@@ -163,6 +163,7 @@ public class JoueurServiceTest {
         joueurService.poserCarteBotte(carteBotteVitesse, j, defausse);
         assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 0);
 
+
         assertEquals(j.getPlateau().getPile(TypePile.BOTTES).getPileCarte().size(), 2);
     }
 
@@ -211,15 +212,21 @@ public class JoueurServiceTest {
     @Test
     void attaquer() {
         //TODO Check
-        Joueur j = new Joueur(1, "mayaSixtine", 24);
+        Joueur jDef = new Joueur(1, "mayaSixtine", 24);
+        Joueur jAtt = new Joueur(2, "yo", 24);
 
         Carte carteAttaque = new Carte(NomCarte.VITESSE, TypeCarte.ATTAQUE, 2);
         Carte carteAttaque2 = new Carte(NomCarte.CREVAISON, TypeCarte.ATTAQUE, 3);
 
-        joueurService.attaquer(carteAttaque, j);
-        assertEquals(j.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 1);
-        joueurService.attaquer(carteAttaque2, j);
-        assertEquals(j.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 1);
-        assertFalse(joueurService.attaquer(carteAttaque2, j));
+        joueurService.attaquer(carteAttaque, jDef, jAtt);
+        assertEquals(jAtt.getPlateau().getPile(TypePile.VITESSE).getPileCarte().size(), 1);
+        joueurService.attaquer(carteAttaque2, jDef, jAtt);
+        assertEquals(jAtt.getPlateau().getPile(TypePile.BATAILLE).getPileCarte().size(), 1);
+        IllegalArgumentException thrown1 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.attaquer(carteAttaque2, jDef, jAtt));
+        Assertions.assertEquals("Erreur : on peut attaquer, le joueur en face a déjà une attaque sur sa pile bataille", thrown1.getMessage());
+
+        IllegalArgumentException thrown2 = Assertions.assertThrows(IllegalArgumentException.class, () -> joueurService.attaquer(carteAttaque, jDef, jAtt));
+        Assertions.assertEquals("Erreur : on peut attaquer, le joueur en face a déjà une attaque sur sa pile vitesse", thrown2.getMessage());
+
     }
 }
