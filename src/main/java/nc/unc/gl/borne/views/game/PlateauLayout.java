@@ -48,7 +48,7 @@ public class PlateauLayout extends HorizontalLayout {
 
         Div soixanteQuinze = new Div();
         soixanteQuinze.add(new Image("cartes/borne_soixante_quinze.jpeg","cartes/borne_soixante_quinze"));
-        soixanteQuinze.add(new H4(getNbCartePileBorneString(NomCarte.SOIXANTE_QUINZE, joueur)));
+        soixanteQuinze.add(new H4("x " + getNbCartePileBorneString(NomCarte.SOIXANTE_QUINZE, joueur)));
 
 
         Div cent = new Div();

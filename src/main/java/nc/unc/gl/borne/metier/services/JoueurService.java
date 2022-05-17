@@ -77,6 +77,16 @@ public class JoueurService {
     }
 
     public void poserCarteBorne(Carte carteBorne, Joueur joueur){
+        int scoreJoueur = 0;
+        switch (carteBorne.getNom()) {
+            case VINGT_CINQ -> scoreJoueur = joueur.getScore() + 25;
+            case CINQUANTE -> scoreJoueur = joueur.getScore() + 50;
+            case SOIXANTE_QUINZE -> scoreJoueur = joueur.getScore() + 75;
+            case CENT -> scoreJoueur = joueur.getScore() + 100;
+            case DEUX_CENTS -> scoreJoueur = joueur.getScore() + 200;
+            default -> throw new IllegalArgumentException("Erreur: la carte borne n'as pas un nom de carte correct " +
+                "(valeur en km)!");
+        }
         // S'il y a une limitation de vitesse
         if (joueur.getScore() + carteBorne.getIdentifiant() > 1000) {
             throw new IllegalArgumentException("Erreur : il faut terminer avec un score égale à 1000");
@@ -93,19 +103,8 @@ public class JoueurService {
                     "d'une carte attaque présente! ");
             }
 
-            int nbKm;
-            if(carteBorne.getNom() == NomCarte.VINGT_CINQ) nbKm = 25;
-            else if(carteBorne.getNom() == NomCarte.CINQUANTE) nbKm = 50;
-            else if(carteBorne.getNom() == NomCarte.SOIXANTE_QUINZE) nbKm = 75;
-            else if(carteBorne.getNom() == NomCarte.CENT) nbKm = 100;
-            else if(carteBorne.getNom() == NomCarte.DEUX_CENTS) nbKm = 200;
-            else throw new IllegalArgumentException("Erreur: la carte borne n'as pas un nom de carte correct " +
-                    "(valeur en km)!");
-
-            if(joueur.getScore() + nbKm == 1000 || joueur.getScore() + nbKm < 1000){
-                joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
-                joueur.setScore(joueur.getScore() + nbKm);
-            }
+            joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
+            joueur.setScore(scoreJoueur);
         }
     }
 
