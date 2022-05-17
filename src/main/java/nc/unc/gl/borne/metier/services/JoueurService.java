@@ -93,15 +93,18 @@ public class JoueurService {
                     "d'une carte attaque présente! ");
             }
 
-            joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
-            switch (carteBorne.getNom()) {
-                case VINGT_CINQ -> joueur.setScore(joueur.getScore() + 25);
-                case CINQUANTE -> joueur.setScore(joueur.getScore() + 50);
-                case SOIXANTE_QUINZE -> joueur.setScore(joueur.getScore() + 75);
-                case CENT -> joueur.setScore(joueur.getScore() + 100);
-                case DEUX_CENTS -> joueur.setScore(joueur.getScore() + 200);
-                default -> throw new IllegalArgumentException("Erreur: la carte borne n'as pas un nom de carte correct " +
+            int nbKm;
+            if(carteBorne.getNom() == NomCarte.VINGT_CINQ) nbKm = 25;
+            else if(carteBorne.getNom() == NomCarte.CINQUANTE) nbKm = 50;
+            else if(carteBorne.getNom() == NomCarte.SOIXANTE_QUINZE) nbKm = 75;
+            else if(carteBorne.getNom() == NomCarte.CENT) nbKm = 100;
+            else if(carteBorne.getNom() == NomCarte.DEUX_CENTS) nbKm = 200;
+            else throw new IllegalArgumentException("Erreur: la carte borne n'as pas un nom de carte correct " +
                     "(valeur en km)!");
+
+            if(joueur.getScore() + nbKm == 1000 || joueur.getScore() + nbKm < 1000){
+                joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
+                joueur.setScore(joueur.getScore() + nbKm);
             }
         }
     }
