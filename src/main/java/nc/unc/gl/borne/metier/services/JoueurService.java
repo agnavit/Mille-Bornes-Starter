@@ -77,18 +77,18 @@ public class JoueurService {
     }
 
     public void poserCarteBorne(Carte carteBorne, Joueur joueur){
-        int scoreJoueur = 0;
+        int scoreCarte = 0;
         switch (carteBorne.getNom()) {
-            case VINGT_CINQ -> scoreJoueur = joueur.getScore() + 25;
-            case CINQUANTE -> scoreJoueur = joueur.getScore() + 50;
-            case SOIXANTE_QUINZE -> scoreJoueur = joueur.getScore() + 75;
-            case CENT -> scoreJoueur = joueur.getScore() + 100;
-            case DEUX_CENTS -> scoreJoueur = joueur.getScore() + 200;
+            case VINGT_CINQ -> scoreCarte = 25;
+            case CINQUANTE -> scoreCarte = 50;
+            case SOIXANTE_QUINZE -> scoreCarte = 75;
+            case CENT -> scoreCarte = 100;
+            case DEUX_CENTS -> scoreCarte = 200;
             default -> throw new IllegalArgumentException("Erreur: la carte borne n'as pas un nom de carte correct " +
                 "(valeur en km)!");
         }
         // S'il y a une limitation de vitesse
-        if (joueur.getScore() + carteBorne.getIdentifiant() > 1000) {
+        if (joueur.getScore() + scoreCarte > 1000) {
             throw new IllegalArgumentException("Erreur : il faut terminer avec un score égale à 1000");
         }else {
             if (joueur.getPlateau().getPile(TypePile.VITESSE).getTaille() == 1) {
@@ -104,7 +104,7 @@ public class JoueurService {
             }
 
             joueur.setPlateau(plateauService.ajouterCartePlateau(TypePile.BORNES, carteBorne, joueur));
-            joueur.setScore(scoreJoueur);
+            joueur.setScore(joueur.getScore() + scoreCarte);
         }
     }
 
